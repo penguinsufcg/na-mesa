@@ -12,10 +12,10 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 }
 
-if(!firebase.apps.length) {
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
 export const storage = firebase.storage()
-export const auth = firebase.auth
+export const firebaseAuth = firebase.auth()
 export default firebase
