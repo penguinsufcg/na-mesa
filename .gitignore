@@ -1,4 +1,5 @@
 .next
+.env*
 
 # Created by https://www.toptal.com/developers/gitignore/api/yarn,linux,macos,wintersmith
 # Edit at https://www.toptal.com/developers/gitignore?templates=yarn,linux,macos,wintersmith
