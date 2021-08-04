@@ -1,11 +1,20 @@
 import firebase, { firebaseAuth } from '../config/firebaseClient'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Auth {
   uid?: string
   email?: string | null
   name: string | null
   photoUrl?: string | null
+}
+
+function formatAuth(auth: firebase.User) {
+  return {
+    uid: auth.uid,
+    email: auth.email,
+    name: auth.displayName,
+    photoUrl: auth.photoURL,
+  }
 }
 
 export function useAuth() {
@@ -27,6 +36,22 @@ export function useAuth() {
   const signOut = () => {
     firebaseAuth.signOut().then(clear)
   }
+
+  const handleAuthStateChange = async (authState: firebase.User | null) => {
+    if (!authState) {
+      setAuth(null)
+      setLoading(false)
+      return
+    }
+
+    setAuth(formatAuth(authState))
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    const listener = firebaseAuth.onAuthStateChanged(handleAuthStateChange)
+    return () => listener()
+  }, [])
 
   return {
     auth,
