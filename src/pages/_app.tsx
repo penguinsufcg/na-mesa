@@ -3,11 +3,14 @@ import type { AppProps } from 'next/app'
 
 import theme from '../theme'
 import '../styles/globals.css'
+import AuthProvider from '../screens/AuthProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </ChakraProvider>
   )
 }
