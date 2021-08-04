@@ -8,6 +8,13 @@ interface Auth {
   photoUrl?: string | null
 }
 
+export interface useAuthContext {
+  auth: Auth | null
+  loading: boolean
+  signIn: () => Promise<void>
+  signOut: () => Promise<void>
+}
+
 function formatAuth(auth: firebase.User) {
   return {
     uid: auth.uid,
@@ -17,7 +24,7 @@ function formatAuth(auth: firebase.User) {
   }
 }
 
-export function useAuth() {
+export function useAuth(): useAuthContext {
   const [auth, setAuth] = useState<Auth | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -26,16 +33,13 @@ export function useAuth() {
     setAuth(null)
   }
 
-  const signIn = () => {
+  const signIn = () =>
     firebaseAuth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then((_) => console.log('User logged in'))
       .catch((e) => console.log(e))
-  }
 
-  const signOut = () => {
-    firebaseAuth.signOut().then(clear)
-  }
+  const signOut = () => firebaseAuth.signOut().then(clear)
 
   const handleAuthStateChange = async (authState: firebase.User | null) => {
     if (!authState) {
