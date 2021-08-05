@@ -8,7 +8,7 @@ interface Auth {
   photoUrl?: string | null
 }
 
-export interface useAuthContext {
+export interface AuthContextProps {
   auth: Auth | null
   loading: boolean
   signIn: () => Promise<void>
@@ -24,7 +24,7 @@ function formatAuth(auth: firebase.User) {
   }
 }
 
-export function useAuth(): useAuthContext {
+export function useAuth(): AuthContextProps {
   const [auth, setAuth] = useState<Auth | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
