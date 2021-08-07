@@ -13,16 +13,20 @@ const colors = {
     800: '#490203',
     900: '#1f0000',
   },
-  // TODO: Choose best option to define color schem
-  /* Other option to structure colors: 
-  primary: {
-    base: '...',
-    hover: '...',
-    active: '...'
-    washed: '...',
-    contrast: '...',
+  
+  secondary: {
+    50: '#eaf3fc',
+    100: '#d2d6e2',
+    200: '#b5bbc9',
+    300: '#99a1b3',
+    400: '#7b869d',
+    500: '#616c83',
+    600: '#4c5466',
+    700: '#363c4a',
+    800: '#1f242e',
+    900: '#080c16',
   }
-  */
+
 }
 
 export default colors

@@ -3,12 +3,38 @@
 
 const ButtonStyle = {
   // style object for base or default style
-  baseStyle: {},
+  baseStyle: {
+    fontFamily: 'body',
+    borderRadius: '0.313rem',
+    fontWeight: '500',
+  },
   // styles for different sizes ("sm", "md", "lg")
-  sizes: {},
+  sizes: { 
+    xs: {
+      fontSize: '0.75rem',
+      h: '2rem',
+      px: '1rem'
+    },
+    sm: {
+      fontSize: '0.875rem',
+      h: '2.5rem',
+      px: '1rem'
+    },
+    md: {
+      fontSize: '0.875rem',
+      h: '3rem',
+      px: '1rem'
+    },
+    lg: {
+      fontSize: '0.875rem',
+      h: '3.5rem',
+      px: '1rem'
+    }
+  },
   // styles for different visual variants ("outline", "solid")
   variants: {
     primary: {
+      margin: '0.5rem',
       bg: 'primary.500',
       color: 'white',
       _hover: {
@@ -19,6 +45,7 @@ const ButtonStyle = {
       },
     },
     secondary: {
+      margin: '0.5rem',
       color: 'primary.500',
       border: '1px solid',
       borderColor: 'primary.500',

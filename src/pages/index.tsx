@@ -19,9 +19,17 @@ export default function Home() {
           is online!
         </Heading>
         <Flex>
-          <Button variant="secondary">Secondary</Button>
-          <Spacer />
-          <Button size="md">Primary</Button>
+          <Button variant="secondary">LARGE</Button>
+          <Button variant="secondary">MEDIUM</Button>
+          <Button variant="secondary">SMALL</Button>
+        </Flex>
+        <Spacer />
+        <Flex>
+          <Button size="lg" variant="primary">LARGE</Button>
+          <Button size="md" variant="primary">MEDIUM</Button>
+          <Button size="sm" variant="primary">SMALL</Button>
+          <Button size="xs" variant="primary">EXTRA SMALL</Button>
+
         </Flex>
       </Flex>
     </Center>
