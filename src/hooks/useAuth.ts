@@ -53,8 +53,12 @@ export function useAuth(): AuthContextProps {
   }
 
   useEffect(() => {
-    const listener = firebaseAuth.onAuthStateChanged(handleAuthStateChange)
-    return () => listener()
+    // This effect will be triggered whenever a user sign in or sign out in
+    // namesa website. The firebase [onAuthStateChanged] method
+    // is a observer and returns a unsubscriber,
+    // so this method executes it when the component is unmounted
+    const observer = firebaseAuth.onAuthStateChanged(handleAuthStateChange)
+    return () => observer()
   }, [])
 
   return {

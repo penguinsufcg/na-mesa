@@ -1,17 +1,15 @@
-import React, { useContext } from 'react'
-import { AuthContextProps } from './useAuth'
+import React, { Context, useContext } from 'react'
+import { AuthContextProps } from '@/hooks/useAuth'
 
-export const AuthContext = React.createContext<AuthContextProps>({
-  auth: null,
-  loading: true,
-  signIn: async () => {},
-  signOut: async () => {},
-})
+export const AuthContext: Context<AuthContextProps> =
+  React.createContext<AuthContextProps>({
+    auth: null,
+    loading: true,
+    signIn: async () => {},
+    signOut: async () => {},
+  })
 
-function useAuthContext(): AuthContextProps {
-  const context = useContext<AuthContextProps>(AuthContext)
-
-  return context
-}
+const useAuthContext = (): AuthContextProps =>
+  useContext<AuthContextProps>(AuthContext)
 
 export default useAuthContext
