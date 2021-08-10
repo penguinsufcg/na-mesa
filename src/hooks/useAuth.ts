@@ -1,4 +1,4 @@
-import firebase, { firebaseAuth } from '../config/firebaseClient'
+import firebase, { firebaseAuth } from '@/config/firebaseClient'
 import { useEffect, useState } from 'react'
 
 interface Auth {

@@ -4,8 +4,12 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "src",
     "paths": {
+      "@/config/*": ["config/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/screens/*": ["screens/*"]
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"],
+      "@/theme/*": ["theme/*"]
     },
     "skipLibCheck": true,
     "strict": true,

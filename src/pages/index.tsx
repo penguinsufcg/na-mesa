@@ -7,7 +7,7 @@ import {
   Text,
   Box,
 } from '@chakra-ui/react'
-import useAuthContext from '../hooks/useAuthContext'
+import useAuthContext from '@/hooks/useAuthContext'
 
 export default function Home() {
   const { signIn } = useAuthContext()

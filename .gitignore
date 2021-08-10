@@ -73,3 +73,7 @@ config.json
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/yarn,linux,macos,wintersmith
+
+### npm ###
+
+package-lock.json
