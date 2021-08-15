@@ -7,7 +7,9 @@ import {
   Text,
   Box,
 } from '@chakra-ui/react'
+import DishModal from '@/components/DishModal/DishModal'
 import useAuthContext from '@/hooks/useAuthContext'
+import { useDisclosure } from '@chakra-ui/react'
 
 interface Dish {
   available: boolean
@@ -20,6 +22,7 @@ interface Dish {
 }
 
 export default function Home() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { signIn } = useAuthContext()
   return (
     <Center h="100vh" w="100vw">
@@ -35,9 +38,12 @@ export default function Home() {
             Secondary
           </Button>
           <Spacer />
-          <Button size="md">Primary</Button>
+          <Button size="md" onClick={onOpen}>
+            Primary
+          </Button>
         </Flex>
       </Flex>
+      <DishModal update={true} isOpen={isOpen} onClose={onClose} />
     </Center>
   )
 }
