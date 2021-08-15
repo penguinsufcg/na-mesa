@@ -8,9 +8,14 @@ import {
   Box,
 } from '@chakra-ui/react'
 import useAuthContext from '@/hooks/useAuthContext'
+import useFirebaseQuery, { Dish } from '@/hooks/useFirebaseQuery'
+import { db } from '@/config/firebaseClient'
 
 export default function Home() {
   const { signIn } = useAuthContext()
+  const doc = useFirebaseQuery<Dish>(db.collection('dishes'))
+  console.log(`My doc ${doc?.imageURL}`)
+
   return (
     <Center h="100vh" w="100vw">
       <Flex direction="column">
