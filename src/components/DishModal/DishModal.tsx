@@ -17,6 +17,15 @@ import { Upload } from 'antd'
 import { FileImageOutlined } from '@ant-design/icons'
 import React from 'react'
 
+type DishValues = {
+  name: string
+  price: number
+  serving: number
+  description: string
+  timePreparation: number
+  img: string
+}
+
 type DishModalProps = {
   update: boolean
   isOpen: boolean
@@ -25,15 +34,50 @@ type DishModalProps = {
 
 function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
   const { Dragger } = Upload
-  const [filesList, setFilesList] = useState<any[]>([])
-
   const initialRef = React.useRef().current
   const finalRef = React.useRef().current
 
+  const [dishValues, setDishValues] = useState<DishValues>({
+    name: '',
+    price: 0,
+    serving: 0,
+    description: '',
+    timePreparation: 0,
+    img: '',
+  })
+
+  const [filesList, setFilesList] = useState<any[]>([])
+
+  const saveDish = () => {
+    console.log(dishValues)
+  }
+
+  const handleName = (event: any) => {
+    setDishValues({ ...dishValues, name: event.target.value })
+  }
+
+  const handleDescription = (event: any) => {
+    setDishValues({ ...dishValues, description: event.target.value })
+  }
+
+  const handlePrice = (event: any) => {
+    setDishValues({ ...dishValues, price: event.target.value })
+  }
+
+  const handleTime = (event: any) => {
+    setDishValues({ ...dishValues, timePreparation: event.target.value })
+  }
+
+  const handleServing = (event: any) => {
+    setDishValues({ ...dishValues, serving: event.target.value })
+  }
+
+  const handleImg = (event: any) => {
+    setDishValues({ ...dishValues, img: event.target.value })
+  }
+
   const props = {
     async onChange(info: any) {
-      console.log(info)
-
       setFilesList([...filesList, ...[info.fileList]])
     },
   }
@@ -56,22 +100,38 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Nome do Produto</FormLabel>
-              <Input ref={initialRef} placeholder="Nome do Produto" />
+              <Input
+                onChange={handleName}
+                ref={initialRef}
+                placeholder="Nome do Produto"
+              />
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Descrição</FormLabel>
-              <Input height="7rem" placeholder="Descrição" />
+              <Input
+                onChange={handleDescription}
+                height="7rem"
+                placeholder="Descrição"
+              />
             </FormControl>
             <Box display="flex">
               <FormControl mt={4}>
                 <FormLabel width="10rem">Preço</FormLabel>
-                <Input width="10rem" placeholder="Preço" />
+                <Input
+                  onChange={handlePrice}
+                  width="10rem"
+                  placeholder="Preço"
+                />
               </FormControl>
 
               <FormControl mt={4}>
                 <FormLabel width="10rem">Serve</FormLabel>
-                <Input width="10rem" placeholder="Serve" />
+                <Input
+                  onChange={handleServing}
+                  width="10rem"
+                  placeholder="Serve"
+                />
               </FormControl>
             </Box>
             <FormControl mt={4}>
@@ -95,7 +155,9 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
             <Button onClick={onClose} variant="secondary" mr={3}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Save</Button>
+            <Button onClick={saveDish} colorScheme="blue">
+              Save
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

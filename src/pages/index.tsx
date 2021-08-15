@@ -43,7 +43,7 @@ export default function Home() {
           </Button>
         </Flex>
       </Flex>
-      <DishModal update={true} isOpen={isOpen} onClose={onClose} />
+      <DishModal update={false} isOpen={isOpen} onClose={onClose} />
     </Center>
   )
 }
