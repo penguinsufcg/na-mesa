@@ -153,10 +153,10 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
 
           <ModalFooter>
             <Button onClick={onClose} variant="secondary" mr={3}>
-              Cancel
+              Cancelar
             </Button>
             <Button onClick={saveDish} colorScheme="blue">
-              Save
+              Salvar
             </Button>
           </ModalFooter>
         </ModalContent>

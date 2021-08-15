@@ -7,7 +7,8 @@ import {
   Text,
   Box,
 } from '@chakra-ui/react'
-import DishModal from '@/components/DishModal/DishModal'
+import DishModal from '@/components/Modals/DishModal'
+import ConfirmationModal from '@/components/Modals/ConfirmationModal'
 import useAuthContext from '@/hooks/useAuthContext'
 import { useDisclosure } from '@chakra-ui/react'
 
@@ -43,7 +44,14 @@ export default function Home() {
           </Button>
         </Flex>
       </Flex>
-      <DishModal update={false} isOpen={isOpen} onClose={onClose} />
+      {/* <DishModal update={false} isOpen={isOpen} onClose={onClose} /> */}
+      {/*<ConfirmationModal
+        label={'Excluir Produto'}
+        message={'quer excluir gata?'}
+        isOpen={isOpen}
+        onClose={onClose}
+        handleSubmit={() => {}}
+      />*/}
     </Center>
   )
 }
