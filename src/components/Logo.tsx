@@ -1,4 +1,4 @@
-import { Flex, Text, Spacer } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import { BiCoffee } from 'react-icons/bi'
 
 const Logo = () => {
