@@ -37,6 +37,8 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
   const initialRef = React.useRef().current
   const finalRef = React.useRef().current
 
+  const [uploadImg, setUploadImg] = useState(false)
+
   const [dishValues, setDishValues] = useState<DishValues>({
     name: '',
     price: 0,
@@ -45,11 +47,23 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
     timePreparation: 0,
     img: '',
   })
-
-  const [filesList, setFilesList] = useState<any[]>([])
-
   const saveDish = () => {
     console.log(dishValues)
+  }
+
+  const getBase64 = (file: File) => {
+    return new Promise(() => {
+      let baseURL = ''
+      const reader = new FileReader()
+
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        baseURL = reader.result as string
+        console.log(baseURL)
+        setDishValues({ ...dishValues, img: baseURL })
+      }
+    })
   }
 
   const handleName = (event: any) => {
@@ -72,13 +86,10 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
     setDishValues({ ...dishValues, serving: event.target.value })
   }
 
-  const handleImg = (event: any) => {
-    setDishValues({ ...dishValues, img: event.target.value })
-  }
-
-  const props = {
+  const propsImage = {
     async onChange(info: any) {
-      setFilesList([...filesList, ...[info.fileList]])
+      setUploadImg(!uploadImg)
+      info.fileList[0] && (await getBase64(info.fileList[0].originFileObj))
     },
   }
 
@@ -115,13 +126,17 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
                 placeholder="Descrição"
               />
             </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Preço</FormLabel>
+              <Input onChange={handlePrice} placeholder="Preço" />
+            </FormControl>
             <Box display="flex">
               <FormControl mt={4}>
-                <FormLabel width="10rem">Preço</FormLabel>
+                <FormLabel width="10rem">Tempo de preparo</FormLabel>
                 <Input
-                  onChange={handlePrice}
+                  onChange={handleTime}
                   width="10rem"
-                  placeholder="Preço"
+                  placeholder="Tempo de preparo"
                 />
               </FormControl>
 
@@ -139,13 +154,17 @@ function DishModal({ isOpen, onClose, update }: DishModalProps): JSX.Element {
               <Box textAlign="center" height="7.688rem" borderWidth="2px">
                 <Dragger
                   style={{ marginTop: '2rem' }}
-                  {...props}
+                  {...propsImage}
                   beforeUpload={() => false} // return false so that antd doesn't upload the picture right away
                 >
-                  <p className="ant-upload-drag-icon">
-                    <FileImageOutlined style={{ fontSize: '2rem' }} />
-                  </p>
-                  <p className="ant-upload-text">Insira uma imagem</p>
+                  {!uploadImg && (
+                    <Box>
+                      <p className="ant-upload-drag-icon">
+                        <FileImageOutlined style={{ fontSize: '2rem' }} />
+                      </p>
+                      <p className="ant-upload-text">Insira uma imagem</p>
+                    </Box>
+                  )}
                 </Dragger>
               </Box>
             </FormControl>
