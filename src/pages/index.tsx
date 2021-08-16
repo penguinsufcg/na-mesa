@@ -8,12 +8,22 @@ import {
   Box,
 } from '@chakra-ui/react'
 import useAuthContext from '@/hooks/useAuthContext'
-import useFirebaseQuery, { Dish } from '@/hooks/useFirebaseQuery'
+import useFirestoreQuery from '@/hooks/useFirestoreQuery'
 import { db } from '@/config/firebaseClient'
+
+interface Dish {
+  available: boolean
+  description: string
+  imageURL: string
+  name: string
+  preparationTime: number
+  price: number
+  servings: number
+}
 
 export default function Home() {
   const { signIn } = useAuthContext()
-  const doc = useFirebaseQuery<Dish>(db.collection('dishes'))
+  const doc = useFirestoreQuery<Dish>(db.collection('dishes'))
   console.log(`My doc ${doc?.imageURL}`)
 
   return (

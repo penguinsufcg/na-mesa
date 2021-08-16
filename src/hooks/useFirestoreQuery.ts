@@ -1,19 +1,6 @@
 import { useState, useEffect } from 'react'
 import type firebase from 'firebase'
-import { db } from '@/config/firebaseClient'
 
-export interface Dish {
-  available: boolean
-  description: string
-  imageURL: string
-  name: string
-  preparationTime: number
-  price: number
-  servings: number
-}
-
-// db.collection('todos')
-// db.collection('users').doc('my-user-id')
 type FirebaseDocRef =
   | firebase.firestore.Query
   | firebase.firestore.DocumentReference
@@ -21,12 +8,13 @@ type FirebaseDocRef =
 function isDocumentReference(
   query: any,
 ): query is firebase.firestore.DocumentReference {
-  // TODO: Give Context
-  // TODO: Reference owner code
+  // Depending on the query's content we handle using a different manner
+  // this code helps to identify which specific type the query belongs
+  // See https://github.com/vueuse/vueuse/blob/410b59e3360b76b100d6ecadc8463392cc92c0e3/packages/firebase/useFirestore/index.ts#L29
   return (query.path?.match(/\//g) || []).length % 2 !== 0
 }
 
-function useFirebaseQuery<Entity>(query: FirebaseDocRef): Entity | null {
+function useFirestoreQuery<Entity>(query: FirebaseDocRef): Entity | null {
   const [doc, setDoc] = useState<Entity | null>(null)
   if (isDocumentReference(query)) {
     useEffect(() => {
@@ -36,8 +24,6 @@ function useFirebaseQuery<Entity>(query: FirebaseDocRef): Entity | null {
       return () => unsubscribe()
     }, [])
   } else {
-    // TO DISCUSS: Do we need to differentiate each type of event for UI purposes?
-    // Beyond the data we can provide the event received
     useEffect(() => {
       const unsubscribe = query.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -50,8 +36,7 @@ function useFirebaseQuery<Entity>(query: FirebaseDocRef): Entity | null {
               setDoc(null)
               break
             default:
-              //TO BE DEFINED
-              console.log('NOTHING', change.doc.data())
+              console.log('[useFirestoreQuery]: Unexpected firestore change')
               break
           }
         })
@@ -59,12 +44,8 @@ function useFirebaseQuery<Entity>(query: FirebaseDocRef): Entity | null {
       return () => unsubscribe()
     }, [])
   }
-  // await (
-  //   await db.collection('dishes').get()
-  // ).docs.forEach((doc) => console.log(doc.data()))
-  //console.log(query)
 
   return doc
 }
 
-export default useFirebaseQuery
+export default useFirestoreQuery
