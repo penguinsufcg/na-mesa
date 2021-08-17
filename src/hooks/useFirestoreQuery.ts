@@ -47,7 +47,7 @@ function onFirebaseDocChange<Entity>(
   })
 }
 
-function useFirestoreQuery<Entity>(query: FirestoreQuery): Entity | null {
+function useFirestoreObjectQuery<Entity>(query: FirestoreQuery): Entity | null {
   const [doc, setDoc] = useState<Entity | null>(null)
   const queryRef = useRef<FirestoreQuery>(query)
 
@@ -62,15 +62,10 @@ function useFirestoreQuery<Entity>(query: FirestoreQuery): Entity | null {
       return () => {}
     }
 
-    let unsubscriber = () => {}
-    if (isDocumentReference(queryRef.current)) {
-      unsubscriber = onFirebaseDocChange<Entity>(queryRef.current, setDoc)
-    } else {
-      unsubscriber = onFirebaseCollectionChange<Entity>(
-        queryRef.current,
-        setDoc,
-      )
-    }
+    const unsubscriber = isDocumentReference(queryRef.current)
+      ? onFirebaseDocChange<Entity>(queryRef.current, setDoc)
+      : onFirebaseCollectionChange<Entity>(queryRef.current, setDoc)
+
     return () => unsubscriber()
   }, [queryRef])
 
@@ -103,4 +98,4 @@ export function useFirestoreListQuery<Entity>(
   return collection
 }
 
-export default useFirestoreQuery
+export default useFirestoreObjectQuery
