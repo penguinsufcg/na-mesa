@@ -1,4 +1,5 @@
 import type firebase from 'firebase'
+import type react from 'react'
 import { useEffect, useRef, useState } from 'react'
 import isEqual from 'lodash.isequal'
 
@@ -17,7 +18,7 @@ function isDocumentReference(
 
 function onFirebaseCollectionChange<Entity>(
   query: firebase.firestore.Query,
-  callback: any,
+  callback: react.Dispatch<Entity | null>,
 ) {
   return query.onSnapshot((snapshot) => {
     snapshot.docChanges().forEach((change) => {
@@ -39,7 +40,7 @@ function onFirebaseCollectionChange<Entity>(
 
 function onFirebaseDocChange<Entity>(
   query: firebase.firestore.DocumentReference,
-  callback: any,
+  callback: react.Dispatch<Entity | null>,
 ) {
   return query.onSnapshot((snapshot) => {
     callback(snapshot.data() as Entity)
