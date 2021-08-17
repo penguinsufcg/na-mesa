@@ -1,5 +1,6 @@
 import type firebase from 'firebase'
 import { useEffect, useRef, useState } from 'react'
+import isEqual from 'lodash.isequal'
 
 type FirestoreQuery =
   | firebase.firestore.Query
@@ -50,17 +51,8 @@ function useFirestoreQuery<Entity>(query: FirestoreQuery): Entity | null {
   const queryRef = useRef<FirestoreQuery>(query)
 
   useEffect(() => {
-    if (isDocumentReference(queryRef.current) && isDocumentReference(query)) {
-      if (queryRef.current.isEqual(query)) {
-        queryRef.current = query
-      }
-    } else if (
-      !isDocumentReference(queryRef.current) &&
-      !isDocumentReference(query)
-    ) {
-      if (queryRef.current.isEqual(query)) {
-        queryRef.current = query
-      }
+    if (!isEqual(queryRef.current, query)) {
+      queryRef.current = query
     }
   }, [])
 
