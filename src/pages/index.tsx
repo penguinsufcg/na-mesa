@@ -7,8 +7,10 @@ import {
   Text,
   Box,
 } from '@chakra-ui/react'
+import useAuthContext from '@/hooks/useAuthContext'
 
 export default function Home() {
+  const { signIn } = useAuthContext()
   return (
     <Center h="100vh" w="100vw">
       <Flex direction="column">
@@ -19,17 +21,11 @@ export default function Home() {
           is online!
         </Heading>
         <Flex>
-          <Button variant="secondary">LARGE</Button>
-          <Button variant="secondary">MEDIUM</Button>
-          <Button variant="secondary">SMALL</Button>
-        </Flex>
-        <Spacer />
-        <Flex>
-          <Button size="lg" variant="primary">LARGE</Button>
-          <Button size="md" variant="primary">MEDIUM</Button>
-          <Button size="sm" variant="primary">SMALL</Button>
-          <Button size="xs" variant="primary">EXTRA SMALL</Button>
-
+          <Button variant="secondary" onClick={signIn}>
+            Secondary
+          </Button>
+          <Spacer />
+          <Button size="md">Primary</Button>
         </Flex>
       </Flex>
     </Center>
