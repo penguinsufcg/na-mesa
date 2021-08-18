@@ -8,10 +8,6 @@ import {
   Box,
 } from '@chakra-ui/react'
 import useAuthContext from '@/hooks/useAuthContext'
-import useFirestoreObjectQuery, {
-  useFirestoreListQuery,
-} from '@/hooks/useFirestoreQuery'
-import { db } from '@/config/firebaseClient'
 
 interface Dish {
   available: boolean
@@ -25,11 +21,6 @@ interface Dish {
 
 export default function Home() {
   const { signIn } = useAuthContext()
-  const doc = useFirestoreObjectQuery<Dish>(db.collection('dishes'))
-  const list = useFirestoreListQuery<Dish>(db.collection('dishes'))
-  console.log(list)
-  console.log(`My doc ${doc?.imageURL}`)
-
   return (
     <Center h="100vh" w="100vw">
       <Flex direction="column">

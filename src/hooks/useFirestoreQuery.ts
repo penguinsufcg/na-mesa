@@ -47,7 +47,9 @@ function onFirebaseDocChange<Entity>(
   })
 }
 
-function useFirestoreObjectQuery<Entity>(query: FirestoreQuery): Entity | null {
+export function useFirestoreObjectQuery<Entity>(
+  query: FirestoreQuery,
+): Entity | null {
   const [doc, setDoc] = useState<Entity | null>(null)
   const queryRef = useRef<FirestoreQuery>(query)
 
@@ -89,13 +91,11 @@ export function useFirestoreListQuery<Entity>(
       return () => {}
     }
 
-    const unsubscribe = queryRef.current.onSnapshot((snapshot) => {
+    const unsubscriber = queryRef.current.onSnapshot((snapshot) => {
       setCollection(snapshot.docs.map((doc) => doc.data()) as [Entity])
     })
-    return () => unsubscribe()
+    return () => unsubscriber()
   }, [queryRef])
 
   return collection
 }
-
-export default useFirestoreObjectQuery
