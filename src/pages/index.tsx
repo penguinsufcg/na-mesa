@@ -4,7 +4,6 @@ import {
   Flex,
   Spacer,
   Heading,
-  Text,
   Box,
 } from '@chakra-ui/react'
 import DishModal from '@/components/Admin/DishModal'
