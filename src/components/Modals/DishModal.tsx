@@ -1,33 +1,25 @@
-import { useState } from 'react'
+import { FileImageOutlined } from '@ant-design/icons'
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
+  Box,
   Button,
+  FormControl,
   FormLabel,
   Input,
-  FormControl,
-  Box,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from '@chakra-ui/react'
 import { Upload } from 'antd'
-import { FileImageOutlined } from '@ant-design/icons'
-import React from 'react'
-
-type DishValues = {
-  name: string
-  price: number
-  serving: number
-  description: string
-  preparationTime: number
-  img: string
-}
+import type { Dish } from 'api/dishes'
+import { createDish } from 'api/dishes'
+import React, { useState } from 'react'
 
 type DishModalProps = {
-  dish?: DishValues
+  dish?: Dish
   update: boolean
   isOpen: boolean
   onClose: () => void
@@ -45,16 +37,18 @@ function DishModal({
 
   const [uploadImg, setUploadImg] = useState(false)
 
-  const [dishValues, setDishValues] = useState<DishValues>({
+  const [dishValues, setDishValues] = useState<Dish>({
     name: dish?.name ?? '',
     price: dish?.price ?? 0,
-    serving: dish?.serving ?? 0,
+    servings: dish?.servings ?? 0,
     description: dish?.description ?? '',
     preparationTime: dish?.preparationTime ?? 0,
-    img: dish?.img ?? '',
+    imageURL: dish?.imageURL ?? '',
+    available: dish?.available ?? true,
   })
-  const saveDish = () => {
-    console.log(dishValues)
+
+  const saveDish = async () => {
+    await createDish(dishValues)
   }
 
   const getBase64 = (file: File) => {
@@ -67,7 +61,7 @@ function DishModal({
       reader.onload = () => {
         baseURL = reader.result as string
         console.log(baseURL)
-        setDishValues({ ...dishValues, img: baseURL })
+        setDishValues({ ...dishValues, imageURL: baseURL })
       }
     })
   }
@@ -89,7 +83,7 @@ function DishModal({
   }
 
   const handleServing = (event: any) => {
-    setDishValues({ ...dishValues, serving: event.target.value })
+    setDishValues({ ...dishValues, servings: event.target.value })
   }
 
   const propsImage = {

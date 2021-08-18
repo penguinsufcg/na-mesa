@@ -12,16 +12,6 @@ import ConfirmationModal from '@/components/Modals/ConfirmationModal'
 import useAuthContext from '@/hooks/useAuthContext'
 import { useDisclosure } from '@chakra-ui/react'
 
-interface Dish {
-  available: boolean
-  description: string
-  imageURL: string
-  name: string
-  preparationTime: number
-  price: number
-  servings: number
-}
-
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { signIn } = useAuthContext()
@@ -44,7 +34,7 @@ export default function Home() {
           </Button>
         </Flex>
       </Flex>
-      {/* <DishModal update={false} isOpen={isOpen} onClose={onClose} /> */}
+      <DishModal update={false} isOpen={isOpen} onClose={onClose} />
       {/*<ConfirmationModal
         label={'Excluir Produto'}
         message={'quer excluir gata?'}
