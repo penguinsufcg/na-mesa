@@ -31,7 +31,7 @@ function onFirebaseCollectionChange<Entity>(
           callback(null)
           break
         default:
-          console.log('[useFirestoreQuery]: Unexpected firestore change')
+          console.error('[useFirestoreQuery]: Unexpected firestore change')
           break
       }
     })
