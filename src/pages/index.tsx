@@ -9,6 +9,16 @@ import {
 } from '@chakra-ui/react'
 import useAuthContext from '@/hooks/useAuthContext'
 
+interface Dish {
+  available: boolean
+  description: string
+  imageURL: string
+  name: string
+  preparationTime: number
+  price: number
+  servings: number
+}
+
 export default function Home() {
   const { signIn } = useAuthContext()
   return (
