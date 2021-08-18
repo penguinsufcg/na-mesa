@@ -100,101 +100,115 @@ function DishModal({
   }
 
   return (
-    <>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          {update ? (
-            <ModalHeader>Mudar Produto</ModalHeader>
-          ) : (
-            <ModalHeader>Novo Produto</ModalHeader>
-          )}
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Nome do Produto</FormLabel>
+    <Modal
+      initialFocusRef={initialRef}
+      finalFocusRef={finalRef}
+      isOpen={isOpen}
+      onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent style={{ width: '31.375rem' }}>
+        {update ? (
+          <ModalHeader
+            color="secondary.700"
+            fontWeight="400"
+            fontFamily="heading"
+            fontSize="lg">
+            Mudar Produto
+          </ModalHeader>
+        ) : (
+          <ModalHeader
+            color="secondary.700"
+            fontWeight="400"
+            fontFamily="heading">
+            Novo Produto
+          </ModalHeader>
+        )}
+        <ModalCloseButton />
+        <ModalBody
+          color="secondary.600"
+          fontFamily="body"
+          fontSize="sm"
+          fontWeight="500"
+          pb={6}>
+          <FormControl>
+            <FormLabel>Nome do Produto</FormLabel>
+            <Input
+              onChange={handleName}
+              value={dishValues.name}
+              ref={initialRef}
+              placeholder="Nome do Produto"
+            />
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Descrição</FormLabel>
+            <Input
+              onChange={handleDescription}
+              value={dishValues.description}
+              height="7rem"
+              placeholder="Descrição"
+            />
+          </FormControl>
+          <FormControl mt={4}>
+            <FormLabel>Preço</FormLabel>
+            <Input
+              value={dishValues.price}
+              onChange={handlePrice}
+              placeholder="Preço"
+            />
+          </FormControl>
+          <Box display="flex">
+            <FormControl mt={4}>
+              <FormLabel width="10rem">Tempo de preparo</FormLabel>
               <Input
-                onChange={handleName}
-                value={dishValues.name}
-                ref={initialRef}
-                placeholder="Nome do Produto"
+                onChange={handleTime}
+                value={dishValues.preparationTime}
+                width="10rem"
+                placeholder="Tempo"
               />
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Descrição</FormLabel>
+              <FormLabel width="10rem">Serve</FormLabel>
               <Input
-                onChange={handleDescription}
-                value={dishValues.description}
-                height="7rem"
-                placeholder="Descrição"
+                onChange={handleServing}
+                value={dishValues.serving}
+                width="10rem"
+                placeholder="Serve"
               />
             </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Preço</FormLabel>
-              <Input
-                value={dishValues.price}
-                onChange={handlePrice}
-                placeholder="Preço"
-              />
-            </FormControl>
-            <Box display="flex">
-              <FormControl mt={4}>
-                <FormLabel width="10rem">Tempo de preparo</FormLabel>
-                <Input
-                  onChange={handleTime}
-                  value={dishValues.preparationTime}
-                  width="10rem"
-                  placeholder="Tempo de preparo"
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel width="10rem">Serve</FormLabel>
-                <Input
-                  onChange={handleServing}
-                  value={dishValues.serving}
-                  width="10rem"
-                  placeholder="Serve"
-                />
-              </FormControl>
+          </Box>
+          <FormControl mt={4}>
+            <FormLabel>Imagem do prato</FormLabel>
+            <Box textAlign="center" height="7.688rem" borderWidth="2px">
+              <Dragger
+                style={{ marginTop: '2rem' }}
+                {...propsImage}
+                beforeUpload={() => false} // return false so that antd doesn't upload the picture right away
+              >
+                {!uploadImg && (
+                  <Box>
+                    <p className="ant-upload-drag-icon">
+                      <FileImageOutlined style={{ fontSize: '2rem' }} />
+                    </p>
+                    <p className="ant-upload-text">Insira uma imagem</p>
+                  </Box>
+                )}
+              </Dragger>
             </Box>
-            <FormControl mt={4}>
-              <FormLabel>Imagem do prato</FormLabel>
-              <Box textAlign="center" height="7.688rem" borderWidth="2px">
-                <Dragger
-                  style={{ marginTop: '2rem' }}
-                  {...propsImage}
-                  beforeUpload={() => false} // return false so that antd doesn't upload the picture right away
-                >
-                  {!uploadImg && (
-                    <Box>
-                      <p className="ant-upload-drag-icon">
-                        <FileImageOutlined style={{ fontSize: '2rem' }} />
-                      </p>
-                      <p className="ant-upload-text">Insira uma imagem</p>
-                    </Box>
-                  )}
-                </Dragger>
-              </Box>
-            </FormControl>
-          </ModalBody>
+          </FormControl>
+        </ModalBody>
 
-          <ModalFooter>
-            <Button onClick={onClose} variant="secondary" mr={3}>
-              Cancelar
-            </Button>
-            <Button onClick={saveDish} colorScheme="blue">
-              Salvar
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+        <ModalFooter>
+          <Button onClick={onClose} variant="secondary" mr={3}>
+            Cancelar
+          </Button>
+          <Button onClick={saveDish} colorScheme="blue">
+            Salvar
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   )
 }
 
