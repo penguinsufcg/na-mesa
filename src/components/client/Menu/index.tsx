@@ -36,7 +36,7 @@ const Menu = () => {
   }
 
   return (
-    <Flex direction="column" alignItems="center">
+    <Flex direction="column" alignItems="center" sx={{ gap: '20px' }}>
       <Search onSearch={handleSearch}  />
       <DishList items={filteredDishes} />
     </Flex>

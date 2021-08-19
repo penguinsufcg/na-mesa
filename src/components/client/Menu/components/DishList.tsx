@@ -21,7 +21,7 @@ const Item = ({ item }) => {
     >
       <Flex>
         <Image src={imageURL} alt="Segun Adebayo" boxSize="100px" objectFit="cover" />
-        <Flex direction="column" sx={{ marginLeft: 4 }}>
+        <Flex direction="column" sx={{ marginLeft: '10px' }}>
           <Flex>
             <Heading size="md">
               {name}
