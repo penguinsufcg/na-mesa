@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 
 interface Props {
   onSearch: (searchKey: string) => unknown
@@ -9,14 +9,14 @@ interface Props {
 const Search: FC<Props> = ({ onSearch }) => {
 
   return (
-  <InputGroup width={335}>
-    <InputLeftElement
-      pointerEvents="none"
-    >
-      <SearchIcon color="gray.300" />
-    </InputLeftElement>
-    <Input placeholder="Pesquisar" onChange={e => onSearch(e.target.value)} />
-  </InputGroup>
+  // <InputGroup width={335}>
+  //   <InputLeftElement
+  //     pointerEvents="none"
+  //   >
+  //     <SearchIcon color="gray.300" />
+  //   </InputLeftElement>
+    <Input width={355} placeholder="Pesquisar" size="md" onChange={e => onSearch(e.target.value)} />
+  // </InputGroup>
   )
 }
 
