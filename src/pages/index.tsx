@@ -7,19 +7,13 @@ import {
   Text,
   Box,
 } from '@chakra-ui/react'
+import DishModal from '@/components/Admin/DishModal'
+import ConfirmationModal from '@/components/Admin/ConfirmationModal'
 import useAuthContext from '@/hooks/useAuthContext'
-
-interface Dish {
-  available: boolean
-  description: string
-  imageURL: string
-  name: string
-  preparationTime: number
-  price: number
-  servings: number
-}
+import { useDisclosure } from '@chakra-ui/react'
 
 export default function Home() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { signIn } = useAuthContext()
   return (
     <Center h="100vh" w="100vw">
@@ -35,9 +29,19 @@ export default function Home() {
             Secondary
           </Button>
           <Spacer />
-          <Button size="md">Primary</Button>
+          <Button size="md" onClick={onOpen}>
+            Primary
+          </Button>
         </Flex>
       </Flex>
+      {/*<DishModal update={false} isOpen={isOpen} onClose={onClose} /> */}
+      {/*<ConfirmationModal
+        label={'Excluir Produto'}
+        message={'quer excluir gata?'}
+        isOpen={isOpen}
+        onClose={onClose}
+        handleSubmit={() => {}}
+      />*/}
     </Center>
   )
 }
