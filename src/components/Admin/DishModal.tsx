@@ -51,7 +51,12 @@ function DishModal({
     await createDish(dishValues)
   }
 
-  const getBase64 = (file: File) => {
+  const closeModal = async () => {
+    setUploadImg(false)
+    onClose()
+  }
+
+  const setBase64 = (file: File) => {
     return new Promise(() => {
       let baseURL = ''
       const reader = new FileReader()
@@ -60,7 +65,6 @@ function DishModal({
 
       reader.onload = () => {
         baseURL = reader.result as string
-        console.log(baseURL)
         setDishValues({ ...dishValues, imageURL: baseURL })
       }
     })
@@ -88,8 +92,9 @@ function DishModal({
 
   const propsImage = {
     async onChange(info: any) {
+      console.log(info)
       setUploadImg(!uploadImg)
-      info.fileList[0] && (await getBase64(info.fileList[0].originFileObj))
+      info.fileList[0] && (await setBase64(info.fileList[0].originFileObj))
     },
   }
 
@@ -166,7 +171,7 @@ function DishModal({
               <FormLabel width="10rem">Serve</FormLabel>
               <Input
                 onChange={handleServing}
-                value={dishValues.serving}
+                value={dishValues.servings}
                 width="10rem"
                 placeholder="Serve"
               />
@@ -178,8 +183,7 @@ function DishModal({
               <Dragger
                 style={{ marginTop: '2rem' }}
                 {...propsImage}
-                beforeUpload={() => false} // return false so that antd doesn't upload the picture right away
-              >
+                beforeUpload={() => false}>
                 {!uploadImg && (
                   <Box>
                     <p className="ant-upload-drag-icon">
@@ -194,7 +198,7 @@ function DishModal({
         </ModalBody>
 
         <ModalFooter>
-          <Button onClick={onClose} variant="secondary" mr={3}>
+          <Button onClick={closeModal} variant="secondary" mr={3}>
             Cancelar
           </Button>
           <Button onClick={saveDish} colorScheme="blue">
