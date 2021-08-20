@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <Flex h="100vh" w="100vw">
+        <Flex h="full">
           <Navbar />
           <Component {...pageProps} />
         </Flex>
