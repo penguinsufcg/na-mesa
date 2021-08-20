@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/layout'
-import Logo from '@/components/logo'
+import Logo from '@/components/Logo'
 import Menu from '@/components/client/Menu'
 import { Button } from '@chakra-ui/react'
 
