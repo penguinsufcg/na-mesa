@@ -6,19 +6,19 @@ export const NavbarData = [
   {
     id: 'op-pedidos',
     title: 'Pedidos',
-    path: '/pedidos',
+    path: '/admin/pedidos',
     icon: <BiDish size={iconSize} />,
   },
   {
     id: 'op-mesas',
     title: 'Mesas',
-    path: '/mesas',
+    path: '/admin/mesas',
     icon: <BiGridAlt size={iconSize} />,
   },
   {
     id: 'op-cardapio',
     title: 'Cardápio',
-    path: '/cardapio',
+    path: '/admin/menu',
     icon: <BiFoodMenu size={iconSize} />,
   },
 ]

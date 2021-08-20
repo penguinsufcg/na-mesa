@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Button, Flex } from '@chakra-ui/react'
+import { Button, Flex, Box } from '@chakra-ui/react'
 import Logo from '@/components/Logo'
 
 import { NavbarData } from './NavbarData'
@@ -44,13 +44,16 @@ const Navbar = () => {
   }
 
   return (
-    <Flex
-      direction="column"
-      width="xs"
+    <Box
+      w="xs"
+      minW="xs"
+      h="100vh"
       paddingX={5}
       paddingY={7}
       borderRight="1px solid"
-      borderColor="secondary.200">
+      borderColor="secondary.200"
+      position="sticky"
+      top={0}>
       <Logo />
       <Flex direction="column" marginTop={7}>
         {NavbarData.map((item) => (
@@ -63,7 +66,7 @@ const Navbar = () => {
           />
         ))}
       </Flex>
-    </Flex>
+    </Box>
   )
 }
 
