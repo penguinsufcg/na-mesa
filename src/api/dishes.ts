@@ -18,3 +18,11 @@ export async function createDish(dish: Dish) {
 
   return data
 }
+
+export async function updateDish(dishId: string, dish: Dish) {
+  await dishCollection.doc(dishId).set(dish)
+}
+
+export async function deleteDish(dishId: string) {
+  await dishCollection.doc(dishId).delete()
+}

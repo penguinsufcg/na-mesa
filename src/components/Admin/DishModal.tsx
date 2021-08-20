@@ -15,11 +15,12 @@ import {
 } from '@chakra-ui/react'
 import { Upload } from 'antd'
 import type { Dish } from 'api/dishes'
-import { createDish } from 'api/dishes'
+import { createDish, updateDish } from 'api/dishes'
 import React, { useState } from 'react'
 
 type DishModalProps = {
   dish?: Dish
+  dishId?: string
   update: boolean
   isOpen: boolean
   onClose: () => void
@@ -30,6 +31,7 @@ function DishModal({
   onClose,
   update,
   dish,
+  dishId,
 }: DishModalProps): JSX.Element {
   const { Dragger } = Upload
   const initialRef = React.useRef().current
@@ -49,6 +51,10 @@ function DishModal({
 
   const saveDish = async () => {
     await createDish(dishValues)
+  }
+
+  const changeDish = async () => {
+    if(dishId) await updateDish(dishId, dishValues)
   }
 
   const closeModal = async () => {
@@ -201,7 +207,7 @@ function DishModal({
           <Button onClick={closeModal} variant="secondary" mr={3}>
             Cancelar
           </Button>
-          <Button onClick={saveDish} colorScheme="blue">
+          <Button onClick={update ? changeDish : saveDish} colorScheme="blue">
             Salvar
           </Button>
         </ModalFooter>

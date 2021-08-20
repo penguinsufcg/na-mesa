@@ -40,7 +40,7 @@ export default function Home() {
         message={'quer excluir gata?'}
         isOpen={isOpen}
         onClose={onClose}
-        handleSubmit={() => {}}
+        handleSubmit={deleteDish(dishId)}
       />*/}
     </Center>
   )
