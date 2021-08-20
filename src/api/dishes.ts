@@ -14,7 +14,7 @@ const dishCollection = db.collection('dishes')
 
 export async function createDish(dish: Dish) {
   const firestoreDoc = await dishCollection.add(dish)
-  const data = await firestoreDoc.get()
+  const data = (await firestoreDoc.get()).data()
 
   return data
 }
