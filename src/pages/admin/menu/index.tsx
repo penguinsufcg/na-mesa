@@ -1,9 +1,9 @@
 import { Heading, Flex, Spacer, Button } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { BiPlus } from 'react-icons/bi'
-import DishTable from '@/components/admin/Menu/components/DishTable'
-import SearchInput from '@/components/admin/Menu/components/SearchInput'
-import SelectInput from '@/components/admin/Menu/components/SelectInput'
+import DishTable from '@/components/Admin/Menu/components/DishTable'
+import SearchInput from '@/components/Admin/Menu/components/SearchInput'
+import SelectInput from '@/components/Admin/Menu/components/SelectInput'
 
 import DATA from './dataMock'
 
