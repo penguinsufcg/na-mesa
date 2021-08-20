@@ -11,6 +11,7 @@ import DishModal from '@/components/Admin/DishModal'
 import ConfirmationModal from '@/components/Admin/ConfirmationModal'
 import useAuthContext from '@/hooks/useAuthContext'
 import { useDisclosure } from '@chakra-ui/react'
+import { deleteDish } from 'api/dishes'
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -34,14 +35,16 @@ export default function Home() {
           </Button>
         </Flex>
       </Flex>
-      {/*<DishModal update={false} isOpen={isOpen} onClose={onClose} /> */}
-      {/*<ConfirmationModal
-        label={'Excluir Produto'}
-        message={'quer excluir gata?'}
-        isOpen={isOpen}
-        onClose={onClose}
-        handleSubmit={deleteDish(dishId)}
-      />*/}
+      {/*<DishModal update={false} isOpen={isOpen} onClose={onClose} />*/}
+      {/*
+        <ConfirmationModal
+          label={'Excluir Produto'}
+          message={'quer excluir gata?'}
+          isOpen={isOpen}
+          onClose={onClose}
+          handleSubmit={() => deleteDish('id')}
+        />
+      */}
     </Center>
   )
 }

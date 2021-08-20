@@ -51,10 +51,12 @@ function DishModal({
 
   const saveDish = async () => {
     await createDish(dishValues)
+    onClose()
   }
 
   const changeDish = async () => {
-    if(dishId) await updateDish(dishId, dishValues)
+    if (dishId) await updateDish(dishId, dishValues)
+    onClose()
   }
 
   const closeModal = async () => {
