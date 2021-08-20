@@ -13,7 +13,7 @@ const MenuPage = () => {
       <Box>
         <Logo />
       </Box>
-      <Flex direction="column" sx={{ padding: '10px', minHeight: 'calc(100vh - 100px)' }}>
+      <Flex direction="column" sx={{ padding: '10px', minHeight: 'calc(100vh - 120px)' }}>
         <Menu />
       </Flex>
       <Flex justifyContent="center" sx={{ height: '100px' }}>
