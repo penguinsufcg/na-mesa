@@ -1,11 +1,11 @@
+import React, { FC } from 'react'
 import { Box, Flex, Heading, Spacer, Stack, Text, Image } from '@chakra-ui/react'
-import React from 'react'
 
 interface Props {
-  items: any[]
+  items: Dish[]
 }
 
-const Item = ({ item }) => {
+const Item: FC<{ item: Dish }> = ({ item }) => {
   const { name, description, price, imageURL } = item
 
   return (
@@ -40,8 +40,7 @@ const Item = ({ item }) => {
     </Box>
   )
 }
-const DishList = ({ items }) => {
-  console.log(items)
+const DishList: FC<Props> = ({ items }) => {
   return (
     <Stack direction="column">
       List
