@@ -1,16 +1,5 @@
 import { db } from '@/config/firebaseClient'
 
-export interface Dish {
-  id?: string
-  available: boolean
-  description: string
-  imageURL: string
-  name: string
-  preparationTime: number
-  price: number
-  servings: number
-}
-
 const dishCollection = db.collection('dishes')
 
 export function createDish(dish: Dish) {
