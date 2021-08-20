@@ -4,7 +4,7 @@ import { Button } from '@chakra-ui/react'
 import Link from 'next/link'
 
 import Logo from '@/components/Logo'
-import Menu from '@/components/Client/Menu'
+import Menu from '@/components/client/Menu'
 
 const MenuPage = () => {
 
@@ -13,10 +13,10 @@ const MenuPage = () => {
       <Box>
         <Logo />
       </Box>
-      <Flex direction="column" sx={{ padding: '10px', minHeight: 'calc(100vh - 120px)' }}>
+      <Flex direction="column" sx={{ padding: '10px', height: 'calc(100vh - 120px)',maxHeight: 'calc(100vh - 120px)' }}>
         <Menu />
       </Flex>
-      <Flex justifyContent="center" sx={{ height: '100px' }}>
+      <Flex justifyContent="center" sx={{ height: '70px' }}>
         <Link href={'/joinTable'} passHref>
           <Button>Entrar na mesa</Button>
         </Link>

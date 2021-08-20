@@ -1,7 +1,7 @@
-import JoinTableForm from '@/components/Client/JoinTableForm'
+import React from 'react'
 import Logo from '@/components/Logo'
 import { Box, Flex } from '@chakra-ui/react'
-import React from 'react'
+import JoinTableForm from '@/components/client/JoinTableForm'
 
 const JoinTablePage = () => {
 

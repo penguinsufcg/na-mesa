@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/layout'
 import DishList from './components/DishList'
 import Search from './components/Search'
 
-const dishes = [
+const dishes: any[] = [
   {
     id: '1',
     name: 'Batata frita',
