@@ -9,7 +9,8 @@
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
-      "@/theme/*": ["theme/*"]
+      "@/theme/*": ["theme/*"],
+      "@/api/*": ["api/*"]
     },
     "skipLibCheck": true,
     "strict": true,
