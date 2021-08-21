@@ -1,9 +1,10 @@
-import { Heading, Flex, Spacer, Button } from '@chakra-ui/react'
+import { Heading, Flex, Spacer, Button, useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { BiPlus } from 'react-icons/bi'
 import DishTable from '@/components/Admin/Menu/components/DishTable'
 import SearchInput from '@/components/Admin/Menu/components/SearchInput'
 import SelectInput from '@/components/Admin/Menu/components/SelectInput'
+import DishModal from '@/components/Admin/DishModal'
 
 import DATA from './dataMock'
 
@@ -22,6 +23,8 @@ const Menu = () => {
   const [data, setData] = useState<DishType[]>(DATA)
   const [orderBy, setOrderBy] = useState('')
   const [searchText, setSearchText] = useState('')
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleOrderBy = (event: any) => {
     setOrderBy(event.target.value)
@@ -48,10 +51,12 @@ const Menu = () => {
       <Flex paddingBottom={14}>
         <Heading fontWeight="normal">Cardápio</Heading>
         <Spacer />
-        <Button leftIcon={<BiPlus size={20} />} margin={0}>
+        <Button leftIcon={<BiPlus size={20} />} margin={0} onClick={onOpen}>
           NOVO PRODUTO
         </Button>
       </Flex>
+
+      <DishModal update={false} isOpen={isOpen} onClose={onClose} />
 
       <Flex marginBottom={3}>
         <SearchInput onSearch={handleSearch} />
