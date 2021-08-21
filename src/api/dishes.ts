@@ -1,6 +1,7 @@
 import { db } from '@/config/firebaseClient'
 
 export interface Dish {
+  id?: string
   available: boolean
   description: string
   imageURL: string
@@ -12,9 +13,14 @@ export interface Dish {
 
 const dishCollection = db.collection('dishes')
 
-export async function createDish(dish: Dish) {
-  const firestoreDoc = await dishCollection.add(dish)
-  const data = await firestoreDoc.get()
+export function createDish(dish: Dish) {
+  return dishCollection.add(dish)
+}
 
-  return data
+export function updateDish(dish: Dish) {
+  return dishCollection.doc(dish.id).set(dish)
+}
+
+export function deleteDish(dish: Dish) {
+  return dishCollection.doc(dish.id).delete()
 }
