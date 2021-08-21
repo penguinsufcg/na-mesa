@@ -6,11 +6,11 @@ import {
   Heading,
   Box,
 } from '@chakra-ui/react'
-import DishModal from '@/components/Admin/DishModal'
-import ConfirmationModal from '@/components/Admin/ConfirmationModal'
+import DishModal from '@/components/admin/DishModal'
+import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import useAuthContext from '@/hooks/useAuthContext'
 import { useDisclosure } from '@chakra-ui/react'
-import Layout from '@/components/Admin/Layout'
+import Layout from '@/components/admin/Layout'
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
