@@ -46,20 +46,8 @@ function DishModal({
     available: dish?.available ?? true,
   })
 
-  const saveDish = () => {
-    createDish(dishValues).then(() => {
-      onClose()
-    }).catch((error) => {
-      console.error("Error: ", error)
-    })
-  }
-
-  const changeDish = () => {
-    updateDish({id: dish?.id, ...dishValues}).then(() => {
-      onClose()
-    }).catch((error) => {
-      console.error("Error: ", error)
-    })
+  const saveDish = async () => {
+    await createDish(dishValues)
   }
 
   const closeModal = async () => {
@@ -212,7 +200,7 @@ function DishModal({
           <Button onClick={closeModal} variant="secondary" mr={3}>
             Cancelar
           </Button>
-          <Button onClick={update ? changeDish : saveDish} colorScheme="blue">
+          <Button onClick={saveDish} colorScheme="blue">
             Salvar
           </Button>
         </ModalFooter>
