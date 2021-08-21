@@ -1,10 +1,9 @@
 import { Button, HStack, Tooltip, useDisclosure } from '@chakra-ui/react'
 import { ReactElement, useState } from 'react'
 import { BiEditAlt, BiShow, BiTrash, BiHide } from 'react-icons/bi'
-import DishModal from '@/components/Admin/DishModal'
-import ConfirmationModal from '@/components/Admin/ConfirmationModal'
+import DishModal from '@/components/admin/DishModal'
+import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import { deleteDish, updateDish } from 'api/dishes'
-import { Dish as DishType } from '@/api/dishes'
 
 type ActionProps = {
   label: string
@@ -21,7 +20,7 @@ const Action = ({ label, icon, onClick }: ActionProps) => (
 )
 
 type TableRowActionsProps = {
-  data: DishType
+  data: Dish
 }
 
 const TableRowActions = ({ data }: TableRowActionsProps) => {
@@ -53,13 +52,13 @@ const TableRowActions = ({ data }: TableRowActionsProps) => {
     <HStack spacing={10} justifyContent="flex-end">
       {isDishAvailable ? (
         <Action
-          label="Exibir no cardápio"
+          label="Esconder no cardápio"
           onClick={changeAvailability}
           icon={<BiShow size={20} />}
         />
       ) : (
         <Action
-          label="Esconder no cardápio"
+          label="Exibir no cardápio"
           onClick={changeAvailability}
           icon={<BiHide size={20} />}
         />
@@ -88,9 +87,7 @@ const TableRowActions = ({ data }: TableRowActionsProps) => {
         isOpen={isOpenDelete}
         onClose={onCloseDelete}
         handleSubmit={() =>
-          deleteDish(data).then(() =>
-            console.log('Apagado com sucesso'),
-          )
+          deleteDish(data).then(() => console.log('Apagado com sucesso'))
         }
       />
     </HStack>

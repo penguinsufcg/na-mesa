@@ -1,9 +1,8 @@
 import { Tr, Td, Flex, Text, Image, HStack } from '@chakra-ui/react'
 import TableRowActions from './TableRowActions'
-import { Dish as DishType } from '@/api/dishes'
 
 type TableRowProps = {
-  data: DishType
+  data: Dish
 }
 
 const TableRow = ({ data }: TableRowProps) => (

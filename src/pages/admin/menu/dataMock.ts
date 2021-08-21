@@ -1,4 +1,4 @@
-interface DishType {
+interface Dish {
   name: string
   description: string
   servings: number
@@ -7,10 +7,10 @@ interface DishType {
   imageURL: string
   available: boolean
   preparationTime: number
-  [key: string]: string | number | boolean // DishType is indexable; not a new property
+  [key: string]: string | number | boolean // Dish is indexable; not a new property
 }
 
-const DATA: DishType[] = [
+const DATA: Dish[] = [
   {
     id: '1',
     name: 'Batata frita',
