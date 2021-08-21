@@ -15,6 +15,7 @@ import Layout from '@/components/admin/Layout'
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { signIn } = useAuthContext()
+
   return (
     <Layout>
       <Center h="100vh" w="100vw">

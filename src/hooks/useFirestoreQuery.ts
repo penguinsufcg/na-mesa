@@ -7,6 +7,8 @@ type FirestoreQuery =
   | firebase.firestore.Query
   | firebase.firestore.DocumentReference
 
+type EntityWithID<P> = P & { id: string }
+
 function isDocumentReference(
   query: any,
 ): query is firebase.firestore.DocumentReference {
@@ -92,7 +94,7 @@ export function useFirestoreListQuery<Entity>(
     }
 
     const unsubscriber = queryRef.current.onSnapshot((snapshot) => {
-      setCollection(snapshot.docs.map((doc) => doc.data()) as [Entity])
+      setCollection(snapshot.docs.map((doc) => ({ id: doc.id,...doc.data()})) as [EntityWithID<Entity>])
     })
     return () => unsubscriber()
   }, [queryRef])
