@@ -31,6 +31,11 @@ function ConfirmationModal({
 
   const [filesList, setFilesList] = useState<any[]>([])
 
+  const confirm = async () => {
+    handleSubmit()
+    onClose()
+  }
+
   const props = {
     async onChange(info: any) {
       setFilesList([...filesList, ...[info.fileList]])
@@ -57,7 +62,7 @@ function ConfirmationModal({
             <Button onClick={onClose} variant="secondary" mr={3}>
               Cancelar
             </Button>
-            <Button onClick={handleSubmit} colorScheme="blue">
+            <Button onClick={confirm} colorScheme="blue">
               Confirmar
             </Button>
           </ModalFooter>
