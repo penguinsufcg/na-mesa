@@ -1,6 +1,5 @@
 import { Table as ChakraTable, Thead, Tr, Th, Tbody } from '@chakra-ui/react'
 import TableRow from './TableRow'
-import { Dish as DishType } from '@/api/dishes'
 
 type TableHeadProps = {
   label: string
@@ -13,7 +12,7 @@ const TableHead = ({ label }: TableHeadProps) => (
 )
 
 type TableProps = {
-  data: DishType[]
+  data: Dish[]
 }
 
 const Table = ({ data }: TableProps) => (

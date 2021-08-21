@@ -3,15 +3,14 @@ import { useEffect, useState } from 'react'
 import Table from './components/Table'
 import SearchInput from './components/SearchInput'
 import SelectInput from './components/SelectInput'
-import { Dish as DishType } from '../../../api/dishes'
 
 type DishTableProps = {
-  data: DishType[]
+  data: Dish[]
 }
 
 const DishTable = ({ data }: DishTableProps) => {
-  const [formatedData, setFormatedData] = useState<DishType[]>(data)
-  const [orderBy, setOrderBy] = useState<keyof Omit<DishType, 'id'>>('name')
+  const [formatedData, setFormatedData] = useState<Dish[]>(data)
+  const [orderBy, setOrderBy] = useState<keyof Omit<Dish, 'id'>>('name')
   const [searchText, setSearchText] = useState('')
 
   const handleOrderBy = (event: any) => {
