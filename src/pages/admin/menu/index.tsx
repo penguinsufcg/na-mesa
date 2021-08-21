@@ -1,22 +1,13 @@
 import { Heading, Flex, Spacer, Button, useDisclosure } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
 import { BiPlus } from 'react-icons/bi'
 import DishTable from '@/components/Admin/DishTable'
 import DishModal from '@/components/Admin/DishModal'
+import { Dish as DishType } from '@/api/dishes'
 
 import DATA from './dataMock'
-
-interface DishType {
-  name: string
-  description: string
-  servings: number
-  price: number
-  id: string
-  imageURL: string
-  available: boolean
-  preparationTime: number
-  [key: string]: string | number | boolean // DishType is indexable; not a new property
-}
+import { db } from '@/config/firebaseClient'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
+import { useEffect } from 'react'
 
 const Menu = () => {
   const {
@@ -24,6 +15,12 @@ const Menu = () => {
     onOpen: onOpenDishModal,
     onClose: onCloseDishModal,
   } = useDisclosure()
+
+  const data = useFirestoreListQuery<DishType>(db.collection('dishes'))
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   return (
     <Flex width="full" direction="column" padding={12}>
@@ -44,7 +41,7 @@ const Menu = () => {
         onClose={onCloseDishModal}
       />
 
-      <DishTable data={DATA} />
+      <DishTable data={data ?? []} />
     </Flex>
   )
 }
