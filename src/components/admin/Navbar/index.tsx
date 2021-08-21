@@ -50,7 +50,10 @@ const Navbar = () => {
       paddingX={5}
       paddingY={7}
       borderRight="1px solid"
-      borderColor="secondary.200">
+      borderColor="secondary.200"
+      height="100vh"
+      position="sticky"
+      top={0}>
       <Logo />
       <Flex direction="column" marginTop={7}>
         {NavbarData.map((item) => (
