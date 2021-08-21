@@ -42,7 +42,7 @@ export default function Home() {
           message={'quer excluir gata?'}
           isOpen={isOpen}
           onClose={onClose}
-          handleSubmit={() => deleteDish('id')}
+          handleSubmit={() => deleteDish(dish)}
         />
       */}
     </Center>

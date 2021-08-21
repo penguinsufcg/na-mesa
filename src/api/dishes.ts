@@ -13,11 +13,8 @@ export interface Dish {
 
 const dishCollection = db.collection('dishes')
 
-export async function createDish(dish: Dish) {
-  const firestoreDoc = await dishCollection.add(dish)
-  const data = (await firestoreDoc.get()).data()
-
-  return data
+export function createDish(dish: Dish) {
+  return dishCollection.add(dish)
 }
 
 export function updateDish(dish: Dish) {

@@ -47,9 +47,12 @@ function DishModal({
     available: dish?.available ?? true,
   })
 
-  const saveDish = async () => {
-    await createDish(dishValues)
-    onClose()
+  const saveDish = () => {
+    createDish(dishValues).then(() => {
+      onClose()
+    }).catch((error) => {
+      console.error("Error: ", error)
+    })
   }
 
   const changeDish = () => {
