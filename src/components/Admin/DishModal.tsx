@@ -20,7 +20,6 @@ import React, { useState } from 'react'
 
 type DishModalProps = {
   dish?: Dish
-  dishId?: string
   update: boolean
   isOpen: boolean
   onClose: () => void
@@ -31,7 +30,6 @@ function DishModal({
   onClose,
   update,
   dish,
-  dishId,
 }: DishModalProps): JSX.Element {
   const { Dragger } = Upload
   const initialRef = React.useRef().current
@@ -54,9 +52,12 @@ function DishModal({
     onClose()
   }
 
-  const changeDish = async () => {
-    if (dishId) await updateDish(dishId, dishValues)
-    onClose()
+  const changeDish = () => {
+    updateDish({id: dish?.id, ...dishValues}).then(() => {
+      onClose()
+    }).catch((error) => {
+      console.error("Error: ", error)
+    })
   }
 
   const closeModal = async () => {
