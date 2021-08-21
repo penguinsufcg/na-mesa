@@ -27,7 +27,7 @@ function onFirebaseCollectionChange<Entity>(
       switch (change.type) {
         case 'added':
         case 'modified':
-          callback(change.doc.data() as Entity)
+          callback({ id: change.doc.id, ...change.doc.data()} as EntityWithID<Entity>)
           break
         case 'removed':
           callback(null)
@@ -45,7 +45,10 @@ function onFirebaseDocChange<Entity>(
   callback: react.Dispatch<Entity | null>,
 ) {
   return query.onSnapshot((snapshot) => {
-    callback(snapshot.data() as Entity)
+    callback({
+      id: snapshot.id, 
+      ...snapshot.data()
+    } as EntityWithID<Entity>)
   })
 }
 
