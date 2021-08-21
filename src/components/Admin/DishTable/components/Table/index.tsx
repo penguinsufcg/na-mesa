@@ -1,16 +1,6 @@
 import { Table as ChakraTable, Thead, Tr, Th, Tbody } from '@chakra-ui/react'
 import TableRow from './TableRow'
-
-interface DishType {
-  name: string
-  description: string
-  servings: number
-  price: number
-  id: string
-  imageURL: string
-  available: boolean
-  preparationTime: number
-}
+import { Dish as DishType } from '@/api/dishes'
 
 type TableHeadProps = {
   label: string

@@ -1,16 +1,6 @@
 import { Tr, Td, Flex, Text, Image, HStack } from '@chakra-ui/react'
 import TableRowActions from './TableRowActions'
-
-interface DishType {
-  name: string
-  description: string
-  servings: number
-  price: number
-  id: string
-  imageURL: string
-  available: boolean
-  preparationTime: number
-}
+import { Dish as DishType } from '@/api/dishes'
 
 type TableRowProps = {
   data: DishType
@@ -43,7 +33,7 @@ const TableRow = ({ data }: TableRowProps) => (
     </Td>
     <Td>{`${data.preparationTime} min`}</Td>
     <Td>{data.servings}</Td>
-    <Td>{`R$ ${data.price.toFixed(2)}`}</Td>
+    <Td>{`R$ ${data.price}`}</Td>
     <Td borderBottomRightRadius="md" borderTopRightRadius="md" align="right">
       <TableRowActions data={data} />
     </Td>
