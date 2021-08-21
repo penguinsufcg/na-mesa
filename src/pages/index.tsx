@@ -1,50 +1,28 @@
-import {
-  Button,
-  Center,
-  Flex,
-  Spacer,
-  Heading,
-  Text,
-  Box,
-} from '@chakra-ui/react'
-import DishModal from '@/components/Admin/DishModal'
-import ConfirmationModal from '@/components/Admin/ConfirmationModal'
-import useAuthContext from '@/hooks/useAuthContext'
-import { useDisclosure } from '@chakra-ui/react'
-import { deleteDish } from 'api/dishes'
+import React from 'react'
+import { Box, Flex } from '@chakra-ui/layout'
+import { Button } from '@chakra-ui/react'
+import Link from 'next/link'
 
-export default function Home() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { signIn } = useAuthContext()
+import Logo from '@/components/Logo'
+import Menu from '@/components/client/Menu'
+
+const MenuPage = () => {
+
   return (
-    <Center h="100vh" w="100vw">
-      <Flex direction="column">
-        <Heading marginBottom={5} textAlign="center">
-          <Box color="primary.500" display="initial">
-            NaMesa
-          </Box>{' '}
-          is online!
-        </Heading>
-        <Flex>
-          <Button variant="secondary" onClick={signIn}>
-            Secondary
-          </Button>
-          <Spacer />
-          <Button size="md" onClick={onOpen}>
-            Primary
-          </Button>
-        </Flex>
+    <Flex direction="column" sx={{ alignItems: 'center', padding: 4 }}>
+      <Box>
+        <Logo />
+      </Box>
+      <Flex direction="column" sx={{ padding: '10px', height: 'calc(100vh - 120px)',maxHeight: 'calc(100vh - 120px)' }}>
+        <Menu />
       </Flex>
-      {/*<DishModal update={false} isOpen={isOpen} onClose={onClose} />*/}
-      {/*
-        <ConfirmationModal
-          label={'Excluir Produto'}
-          message={'quer excluir gata?'}
-          isOpen={isOpen}
-          onClose={onClose}
-          handleSubmit={() => deleteDish(dish)}
-        />
-      */}
-    </Center>
+      <Flex justifyContent="center" sx={{ height: '70px' }}>
+        <Link href={'/joinTable'} passHref>
+          <Button>Entrar na mesa</Button>
+        </Link>
+      </Flex>
+    </Flex>
   )
 }
+
+export default MenuPage

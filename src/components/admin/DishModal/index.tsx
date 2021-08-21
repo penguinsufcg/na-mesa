@@ -14,7 +14,6 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { Upload } from 'antd'
-import type { Dish } from 'api/dishes'
 import { createDish, updateDish } from 'api/dishes'
 import React, { useState } from 'react'
 
