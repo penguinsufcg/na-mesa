@@ -3,17 +3,8 @@ import { ReactElement, useState } from 'react'
 import { BiEditAlt, BiShow, BiTrash, BiHide } from 'react-icons/bi'
 import DishModal from '@/components/Admin/DishModal'
 import ConfirmationModal from '@/components/Admin/ConfirmationModal'
-
-interface DishType {
-  name: string
-  description: string
-  servings: number
-  price: number
-  id: string
-  imageURL: string
-  available: boolean
-  preparationTime: number
-}
+import { deleteDish, updateDish } from 'api/dishes'
+import { Dish as DishType } from '@/api/dishes'
 
 type ActionProps = {
   label: string
@@ -49,6 +40,12 @@ const TableRowActions = ({ data }: TableRowActionsProps) => {
   const [isDishAvailable, setIsDishAvailable] = useState(data.available)
 
   const changeAvailability = () => {
+    updateDish({
+      ...data,
+      available: !isDishAvailable,
+    })
+      .then(() => console.log('Atualizou com sucesso'))
+      .catch((error) => console.log(error))
     setIsDishAvailable(!isDishAvailable)
   }
 
@@ -58,13 +55,13 @@ const TableRowActions = ({ data }: TableRowActionsProps) => {
         <Action
           label="Exibir no cardápio"
           onClick={changeAvailability}
-          icon={<BiHide size={20} />}
+          icon={<BiShow size={20} />}
         />
       ) : (
         <Action
           label="Esconder no cardápio"
           onClick={changeAvailability}
-          icon={<BiShow size={20} />}
+          icon={<BiHide size={20} />}
         />
       )}
 
@@ -90,9 +87,11 @@ const TableRowActions = ({ data }: TableRowActionsProps) => {
         message={'Tem certeza que deseja excluir o produto?'}
         isOpen={isOpenDelete}
         onClose={onCloseDelete}
-        handleSubmit={() => {
-          console.log('Enviando...')
-        }}
+        handleSubmit={() =>
+          deleteDish(data).then(() =>
+            console.log('Apagado com sucesso'),
+          )
+        }
       />
     </HStack>
   )
