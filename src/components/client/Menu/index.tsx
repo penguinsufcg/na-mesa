@@ -12,7 +12,9 @@ interface Props {
 }
 
 const Menu = ({ searchKey }: Props) => {
-  const data = useFirestoreListQuery<Dish>(db.collection('dishes').where('available', '==', true))
+  const data = useFirestoreListQuery<Dish>(
+    db.collection('dishes').where('available', '==', true),
+  )
   const [filteredDishes, setFilteredDishes] = useState<Dish[]>(data ?? [])
 
   useEffect(() => {
@@ -23,14 +25,16 @@ const Menu = ({ searchKey }: Props) => {
       setFilteredDishes(data)
       return
     }
-    const filtered = data.filter((item: Dish) => item.name.startsWith(searchKey))
+    const filtered = data.filter((item: Dish) =>
+      item.name.startsWith(searchKey),
+    )
     setFilteredDishes(filtered)
   }, [data, searchKey])
 
   return (
     <Skeleton isLoaded={!!data}>
       <Flex direction="column" alignItems="center">
-        <DishList items={filteredDishes ?? []}/>
+        <DishList items={filteredDishes ?? []} />
       </Flex>
     </Skeleton>
   )

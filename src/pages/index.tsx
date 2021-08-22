@@ -10,11 +10,7 @@ const MenuPage = () => {
   const [searchKey, setSearchKey] = useState<string>()
 
   return (
-    <Grid
-      h="100vh"
-      templateRows="repeat(10, 1fr)"
-      gap={2}
-    >
+    <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
       <GridItem rowSpan={1}>
         <Logo />
         <Center>
