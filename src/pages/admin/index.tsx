@@ -29,7 +29,7 @@ export default function Home() {
             </Button>
           </Flex>
         </Flex>
-        {/*<DishModal update={false} isOpen={isOpen} onClose={onClose} /> */}
+        <DishModal update={false} isOpen={isOpen} onClose={onClose} />
         {/*<ConfirmationModal
           label={'Excluir Produto'}
           message={'quer excluir gata?'}

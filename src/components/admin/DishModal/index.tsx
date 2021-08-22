@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { FileImageOutlined } from '@ant-design/icons'
 import {
   Box,
@@ -12,16 +13,27 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  NumberInput,
+  NumberInputField,
 } from '@chakra-ui/react'
 import { Upload } from 'antd'
 import { createDish, updateDish } from 'api/dishes'
-import React, { useState } from 'react'
 
 type DishModalProps = {
   dish?: Dish
   update: boolean
   isOpen: boolean
   onClose: () => void
+}
+
+const DEFAULT_DISH = {
+  name: '',
+  price: 0,
+  servings: 0,
+  description: '',
+  preparationTime: 0,
+  imageURL: '',
+  available: true,
 }
 
 function DishModal({
@@ -36,18 +48,10 @@ function DishModal({
 
   const [uploadImg, setUploadImg] = useState(false)
 
-  const [dishValues, setDishValues] = useState<Dish>({
-    name: dish?.name ?? '',
-    price: dish?.price ?? 0,
-    servings: dish?.servings ?? 0,
-    description: dish?.description ?? '',
-    preparationTime: dish?.preparationTime ?? 0,
-    imageURL: dish?.imageURL ?? '',
-    available: dish?.available ?? true,
-  })
+  const [newDish, setNewDish] = useState<Dish>(dish ?? DEFAULT_DISH)
 
   const saveDish = () => {
-    createDish(dishValues)
+    createDish(newDish)
       .then(() => {
         onClose()
       })
@@ -57,7 +61,7 @@ function DishModal({
   }
 
   const changeDish = () => {
-    updateDish({ id: dish?.id, ...dishValues })
+    updateDish({ id: dish?.id, ...newDish })
       .then(() => {
         onClose()
       })
@@ -80,34 +84,25 @@ function DishModal({
 
       reader.onload = () => {
         baseURL = reader.result as string
-        setDishValues({ ...dishValues, imageURL: baseURL })
+        setNewDish({ ...newDish, imageURL: baseURL })
       }
     })
   }
 
-  const handleName = (event: any) => {
-    setDishValues({ ...dishValues, name: event.target.value })
-  }
-
-  const handleDescription = (event: any) => {
-    setDishValues({ ...dishValues, description: event.target.value })
-  }
-
-  const handlePrice = (event: any) => {
-    setDishValues({ ...dishValues, price: event.target.value })
-  }
-
-  const handleTime = (event: any) => {
-    setDishValues({ ...dishValues, preparationTime: event.target.value })
-  }
-
-  const handleServing = (event: any) => {
-    setDishValues({ ...dishValues, servings: event.target.value })
-  }
+  const handleChange =
+    (attr: keyof Dish) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { value, type },
+      } = event
+      if (type === 'number' || isFinite(Number(value))) {
+        setNewDish({ ...newDish, [attr]: Number(value) })
+        return
+      }
+      setNewDish({ ...newDish, [attr]: value })
+    }
 
   const propsImage = {
     async onChange(info: any) {
-      console.log(info)
       setUploadImg(!uploadImg)
       info.fileList[0] && (await setBase64(info.fileList[0].originFileObj))
     },
@@ -144,52 +139,55 @@ function DishModal({
           fontSize="sm"
           fontWeight="500"
           pb={6}>
-          <FormControl>
+          <FormControl id="name" isRequired>
             <FormLabel>Nome do Produto</FormLabel>
             <Input
-              onChange={handleName}
-              value={dishValues.name}
+              onChange={handleChange('name')}
+              value={newDish.name}
               ref={initialRef}
               placeholder="Nome do Produto"
             />
           </FormControl>
-
-          <FormControl mt={4}>
+          <FormControl id="description" mt={4}>
             <FormLabel>Descrição</FormLabel>
             <Input
-              onChange={handleDescription}
-              value={dishValues.description}
+              onChange={handleChange('description')}
+              value={newDish.description}
               height="7rem"
               placeholder="Descrição"
             />
           </FormControl>
           <FormControl mt={4}>
             <FormLabel>Preço</FormLabel>
-            <Input
-              value={dishValues.price}
-              onChange={handlePrice}
-              placeholder="Preço"
-            />
+            <NumberInput precision={2}>
+              <NumberInputField
+                value={newDish.price}
+                onChange={handleChange('price')}
+                type="number"
+                placeholder="Preço"
+              />
+            </NumberInput>
           </FormControl>
           <Box display="flex">
             <FormControl mt={4}>
               <FormLabel width="10rem">Tempo de preparo</FormLabel>
-              <Input
-                onChange={handleTime}
-                value={dishValues.preparationTime}
-                width="10rem"
-                placeholder="Tempo"
-              />
+              <NumberInput min={0} value={newDish.preparationTime}>
+                <NumberInputField
+                  onChange={handleChange('preparationTime')}
+                  width="10rem"
+                  placeholder="Tempo"
+                />
+              </NumberInput>
             </FormControl>
-
             <FormControl mt={4}>
               <FormLabel width="10rem">Serve</FormLabel>
-              <Input
-                onChange={handleServing}
-                value={dishValues.servings}
-                width="10rem"
-                placeholder="Serve"
-              />
+              <NumberInput min={1} value={newDish.servings}>
+                <NumberInputField
+                  onChange={handleChange('servings')}
+                  width="10rem"
+                  placeholder="Serve"
+                />
+              </NumberInput>
             </FormControl>
           </Box>
           <FormControl mt={4}>
