@@ -4,7 +4,6 @@ import { Box, Flex } from '@chakra-ui/react'
 import JoinTableForm from '@/components/client/JoinTableForm'
 
 const JoinTablePage = () => {
-
   return (
     <Flex direction="column" sx={{ alignItems: 'center', padding: 4 }}>
       <Box sx={{ marginBottom: '20px' }}>

@@ -47,19 +47,23 @@ function DishModal({
   })
 
   const saveDish = () => {
-    createDish(dishValues).then(() => {
-      onClose()
-    }).catch((error) => {
-      console.error("Error: ", error)
-    })
+    createDish(dishValues)
+      .then(() => {
+        onClose()
+      })
+      .catch((error) => {
+        console.error('Error: ', error)
+      })
   }
 
   const changeDish = () => {
-    updateDish({id: dish?.id, ...dishValues}).then(() => {
-      onClose()
-    }).catch((error) => {
-      console.error("Error: ", error)
-    })
+    updateDish({ id: dish?.id, ...dishValues })
+      .then(() => {
+        onClose()
+      })
+      .catch((error) => {
+        console.error('Error: ', error)
+      })
   }
 
   const closeModal = async () => {

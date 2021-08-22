@@ -7,13 +7,18 @@ import Logo from '@/components/Logo'
 import Menu from '@/components/client/Menu'
 
 const MenuPage = () => {
-
   return (
     <Flex direction="column" sx={{ alignItems: 'center', padding: 4 }}>
       <Box>
         <Logo />
       </Box>
-      <Flex direction="column" sx={{ padding: '10px', height: 'calc(100vh - 120px)',maxHeight: 'calc(100vh - 120px)' }}>
+      <Flex
+        direction="column"
+        sx={{
+          padding: '10px',
+          height: 'calc(100vh - 120px)',
+          maxHeight: 'calc(100vh - 120px)',
+        }}>
         <Menu />
       </Flex>
       <Flex justifyContent="center" sx={{ height: '70px' }}>

@@ -9,27 +9,27 @@ const ButtonStyle = {
     fontWeight: '500',
   },
   // styles for different sizes ("sm", "md", "lg")
-  sizes: { 
+  sizes: {
     xs: {
       fontSize: '0.75rem',
       h: '2rem',
-      px: '1rem'
+      px: '1rem',
     },
     sm: {
       fontSize: '0.875rem',
       h: '2.5rem',
-      px: '1rem'
+      px: '1rem',
     },
     md: {
       fontSize: '0.875rem',
       h: '3rem',
-      px: '1rem'
+      px: '1rem',
     },
     lg: {
       fontSize: '0.875rem',
       h: '3.5rem',
-      px: '1rem'
-    }
+      px: '1rem',
+    },
   },
   // styles for different visual variants ("outline", "solid")
   variants: {

@@ -1,11 +1,4 @@
-import {
-  Button,
-  Center,
-  Flex,
-  Spacer,
-  Heading,
-  Box,
-} from '@chakra-ui/react'
+import { Button, Center, Flex, Spacer, Heading, Box } from '@chakra-ui/react'
 import DishModal from '@/components/admin/DishModal'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import useAuthContext from '@/hooks/useAuthContext'

@@ -20,14 +20,17 @@ function isDocumentReference(
 
 function onFirebaseCollectionChange<Entity>(
   query: firebase.firestore.Query,
-  callback: react.Dispatch<Entity | null>,
+  callback: react.Dispatch<EntityWithID<Entity> | null>,
 ) {
   return query.onSnapshot((snapshot) => {
     snapshot.docChanges().forEach((change) => {
       switch (change.type) {
         case 'added':
         case 'modified':
-          callback(change.doc.data() as Entity)
+          callback({
+            id: change.doc.id,
+            ...change.doc.data(),
+          } as EntityWithID<Entity>)
           break
         case 'removed':
           callback(null)
@@ -45,7 +48,10 @@ function onFirebaseDocChange<Entity>(
   callback: react.Dispatch<Entity | null>,
 ) {
   return query.onSnapshot((snapshot) => {
-    callback(snapshot.data() as Entity)
+    callback({
+      id: snapshot.id,
+      ...snapshot.data(),
+    } as EntityWithID<Entity>)
   })
 }
 
@@ -94,7 +100,11 @@ export function useFirestoreListQuery<Entity>(
     }
 
     const unsubscriber = queryRef.current.onSnapshot((snapshot) => {
-      setCollection(snapshot.docs.map((doc) => ({ id: doc.id,...doc.data()})) as [EntityWithID<Entity>])
+      setCollection(
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
+          EntityWithID<Entity>,
+        ],
+      )
     })
     return () => unsubscriber()
   }, [queryRef])
