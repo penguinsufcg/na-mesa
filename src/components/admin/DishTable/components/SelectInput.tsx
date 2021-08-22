@@ -13,7 +13,7 @@ const SelectInput = ({ onChange }: SelectInputProps) => (
     fontSize="sm"
     onChange={onChange}>
     <option value="name">Nome</option>
-    <option value="time">Tempo de preparo</option>
+    <option value="preparationTime">Tempo de preparo</option>
     <option value="servings">Serve</option>
     <option value="price">Preço</option>
   </Select>
