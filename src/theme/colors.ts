@@ -13,7 +13,7 @@ const colors = {
     800: '#490203',
     900: '#1f0000',
   },
-  
+
   secondary: {
     50: '#eaf3fc',
     100: '#d2d6e2',
@@ -25,8 +25,7 @@ const colors = {
     700: '#363c4a',
     800: '#1f242e',
     900: '#080c16',
-  }
-
+  },
 }
 
 export default colors
