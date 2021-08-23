@@ -14,7 +14,9 @@ const JoinTableForm = () => {
 
   return (
     <Flex direction="column" sx={{ alignItems: 'center', gap: '12px' }}>
-      <Heading size="lg">Entrar na mesa</Heading>
+      <Heading size="lg" color="gray.600" fontWeight="medium" mb="10px">
+        Entrar na mesa
+      </Heading>
       <Input
         placeholder="Código da mesa"
         isRequired

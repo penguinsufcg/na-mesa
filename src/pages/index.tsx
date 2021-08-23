@@ -1,32 +1,33 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/layout'
-import { Button } from '@chakra-ui/react'
+import { Button, Center, Grid, GridItem } from '@chakra-ui/react'
 import Link from 'next/link'
 
 import Logo from '@/components/Logo'
 import Menu from '@/components/client/Menu'
+import { useState } from 'react'
 
 const MenuPage = () => {
+  const [searchKey, setSearchKey] = useState<string>()
+
   return (
-    <Flex direction="column" sx={{ alignItems: 'center', padding: 4 }}>
-      <Box>
+    <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
+      <GridItem rowSpan={1}>
         <Logo />
-      </Box>
-      <Flex
-        direction="column"
-        sx={{
-          padding: '10px',
-          height: 'calc(100vh - 120px)',
-          maxHeight: 'calc(100vh - 120px)',
-        }}>
-        <Menu />
-      </Flex>
-      <Flex justifyContent="center" sx={{ height: '70px' }}>
-        <Link href={'/joinTable'} passHref>
-          <Button>Entrar na mesa</Button>
-        </Link>
-      </Flex>
-    </Flex>
+        <Center>
+          <Menu.Search onSearch={(key: string) => setSearchKey(key)} />
+        </Center>
+      </GridItem>
+      <GridItem rowSpan={8} sx={{ overflowY: 'scroll' }}>
+        <Menu searchKey={searchKey} />
+      </GridItem>
+      <GridItem rowSpan={1}>
+        <Center>
+          <Link href={'/join'} passHref>
+            <Button>Entrar na mesa</Button>
+          </Link>
+        </Center>
+      </GridItem>
+    </Grid>
   )
 }
 
