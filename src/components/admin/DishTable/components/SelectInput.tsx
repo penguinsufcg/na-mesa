@@ -1,7 +1,7 @@
 import { Select } from '@chakra-ui/react'
 
 type SelectInputProps = {
-  onChange: (e: any) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const SelectInput = ({ onChange }: SelectInputProps) => (
