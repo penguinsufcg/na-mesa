@@ -32,7 +32,7 @@ const TableRow = ({ data }: TableRowProps) => (
     </Td>
     <Td>{`${data.preparationTime} min`}</Td>
     <Td>{data.servings}</Td>
-    <Td>{`R$ ${data.price}`}</Td>
+    <Td>{`R$ ${data.price.toFixed(2)}`}</Td>
     <Td borderBottomRightRadius="md" borderTopRightRadius="md" align="right">
       <TableRowActions data={data} />
     </Td>
