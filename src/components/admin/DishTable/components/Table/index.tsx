@@ -23,6 +23,7 @@ const Table = ({ data }: TableProps) => (
         <TableHead label="TEMPO DE PREPARO" />
         <TableHead label="SERVE" />
         <TableHead label="PREÇO" />
+        <TableHead label="" />
       </Tr>
     </Thead>
     <Tbody>
