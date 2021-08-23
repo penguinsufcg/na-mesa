@@ -3,7 +3,7 @@ import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { BiSearch } from 'react-icons/bi'
 
 type SearchInputProps = {
-  onKeyPress: (e: any) => void
+  onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
 const SearchInput = ({ onKeyPress }: SearchInputProps) => (
