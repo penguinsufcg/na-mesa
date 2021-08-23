@@ -21,6 +21,7 @@ const TableRow = ({ data }: TableRowProps) => (
           objectFit="cover"
           src={data.imageURL ? data.imageURL : ''}
           alt={data.name}
+          fallbackSrc="https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png"
         />
         <Flex direction="column">
           <Text>{data.name}</Text>
