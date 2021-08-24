@@ -20,45 +20,53 @@ function isDocumentReference(
 
 function onFirebaseCollectionChange<Entity>(
   query: firebase.firestore.Query,
-  callback: react.Dispatch<EntityWithID<Entity> | null>,
+  setData: react.Dispatch<EntityWithID<Entity> | null>,
+  setError: react.Dispatch<firebase.firestore.FirestoreError>,
 ) {
-  return query.onSnapshot((snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-      switch (change.type) {
-        case 'added':
-        case 'modified':
-          callback({
-            id: change.doc.id,
-            ...change.doc.data(),
-          } as EntityWithID<Entity>)
-          break
-        case 'removed':
-          callback(null)
-          break
-        default:
-          console.error('[useFirestoreQuery]: Unexpected firestore change')
-          break
-      }
-    })
-  })
+  return query.onSnapshot(
+    (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        switch (change.type) {
+          case 'added':
+          case 'modified':
+            setData({
+              id: change.doc.id,
+              ...change.doc.data(),
+            } as EntityWithID<Entity>)
+            break
+          case 'removed':
+            setData(null)
+            break
+          default:
+            console.error('[useFirestoreQuery]: Unexpected firestore change')
+            break
+        }
+      })
+    },
+    (error) => setError(error),
+  )
 }
 
 function onFirebaseDocChange<Entity>(
   query: firebase.firestore.DocumentReference,
-  callback: react.Dispatch<Entity | null>,
+  setData: react.Dispatch<EntityWithID<Entity> | null>,
+  setError: react.Dispatch<firebase.firestore.FirestoreError>,
 ) {
-  return query.onSnapshot((snapshot) => {
-    callback({
-      id: snapshot.id,
-      ...snapshot.data(),
-    } as EntityWithID<Entity>)
-  })
+  return query.onSnapshot(
+    (snapshot) => {
+      setData({
+        id: snapshot.id,
+        ...snapshot.data(),
+      } as EntityWithID<Entity>)
+    },
+    (error) => setError(error),
+  )
 }
 
-export function useFirestoreObjectQuery<Entity>(
-  query: FirestoreQuery,
-): Entity | null {
-  const [doc, setDoc] = useState<Entity | null>(null)
+export function useFirestoreObjectQuery<Entity>(query: FirestoreQuery): any {
+  const [doc, setDoc] = useState<EntityWithID<Entity> | null>(null)
+  const [error, setError] = useState<firebase.firestore.FirestoreError>()
+
   const queryRef = useRef<FirestoreQuery>(query)
 
   useEffect(() => {
@@ -73,19 +81,25 @@ export function useFirestoreObjectQuery<Entity>(
     }
 
     const unsubscriber = isDocumentReference(queryRef.current)
-      ? onFirebaseDocChange<Entity>(queryRef.current, setDoc)
-      : onFirebaseCollectionChange<Entity>(queryRef.current, setDoc)
+      ? onFirebaseDocChange<Entity>(queryRef.current, setDoc, setError)
+      : onFirebaseCollectionChange<Entity>(queryRef.current, setDoc, setError)
 
     return () => unsubscriber()
   }, [queryRef])
 
-  return doc
+  return {
+    data: doc,
+    loading: !doc,
+    error,
+  }
 }
 
 export function useFirestoreListQuery<Entity>(
   query: firebase.firestore.Query,
-): [Entity] | null {
+): any {
   const [collection, setCollection] = useState<[Entity] | null>(null)
+  const [error, setError] = useState<firebase.firestore.FirestoreError>()
+
   const queryRef = useRef<firebase.firestore.Query>(query)
 
   useEffect(() => {
@@ -99,15 +113,22 @@ export function useFirestoreListQuery<Entity>(
       return () => {}
     }
 
-    const unsubscriber = queryRef.current.onSnapshot((snapshot) => {
-      setCollection(
-        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
-          EntityWithID<Entity>,
-        ],
-      )
-    })
+    const unsubscriber = queryRef.current.onSnapshot(
+      (snapshot) => {
+        setCollection(
+          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
+            EntityWithID<Entity>,
+          ],
+        )
+      },
+      (error) => setError(error),
+    )
     return () => unsubscriber()
   }, [queryRef])
 
-  return collection
+  return {
+    data: collection,
+    isLoading: !collection,
+    error,
+  }
 }
