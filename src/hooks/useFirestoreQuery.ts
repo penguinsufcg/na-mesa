@@ -63,9 +63,19 @@ function onFirebaseDocChange<Entity>(
   )
 }
 
-export function useFirestoreObjectQuery<Entity>(query: FirestoreQuery): any {
+type FirestoreObjectQueryResponse<Entity> = {
+  data: EntityWithID<Entity> | null
+  isLoading: boolean
+  error: firebase.firestore.FirestoreError | null
+}
+
+export function useFirestoreObjectQuery<Entity>(
+  query: FirestoreQuery,
+): FirestoreObjectQueryResponse<Entity> {
   const [doc, setDoc] = useState<EntityWithID<Entity> | null>(null)
-  const [error, setError] = useState<firebase.firestore.FirestoreError>()
+  const [error, setError] = useState<firebase.firestore.FirestoreError | null>(
+    null,
+  )
 
   const queryRef = useRef<FirestoreQuery>(query)
 
@@ -89,7 +99,7 @@ export function useFirestoreObjectQuery<Entity>(query: FirestoreQuery): any {
 
   return {
     data: doc,
-    isLoading: !doc,
+    isLoading: !doc && !error,
     error,
   }
 }
