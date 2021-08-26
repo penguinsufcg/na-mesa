@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
-import { Button, Flex, Heading, Input } from '@chakra-ui/react'
+import {
+  Button,
+  Flex,
+  Heading,
+  Input,
+  NumberInput,
+  NumberInputField,
+} from '@chakra-ui/react'
 import { generateRandomCode } from 'utils/codeGenerator'
 
 const JoinTableForm = () => {
-  const [tableCode, setTableCode] = useState<string>('')
+  const [tableNumber, setTableNumber] = useState<string>('')
   const [name, setName] = useState<string>('')
 
   const handleSubmit = () => {
@@ -13,18 +20,22 @@ const JoinTableForm = () => {
   }
 
   return (
-    <Flex direction="column" sx={{ alignItems: 'center', gap: '12px' }}>
+    <Flex
+      direction="column"
+      sx={{ alignItems: 'center', gap: '12px', width: '100%' }}>
       <Heading size="lg" color="gray.600" fontWeight="medium" mb="10px">
         Entrar na mesa
       </Heading>
-      <Input
-        placeholder="Código da mesa"
-        isRequired
-        value={tableCode}
-        onChange={(e) => {
-          setTableCode(e.target.value)
-        }}
-      />
+      <NumberInput width="100%">
+        <NumberInputField
+          placeholder="Número da mesa"
+          isRequired
+          value={tableNumber}
+          onChange={(e) => {
+            setTableNumber(e.target.value)
+          }}
+        />
+      </NumberInput>
       <Input
         placeholder="Nome do consumidor"
         isRequired
@@ -35,7 +46,7 @@ const JoinTableForm = () => {
       />
       <Button
         onClick={handleSubmit}
-        disabled={!name || !tableCode}
+        disabled={!name || !tableNumber}
         width="100%">
         Entrar
       </Button>

@@ -56,6 +56,15 @@ const ButtonStyle = {
         bg: 'primary.100',
       },
     },
+    link: {
+      color: 'primary.500',
+      _hover: {
+        textDecoration: 'underline',
+      },
+      _active: {
+        textDecoration: 'underline',
+      },
+    },
   },
   // default values for `size` and `variant`
   defaultProps: {
