@@ -2,8 +2,11 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   NumberInput,
   NumberInputField,
+  PinInput,
+  PinInputField,
   Text,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
@@ -12,6 +15,7 @@ const AccessTableForm = () => {
   const [tableNumber, setTableNumber] = useState<string>('')
 
   const handleSubmit = () => {
+    console.log(tableNumber)
     console.log('Log in!')
   }
 
@@ -22,16 +26,14 @@ const AccessTableForm = () => {
       <Heading size="lg" color="gray.600" fontWeight="medium" mb="10px">
         Acessar mesa
       </Heading>
-      <NumberInput width="100%">
-        <NumberInputField
-          placeholder="Número da mesa"
-          isRequired
-          value={tableNumber}
-          onChange={(e) => {
-            setTableNumber(e.target.value)
-          }}
-        />
-      </NumberInput>
+      <HStack>
+        <PinInput type="number" onChange={(value) => setTableNumber(value)}>
+          <PinInputField />
+          <PinInputField />
+          <PinInputField />
+          <PinInputField />
+        </PinInput>
+      </HStack>
       <Button onClick={handleSubmit} disabled={!tableNumber} width="100%">
         Acessar
       </Button>
