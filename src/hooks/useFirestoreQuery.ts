@@ -82,10 +82,21 @@ export function useFirestoreObjectQuery<Entity>(
   return doc
 }
 
+type FirestoreListQueryResponse<Entity> = {
+  data: [EntityWithID<Entity>] | null
+  isLoading: boolean
+  error: firebase.firestore.FirestoreError | null
+}
+
 export function useFirestoreListQuery<Entity>(
   query: firebase.firestore.Query,
-): [Entity] | null {
-  const [collection, setCollection] = useState<[Entity] | null>(null)
+): FirestoreListQueryResponse<Entity> {
+  const [collection, setCollection] = useState<[EntityWithID<Entity>] | null>(
+    null,
+  )
+  const [error, setError] = useState<firebase.firestore.FirestoreError | null>(
+    null,
+  )
   const queryRef = useRef<firebase.firestore.Query>(query)
 
   useEffect(() => {
@@ -99,15 +110,22 @@ export function useFirestoreListQuery<Entity>(
       return () => {}
     }
 
-    const unsubscriber = queryRef.current.onSnapshot((snapshot) => {
-      setCollection(
-        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
-          EntityWithID<Entity>,
-        ],
-      )
-    })
+    const unsubscriber = queryRef.current.onSnapshot(
+      (snapshot) => {
+        setCollection(
+          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
+            EntityWithID<Entity>,
+          ],
+        )
+      },
+      (error) => setError(error),
+    )
     return () => unsubscriber()
   }, [queryRef])
 
-  return collection
+  return {
+    data: collection,
+    isLoading: !collection && !error,
+    error,
+  }
 }

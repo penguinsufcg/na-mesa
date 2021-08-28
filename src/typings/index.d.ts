@@ -12,6 +12,6 @@ interface Dish {
 interface Session {
   client: string
   code: string
-  orders: [any] | []
+  orders: []
   table: string
 }

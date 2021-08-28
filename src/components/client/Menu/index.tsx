@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Menu = ({ searchKey }: Props) => {
-  const data = useFirestoreListQuery<Dish>(
+  const { data } = useFirestoreListQuery<Dish>(
     db.collection('dishes').where('available', '==', true),
   )
   const [filteredDishes, setFilteredDishes] = useState<Dish[]>(data ?? [])

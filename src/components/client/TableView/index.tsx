@@ -1,8 +1,6 @@
 import { Button } from '@chakra-ui/button'
-import { Flex, Spacer, Text } from '@chakra-ui/layout'
-import { Tag } from '@chakra-ui/tag'
-import { fixControlledValue } from 'antd/lib/input/Input'
-import Link from 'next/link'
+import { Flex, Text } from '@chakra-ui/layout'
+import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
 type Props = {
@@ -10,6 +8,8 @@ type Props = {
 }
 
 const TableView: FC<Props> = ({ code }) => {
+  const router = useRouter()
+
   return (
     <Flex direction="column" sx={{ alignContent: 'spaceBetween' }}>
       <Text fontSize="lg" sx={{ padding: 4, textAlign: 'center' }}>
@@ -32,8 +32,9 @@ const TableView: FC<Props> = ({ code }) => {
           bottom: '3rem',
           alignSelf: 'center',
         }}
+        onClick={() => router.push('/')}
         width="80%">
-        <Link href="/">Acessar</Link>
+        Acessar
       </Button>
     </Flex>
   )
