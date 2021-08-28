@@ -2,15 +2,14 @@ import { Button } from '@chakra-ui/button'
 import { Flex, Spacer, Text } from '@chakra-ui/layout'
 import { Tag } from '@chakra-ui/tag'
 import { fixControlledValue } from 'antd/lib/input/Input'
+import Link from 'next/link'
 import React, { FC } from 'react'
 
 type Props = {
   code: string
 }
 
-const TableView: FC<Props> = () => {
-  const handleSubmit = () => {}
-
+const TableView: FC<Props> = ({ code }) => {
   return (
     <Flex direction="column" sx={{ alignContent: 'spaceBetween' }}>
       <Text fontSize="lg" sx={{ padding: 4, textAlign: 'center' }}>
@@ -25,7 +24,7 @@ const TableView: FC<Props> = () => {
         fontSize="xl"
         color="primary.500"
         sx={{ padding: 4, textAlign: 'center' }}>
-        #2ADE4FS
+        {`#${code}`}
       </Text>
       <Button
         sx={{
@@ -33,9 +32,8 @@ const TableView: FC<Props> = () => {
           bottom: '3rem',
           alignSelf: 'center',
         }}
-        onClick={handleSubmit}
         width="80%">
-        Acessar
+        <Link href="/">Acessar</Link>
       </Button>
     </Flex>
   )

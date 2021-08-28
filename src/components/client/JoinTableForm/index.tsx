@@ -23,15 +23,14 @@ const JoinTableForm = () => {
     const secretCode = generateRandomCode()
 
     onOpen()
-
-    // const data = await createSession({
-    //   code: secretCode.toString(),
-    //   client: auth?.email || '',
-    //   orders: [],
-    //   table: tableNumber,
-    // })
-
-    console.log('session created: ', data)
+    createSession({
+      code: secretCode.toString(),
+      client: auth?.email || '',
+      orders: [],
+      table: tableNumber,
+    })
+      .then((_) => onClose())
+      .catch((error) => `[createSessionError] ${error}`)
   }
 
   return (

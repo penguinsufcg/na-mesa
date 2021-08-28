@@ -29,7 +29,7 @@ const JoinTablePage = () => {
           </Text>
         </>
       ) : (
-        <TableView code={'1234'} />
+        <AccessTableForm />
       )}
     </Flex>
   )
