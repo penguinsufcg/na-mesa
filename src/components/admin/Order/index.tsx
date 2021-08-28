@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Box, Flex, Image, Heading, Text, Spacer } from '@chakra-ui/react'
+import DishOrder from './DishOrder'
 
 interface Dish {
   comments: string
@@ -13,15 +14,14 @@ type Order = {
   code: string
   subtotal: number
   time: string
-  dishs?: Dish[]
+  dishs: Dish[]
 }
 
-const OrderCard = ({ id, code, subtotal, time }: Order) => {
+const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
   return (
     <Flex
       sx={{
         width: '329px',
-        height: '231px',
         padding: '2px',
         _hover: {
           shadow: 'md',
@@ -36,11 +36,23 @@ const OrderCard = ({ id, code, subtotal, time }: Order) => {
           <Text isTruncated width="150px">
             {`MESA ${id}`}
           </Text>
-
           <Text isTruncated width="150px">
             {time}
           </Text>
         </Flex>
+
+        {dishs.map((dish, i) => {
+          return (
+            <DishOrder
+              key={i}
+              name={dish.name}
+              comments={dish.comments}
+              price={dish.price}
+              quantity={dish.quantity}
+            />
+          )
+        })}
+
         <Flex>
           <Text isTruncated width="150px">
             {`Subtotal: ${subtotal}`}
