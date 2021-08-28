@@ -10,6 +10,7 @@ import Link from 'next/link'
 
 import Logo from '@/components/Logo'
 import Menu from '@/components/client/Menu'
+import DragAndDrop from '@/components/admin/Dnd'
 import { useState } from 'react'
 import Navbar from '@/components/client/Navbar'
 import useSession from '@/hooks/useSession'
@@ -34,7 +35,11 @@ const MenuPage = () => {
   const { isLogged } = useSession()
 
   return (
-    <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
+    <Box>
+      <DragAndDrop />
+    </Box>
+
+    /*    <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
       <GridItem rowSpan={1}>
         <Logo />
         <Center paddingX={5}>
@@ -57,7 +62,7 @@ const MenuPage = () => {
           )}
         </Footer>
       </GridItem>
-    </Grid>
+  </Grid> */
   )
 }
 
