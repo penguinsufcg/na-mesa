@@ -3,6 +3,7 @@ import Logo from '@/components/Logo'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import JoinTableForm from '@/components/client/JoinTableForm'
 import AccessTableForm from '@/components/client/AccessTableForm'
+import TableView from '@/components/client/TableView'
 
 const JoinTablePage = () => {
   const [showJoin, setShowJoin] = useState<boolean>(true)
@@ -28,7 +29,7 @@ const JoinTablePage = () => {
           </Text>
         </>
       ) : (
-        <AccessTableForm />
+        <TableView code={'1234'} />
       )}
     </Flex>
   )

@@ -24,12 +24,12 @@ const JoinTableForm = () => {
 
     onOpen()
 
-    const data = await createSession({
-      code: secretCode.toString(),
-      client: auth?.email || '',
-      orders: [],
-      table: tableNumber,
-    })
+    // const data = await createSession({
+    //   code: secretCode.toString(),
+    //   client: auth?.email || '',
+    //   orders: [],
+    //   table: tableNumber,
+    // })
 
     console.log('session created: ', data)
   }
