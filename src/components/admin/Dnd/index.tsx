@@ -12,19 +12,58 @@ const data = {
   orders: {
     order1: {
       id: 'order1',
-      content: <OrderCard id={1} code={'1'} subtotal={50.3} time={'20:31'} />,
+      content: (
+        <OrderCard
+          id={1}
+          code={'1'}
+          subtotal={50.3}
+          time={'20:31'}
+          dishs={[
+            {
+              comments: 'Sem cebola',
+              quantity: 4,
+              name: 'Sanduiches',
+              price: 9.9,
+            },
+          ]}
+        />
+      ),
     },
     order2: {
       id: 'order2',
-      content: <OrderCard id={1} code={'1'} subtotal={50.3} time={'20:31'} />,
+      content: (
+        <OrderCard
+          id={1}
+          code={'1'}
+          subtotal={50.3}
+          time={'20:31'}
+          dishs={[]}
+        />
+      ),
     },
     order3: {
       id: 'order3',
-      content: <OrderCard id={1} code={'1'} subtotal={50.3} time={'20:31'} />,
+      content: (
+        <OrderCard
+          id={1}
+          code={'1'}
+          subtotal={50.3}
+          time={'20:31'}
+          dishs={[]}
+        />
+      ),
     },
     order4: {
       id: 'order4',
-      content: <OrderCard id={1} code={'1'} subtotal={50.3} time={'20:31'} />,
+      content: (
+        <OrderCard
+          id={1}
+          code={'1'}
+          subtotal={50.3}
+          time={'20:31'}
+          dishs={[]}
+        />
+      ),
     },
   },
   columns: {
