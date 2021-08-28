@@ -8,3 +8,10 @@ interface Dish {
   price: number
   servings: number
 }
+
+interface Session {
+  client: string
+  code: string
+  orders: [any] | []
+  table: string
+}

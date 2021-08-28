@@ -10,16 +10,28 @@ import {
 } from '@chakra-ui/react'
 import { generateRandomCode } from 'utils/codeGenerator'
 import LoadingModal from './components/LoadingModal'
+import { useAuth } from '@/hooks/useAuth'
+import { createSession } from 'api/session'
 
 const JoinTableForm = () => {
+  const { auth } = useAuth()
   const [tableNumber, setTableNumber] = useState<string>('')
   const [name, setName] = useState<string>('')
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const secretCode = generateRandomCode()
+
     onOpen()
-    window.alert(`Your code is: ${secretCode}`)
+
+    const data = await createSession({
+      code: secretCode.toString(),
+      client: auth?.email || '',
+      orders: [],
+      table: tableNumber,
+    })
+
+    console.log('session created: ', data)
   }
 
   return (
