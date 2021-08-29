@@ -2,93 +2,27 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { db } from '@/config/firebaseClient'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
 import OrderCard from 'components/admin/Order'
 import '@atlaskit/css-reset'
 import { useEffect } from 'react'
 
 const { useState, memo } = React
 
-const data = {
-  orders: {
-    order1: {
-      id: 'order1',
-      content: (
-        <OrderCard
-          id={1}
-          code={'1'}
-          subtotal={50.3}
-          time={'20:31'}
-          dishs={[
-            {
-              comments: 'Sem cebola',
-              quantity: 4,
-              name: 'Sanduiches',
-              price: 9.9,
-            },
-          ]}
-        />
-      ),
-    },
-    order2: {
-      id: 'order2',
-      content: (
-        <OrderCard
-          id={1}
-          code={'1'}
-          subtotal={50.3}
-          time={'20:31'}
-          dishs={[]}
-        />
-      ),
-    },
-    order3: {
-      id: 'order3',
-      content: (
-        <OrderCard
-          id={1}
-          code={'1'}
-          subtotal={50.3}
-          time={'20:31'}
-          dishs={[]}
-        />
-      ),
-    },
-    order4: {
-      id: 'order4',
-      content: (
-        <OrderCard
-          id={1}
-          code={'1'}
-          subtotal={50.3}
-          time={'20:31'}
-          dishs={[]}
-        />
-      ),
-    },
-  },
-  columns: {
-    pending: {
-      id: 'pending',
-      title: 'PENDING',
-      ordersIds: ['order1', 'order2', 'order3', 'order4'],
-    },
-    kitchen: {
-      id: 'kitchen',
-      title: 'KITCHEN',
-      ordersIds: [],
-    },
-    ready: {
-      id: 'ready',
-      title: 'READY',
-      ordersIds: [],
-    },
-    delivered: {
-      id: 'delivered',
-      title: 'DELIVERED',
-      ordersIds: [],
-    },
-  },
-  columnOrder: ['pending', 'kitchen', 'ready', 'delivered'],
+interface Dish {
+  dishId: string
+  comments: string
+  quantity: number
+  name: string
+  price: number
+}
+
+type Order = {
+  id: string
+  status: string
+  session: string
+  items: Dish[]
 }
 
 const OrderContainer = styled.div<{ isDragging: boolean }>`
@@ -166,38 +100,92 @@ interface ColumnProps {
 
 // eslint-disable-next-line react/display-name
 const Column = memo(({ column, orders, index }: ColumnProps) => (
-  <Draggable draggableId={column.id} index={index}>
-    {(provided, snapshot) => (
-      <Container
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        isDragging={snapshot.isDragging}
-        ref={provided.innerRef}>
-        <Title {...provided.dragHandleProps}>{column.title}</Title>
-        <Droppable droppableId={column.id} type="order">
-          {(provided, snapshot) => (
-            <List
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver}>
-              {orders.map((t, i) => (
-                <Orders key={t.id} order={t} index={i} />
-              ))}
-              {provided.placeholder}
-            </List>
-          )}
-        </Droppable>
-      </Container>
-    )}
-  </Draggable>
+  <Container>
+    <Title>{column.title}</Title>
+    <Droppable droppableId={column.id} type="order">
+      {(provided, snapshot) => (
+        <List
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          isDraggingOver={snapshot.isDraggingOver}>
+          {orders.map((t, i) => (
+            <Orders key={t?.id} order={t} index={i} />
+          ))}
+          {provided.placeholder}
+        </List>
+      )}
+    </Droppable>
+  </Container>
 ))
 
+const columns = {
+  preparing: {
+    id: 'preparing',
+    title: 'PREPARING',
+    ordersIds: [],
+  },
+  kitchen: {
+    id: 'kitchen',
+    title: 'KITCHEN',
+    ordersIds: [],
+  },
+  ready: {
+    id: 'ready',
+    title: 'READY',
+    ordersIds: [],
+  },
+  delivered: {
+    id: 'delivered',
+    title: 'DELIVERED',
+    ordersIds: [],
+  },
+}
+
+const columnOrder = ['preparing', 'kitchen', 'ready', 'delivered']
+
 function DragAndDrop() {
+  const [stateColumns, setStateColumns] = useState<any>(columns)
+  const ordersData = useFirestoreListQuery<Order>(
+    db.collection('orders')
+  )
+  const [state, setState] = useState<any>(ordersData ?? [])
+  
+  useEffect(() => {
+    if (!ordersData) {
+      return
+    }
+
+    const orders = ordersData?.map((order, index) => (
+      {
+        id: order.id,
+        content: (
+          <OrderCard
+            id={index}
+            code={order.id}
+            subtotal={50.3}
+            time={'20:31'}
+            dishs={order.items}
+          />
+        ),
+      }
+    ))
+    const cols = {}    
+    columnOrder.forEach(col => {
+      cols[col] = {
+        id: col,
+        title: col.toUpperCase(),
+        ordersIds: ordersData.filter(order => order.status === col.toUpperCase()).map(o => o.id),
+      }
+    })
+
+    setStateColumns(cols)
+    setState(orders)
+  }, [ordersData])
+  
   const [winReady, setwinReady] = useState(false)
   useEffect(() => {
     setwinReady(true)
   }, [])
-  const [state, setState] = useState<any>(data)
 
   return (
     <DragDropContext
@@ -212,19 +200,8 @@ function DragAndDrop() {
           return
         }
 
-        if (type === 'column') {
-          const newColOrd = Array.from(state.columnOrder)
-          newColOrd.splice(source.index, 1)
-          newColOrd.splice(destination.index, 0, draggableId)
-
-          const newState = {
-            ...state,
-            columnOrder: newColOrd,
-          }
-          setState(newState)
-        }
-        const startcol = state.columns[source.droppableId]
-        const endcol = state.columns[destination.droppableId]
+        const startcol = stateColumns[source.droppableId]
+        const endcol = stateColumns[destination.droppableId]
 
         if (startcol === endcol) {
           const orders = Array.from(startcol.ordersIds)
@@ -236,15 +213,12 @@ function DragAndDrop() {
             ordersIds: orders,
           }
 
-          const newState = {
-            ...state,
-            columns: {
-              ...state.columns,
-              [newCol.id]: newCol,
-            },
+          const newStateColumns = {
+            ...stateColumns,
+            [newCol.id]: newCol
           }
 
-          setState(newState)
+          setStateColumns(newStateColumns)
           return
         }
         const startorderIds = Array.from(startcol.ordersIds)
@@ -259,33 +233,25 @@ function DragAndDrop() {
           ...endcol,
           ordersIds: endorderIds,
         }
-        const newState = {
-          ...state,
-          columns: {
-            ...state.columns,
-            [newStart.id]: newStart,
-            [newEnd.id]: newEnd,
-          },
+        const newStateColumns = {
+          ...stateColumns,
+          [newStart.id]: newStart,
+          [newEnd.id]: newEnd,
         }
-        setState(newState)
+        setStateColumns(newStateColumns)
       }}>
       {winReady ? (
-        <Droppable droppableId="columns" direction="horizontal" type="column">
-          {(provided) => (
-            <Columns {...provided.droppableProps} ref={provided.innerRef}>
-              {state.columnOrder.map((id, i) => {
-                const col = state.columns[id]
-                const orders = col.ordersIds.map(
-                  (orderId) => state.orders[orderId],
-                )
-                return (
-                  <Column key={id} column={col} orders={orders} index={i} />
-                )
-              })}
-              {provided.placeholder}
-            </Columns>
-          )}
-        </Droppable>
+        <Columns>
+          {columnOrder.map((id, i) => {
+            const col = stateColumns[id]
+            const orders = col.ordersIds.map(
+              (orderId) => state?.find(o => o.id === orderId),
+            )
+            return (
+              <Column key={id} column={col} orders={orders} index={i} />
+            )
+          })}
+        </Columns>
       ) : null}
     </DragDropContext>
   )
