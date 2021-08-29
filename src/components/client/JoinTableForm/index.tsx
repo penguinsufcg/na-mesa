@@ -12,11 +12,12 @@ import { generateRandomCode } from 'utils/codeGenerator'
 import LoadingModal from './components/LoadingModal'
 import { useAuth } from '@/hooks/useAuth'
 import { createSession } from 'api/session'
+import { useRouter } from 'next/router'
 
 const JoinTableForm = () => {
-  const { auth } = useAuth()
   const [tableNumber, setTableNumber] = useState<string>('')
   const [name, setName] = useState<string>('')
+  const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleSubmit = async () => {
@@ -25,11 +26,14 @@ const JoinTableForm = () => {
     onOpen()
     createSession({
       code: secretCode.toString(),
-      client: auth?.email || '',
+      client: name,
       orders: [],
       table: tableNumber,
     })
-      .then((_) => onClose())
+      .then((_) => {
+        onClose()
+        router.push(`/join/${secretCode}`)
+      })
       .catch((error) => `[createSessionError] ${error}`)
   }
 

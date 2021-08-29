@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import AccessTableForm from '@/components/client/AccessTableForm'
+import JoinTableForm from '@/components/client/JoinTableForm'
 import Logo from '@/components/Logo'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
-import JoinTableForm from '@/components/client/JoinTableForm'
-import AccessTableForm from '@/components/client/AccessTableForm'
-import TableView from '@/components/client/TableView'
+import React, { useState } from 'react'
 
 const JoinTablePage = () => {
   const [showJoin, setShowJoin] = useState<boolean>(true)

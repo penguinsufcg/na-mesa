@@ -3,12 +3,9 @@ import { Flex, Text } from '@chakra-ui/layout'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
-type Props = {
-  code: string
-}
-
-const TableView: FC<Props> = ({ code }) => {
+const TableCodePage: FC = () => {
   const router = useRouter()
+  const { code } = router.query
 
   return (
     <Flex direction="column" sx={{ alignContent: 'spaceBetween' }}>
@@ -40,4 +37,4 @@ const TableView: FC<Props> = ({ code }) => {
   )
 }
 
-export default TableView
+export default TableCodePage

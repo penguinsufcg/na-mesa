@@ -16,10 +16,13 @@ const AccessTableForm = () => {
   const [sessionCode, setSessionCode] = useState<string>('')
   const router = useRouter()
   const { data: session } = useFirestoreListQuery(
-    db.collection('sessions').where('code', '==', sessionCode),
+    sessionCode.length == 4
+      ? db.collection('sessions').where('code', '==', sessionCode)
+      : db.collection('sessions').where('code', '==', 0),
   )
 
   const handleSubmit = () => {
+    console.log(session)
     if (session != null && session.length) {
       router.push('/')
     }
