@@ -7,8 +7,6 @@ type FirestoreQuery =
   | firebase.firestore.Query
   | firebase.firestore.DocumentReference
 
-type EntityWithID<P> = P & { id: string }
-
 function isDocumentReference(
   query: any,
 ): query is firebase.firestore.DocumentReference {

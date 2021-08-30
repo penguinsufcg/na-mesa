@@ -16,7 +16,9 @@ const Menu = ({ searchKey }: Props) => {
     db.collection('dishes').where('available', '==', true),
   )
 
-  const [filteredDishes, setFilteredDishes] = useState<Dish[]>(data ?? [])
+  const [filteredDishes, setFilteredDishes] = useState<
+    EntityWithID<Dish>[] | null
+  >(data ?? [])
 
   useEffect(() => {
     if (isLoading || error) {
@@ -26,9 +28,8 @@ const Menu = ({ searchKey }: Props) => {
       setFilteredDishes(data)
       return
     }
-    const filtered = data.filter((item: Dish) =>
-      item.name.startsWith(searchKey),
-    )
+    const filtered =
+      data?.filter((item: Dish) => item.name.startsWith(searchKey)) ?? []
     setFilteredDishes(filtered)
   }, [data, searchKey])
 
