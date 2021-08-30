@@ -8,3 +8,5 @@ interface Dish {
   price: number
   servings: number
 }
+
+type EntityWithID<P> = P & { id: string }
