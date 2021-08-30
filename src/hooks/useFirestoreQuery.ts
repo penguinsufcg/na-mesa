@@ -119,6 +119,7 @@ export function useFirestoreListQuery<Entity>(
   )
 
   useEffect(() => {
+    //console.log('here: ', query)
     const unsubscriber = query.onSnapshot(
       (snapshot) => {
         setCollection(

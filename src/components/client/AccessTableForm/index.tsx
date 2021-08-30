@@ -8,21 +8,31 @@ import {
   PinInputField,
   Text,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { db } from '@/config/firebaseClient'
 import { useRouter } from 'next/router'
+import debounce from 'lodash.debounce'
 
 const AccessTableForm = () => {
   const [sessionCode, setSessionCode] = useState<string>('')
   const router = useRouter()
   const { data: session } = useFirestoreListQuery(
-    sessionCode.length == 4
-      ? db.collection('sessions').where('code', '==', sessionCode)
-      : db.collection('sessions').where('code', '==', 0),
+    db.collection('sessions').where('code', '==', sessionCode),
   )
 
+  const handlePinChange = (value: string) => setSessionCode(value)
+  const debouncedHandlePinChange = useMemo(
+    () => debounce(handlePinChange, 300),
+    [sessionCode],
+  )
+
+  useEffect(() => {
+    return () => {
+      debouncedHandlePinChange.cancel()
+    }
+  }, [])
+
   const handleSubmit = () => {
-    console.log(session)
     if (session != null && session.length) {
       router.push('/')
     }
@@ -36,7 +46,7 @@ const AccessTableForm = () => {
         Acessar mesa
       </Heading>
       <HStack>
-        <PinInput type="number" onChange={(value) => setSessionCode(value)}>
+        <PinInput type="number" onChange={debouncedHandlePinChange}>
           <PinInputField />
           <PinInputField />
           <PinInputField />
