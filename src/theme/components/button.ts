@@ -7,6 +7,10 @@ const ButtonStyle = {
     fontFamily: 'body',
     borderRadius: '0.313rem',
     fontWeight: '500',
+    _focus: {
+      border: 'none',
+      boxShadow: 'none'
+    },
   },
   // styles for different sizes ("sm", "md", "lg")
   sizes: {
