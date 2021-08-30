@@ -15,3 +15,5 @@ interface Session {
   orders: []
   table: string
 }
+
+type EntityWithID<P> = P & { id: string }

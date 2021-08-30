@@ -7,8 +7,6 @@ type FirestoreQuery =
   | firebase.firestore.Query
   | firebase.firestore.DocumentReference
 
-type EntityWithID<P> = P & { id: string }
-
 function isDocumentReference(
   query: any,
 ): query is firebase.firestore.DocumentReference {
@@ -20,45 +18,63 @@ function isDocumentReference(
 
 function onFirebaseCollectionChange<Entity>(
   query: firebase.firestore.Query,
-  callback: react.Dispatch<EntityWithID<Entity> | null>,
+  setData: react.Dispatch<EntityWithID<Entity> | null>,
+  setError: react.Dispatch<firebase.firestore.FirestoreError>,
 ) {
-  return query.onSnapshot((snapshot) => {
-    snapshot.docChanges().forEach((change) => {
-      switch (change.type) {
-        case 'added':
-        case 'modified':
-          callback({
-            id: change.doc.id,
-            ...change.doc.data(),
-          } as EntityWithID<Entity>)
-          break
-        case 'removed':
-          callback(null)
-          break
-        default:
-          console.error('[useFirestoreQuery]: Unexpected firestore change')
-          break
-      }
-    })
-  })
+  return query.onSnapshot(
+    (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        switch (change.type) {
+          case 'added':
+          case 'modified':
+            setData({
+              id: change.doc.id,
+              ...change.doc.data(),
+            } as EntityWithID<Entity>)
+            break
+          case 'removed':
+            setData(null)
+            break
+          default:
+            console.error('[useFirestoreQuery]: Unexpected firestore change')
+            break
+        }
+      })
+    },
+    (error) => setError(error),
+  )
 }
 
 function onFirebaseDocChange<Entity>(
   query: firebase.firestore.DocumentReference,
-  callback: react.Dispatch<Entity | null>,
+  setData: react.Dispatch<EntityWithID<Entity> | null>,
+  setError: react.Dispatch<firebase.firestore.FirestoreError>,
 ) {
-  return query.onSnapshot((snapshot) => {
-    callback({
-      id: snapshot.id,
-      ...snapshot.data(),
-    } as EntityWithID<Entity>)
-  })
+  return query.onSnapshot(
+    (snapshot) => {
+      setData({
+        id: snapshot.id,
+        ...snapshot.data(),
+      } as EntityWithID<Entity>)
+    },
+    (error) => setError(error),
+  )
+}
+
+type FirestoreObjectQueryResponse<Entity> = {
+  data: EntityWithID<Entity> | null
+  isLoading: boolean
+  error: firebase.firestore.FirestoreError | null
 }
 
 export function useFirestoreObjectQuery<Entity>(
   query: FirestoreQuery,
-): Entity | null {
-  const [doc, setDoc] = useState<Entity | null>(null)
+): FirestoreObjectQueryResponse<Entity> {
+  const [doc, setDoc] = useState<EntityWithID<Entity> | null>(null)
+  const [error, setError] = useState<firebase.firestore.FirestoreError | null>(
+    null,
+  )
+
   const queryRef = useRef<FirestoreQuery>(query)
 
   useEffect(() => {
@@ -73,13 +89,17 @@ export function useFirestoreObjectQuery<Entity>(
     }
 
     const unsubscriber = isDocumentReference(queryRef.current)
-      ? onFirebaseDocChange<Entity>(queryRef.current, setDoc)
-      : onFirebaseCollectionChange<Entity>(queryRef.current, setDoc)
+      ? onFirebaseDocChange<Entity>(queryRef.current, setDoc, setError)
+      : onFirebaseCollectionChange<Entity>(queryRef.current, setDoc, setError)
 
     return () => unsubscriber()
   }, [queryRef])
 
-  return doc
+  return {
+    data: doc,
+    isLoading: !doc && !error,
+    error,
+  }
 }
 
 type FirestoreListQueryResponse<Entity> = {

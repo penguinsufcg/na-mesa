@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
   Button,
   Flex,
@@ -8,11 +7,11 @@ import {
   NumberInputField,
   useDisclosure,
 } from '@chakra-ui/react'
-import { generateRandomCode } from 'utils/codeGenerator'
-import LoadingModal from './components/LoadingModal'
-import { useAuth } from '@/hooks/useAuth'
 import { createSession } from 'api/session'
 import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { generateRandomCode } from 'utils/codeGenerator'
+import LoadingModal from './components/LoadingModal'
 
 const JoinTableForm = () => {
   const [tableNumber, setTableNumber] = useState<string>('')
