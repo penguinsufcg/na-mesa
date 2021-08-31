@@ -1,14 +1,14 @@
 import {
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
+  Flex,
   Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+  ModalProps,
   Spinner,
   Text,
-  Flex,
-  ModalProps,
 } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 type Props = Omit<ModalProps, 'children'>
 

@@ -19,7 +19,7 @@ const JoinTableForm = () => {
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const secretCode = generateRandomCode()
 
     onOpen()
