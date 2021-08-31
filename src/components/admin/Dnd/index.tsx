@@ -1,29 +1,14 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import styled from 'styled-components'
+import { updateStatusOrder } from 'api/order'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { db } from '@/config/firebaseClient'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
 import OrderCard from 'components/admin/Order'
 import '@atlaskit/css-reset'
 import { useEffect } from 'react'
+import styled from 'styled-components'
 
 const { useState, memo } = React
-
-interface Dish {
-  dishId: string
-  comments: string
-  quantity: number
-  name: string
-  price: number
-}
-
-type Order = {
-  id: string
-  status: string
-  session: string
-  items: Dish[]
-}
 
 const OrderContainer = styled.div<{ isDragging: boolean }>`
   border: 1px solid lightgrey;
@@ -145,43 +130,41 @@ const columnOrder = ['preparing', 'kitchen', 'ready', 'delivered']
 
 function DragAndDrop() {
   const [stateColumns, setStateColumns] = useState<any>(columns)
-  const ordersData = useFirestoreListQuery<Order>(
-    db.collection('orders')
-  )
+  const ordersData = useFirestoreListQuery<Order>(db.collection('orders'))
   const [state, setState] = useState<any>(ordersData ?? [])
-  
+
   useEffect(() => {
     if (!ordersData) {
       return
     }
 
-    const orders = ordersData?.map((order, index) => (
-      {
-        id: order.id,
-        content: (
-          <OrderCard
-            id={index}
-            code={order.id}
-            subtotal={50.3}
-            time={'20:31'}
-            dishs={order.items}
-          />
-        ),
-      }
-    ))
-    const cols = {}    
-    columnOrder.forEach(col => {
+    const orders = ordersData?.map((order, index) => ({
+      id: order.id,
+      content: (
+        <OrderCard
+          id={index}
+          code={order.id}
+          subtotal={50.3}
+          time={'20:31'}
+          dishs={order.items}
+        />
+      ),
+    }))
+    const cols = {}
+    columnOrder.forEach((col) => {
       cols[col] = {
         id: col,
         title: col.toUpperCase(),
-        ordersIds: ordersData.filter(order => order.status === col.toUpperCase()).map(o => o.id),
+        ordersIds: ordersData
+          .filter((order) => order.status === col.toUpperCase())
+          .map((o) => o.id),
       }
     })
 
     setStateColumns(cols)
     setState(orders)
   }, [ordersData])
-  
+
   const [winReady, setwinReady] = useState(false)
   useEffect(() => {
     setwinReady(true)
@@ -215,7 +198,7 @@ function DragAndDrop() {
 
           const newStateColumns = {
             ...stateColumns,
-            [newCol.id]: newCol
+            [newCol.id]: newCol,
           }
 
           setStateColumns(newStateColumns)
@@ -238,18 +221,23 @@ function DragAndDrop() {
           [newStart.id]: newStart,
           [newEnd.id]: newEnd,
         }
-        setStateColumns(newStateColumns)
+
+        updateStatusOrder(draggableId, destination.droppableId.toUpperCase())
+          .then(() => {
+            setStateColumns(newStateColumns)
+          })
+          .catch((error) => {
+            console.error('Error: ', error)
+          })
       }}>
       {winReady ? (
         <Columns>
           {columnOrder.map((id, i) => {
             const col = stateColumns[id]
-            const orders = col.ordersIds.map(
-              (orderId) => state?.find(o => o.id === orderId),
+            const orders = col.ordersIds.map((orderId) =>
+              state?.find((o) => o.id === orderId),
             )
-            return (
-              <Column key={id} column={col} orders={orders} index={i} />
-            )
+            return <Column key={id} column={col} orders={orders} index={i} />
           })}
         </Columns>
       ) : null}
