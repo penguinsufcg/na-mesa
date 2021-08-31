@@ -12,7 +12,7 @@ export const onSessionCreate = functions.firestore
       structuredData: true,
     })
 
-    const { table } = snap.data()
+    const { table, currentSession } = snap.data()
 
     tableCollection
       .where('name', '==', table)
@@ -23,7 +23,7 @@ export const onSessionCreate = functions.firestore
 
         tableCollection.doc(tableDoc.id).update({
           available: false,
-          currentSession: null,
+          currentSession,
         })
       })
   })
