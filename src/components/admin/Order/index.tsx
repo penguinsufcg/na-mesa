@@ -41,7 +41,7 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
           </Text>
         </Flex>
 
-        {dishs.map((dish, i) => {
+        {dishs?.map((dish, i) => {
           return (
             <DishOrder
               key={i}
