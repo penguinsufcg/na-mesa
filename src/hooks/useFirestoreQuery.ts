@@ -1,6 +1,6 @@
 import type firebase from 'firebase'
 import isEqual from 'lodash.isequal'
-import react, { useCallback } from 'react'
+import react from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 type FirestoreQuery =

@@ -9,11 +9,11 @@ import {
 } from '@chakra-ui/react'
 import { createSession } from 'api/session'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { generateRandomCode } from 'utils/codeGenerator'
 import LoadingModal from './components/LoadingModal'
 
-const JoinTableForm = () => {
+const JoinTableForm: FC = () => {
   const [tableNumber, setTableNumber] = useState<string>('')
   const [name, setName] = useState<string>('')
   const router = useRouter()
