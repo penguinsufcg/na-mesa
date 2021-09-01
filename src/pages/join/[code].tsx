@@ -4,12 +4,13 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/layout'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 import { BiCopyAlt } from 'react-icons/bi'
-import { useClipboard } from '@chakra-ui/react'
+import { useClipboard, useToast } from '@chakra-ui/react'
 
 const TableCodePage: FC = () => {
   const router = useRouter()
+  const toast = useToast()
   const { code } = router.query
-  const { hasCopied, onCopy } = useClipboard(code ? code.toString() : '')
+  const { onCopy } = useClipboard(code ? code.toString() : '')
 
   return (
     <Flex
@@ -26,14 +27,25 @@ const TableCodePage: FC = () => {
         celular!
       </Text>
       <Flex sx={{ alignItems: 'center', color: 'primary.500' }}>
-        <Text
-          size="lg"
-          fontSize="xl"
-          color="primary.500"
-          sx={{ textAlign: 'center' }}>
-          {`${code}`}&nbsp;
-        </Text>
-        <BiCopyAlt size="20" />
+        <Button
+          variant="ghost"
+          onClick={() => {
+            onCopy()
+            toast({
+              title: `Código copiado`,
+              status: 'info',
+              isClosable: true,
+            })
+          }}>
+          <Text
+            size="lg"
+            fontSize="xl"
+            color="primary.500"
+            sx={{ textAlign: 'center' }}>
+            {`${code}`}&nbsp;
+          </Text>
+          <BiCopyAlt size="20" />
+        </Button>
       </Flex>
       <Button
         sx={{
