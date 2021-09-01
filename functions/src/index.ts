@@ -8,9 +8,12 @@ const tableCollection = db.collection('tables')
 export const onSessionCreate = functions.firestore
   .document('sessions/{sessionId}')
   .onCreate((snap, _context) => {
-    functions.logger.info(`[onSessionCreate] Updating table ${snap.data()}`, {
-      structuredData: true,
-    })
+    functions.logger.info(
+      `[onSessionCreate] Updating table ${JSON.stringify(snap.data())}`,
+      {
+        structuredData: true,
+      },
+    )
 
     const { table, currentSession } = snap.data()
 
