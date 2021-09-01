@@ -1,3 +1,4 @@
+import useSession from '@/hooks/useSession'
 import {
   Button,
   Flex,
@@ -18,24 +19,18 @@ const JoinTableForm: FC = () => {
   const [name, setName] = useState<string>('')
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { createNewSession, isLoading } = useSession()
 
-  const handleSubmit = () => {
-    const secretCode = generateRandomCode()
-
+  const handleSubmit = async () => {
+    if (!createNewSession) {
+      return
+    }
     onOpen()
-    createSession({
-      code: secretCode.toString(),
-      client: name,
-      orders: [],
-      table: tableNumber,
-    })
-      .then((_) => {
-        onClose()
-        router.push(`/join/${secretCode}`)
-      })
-      .catch((error) => `[createSessionError] ${error}`)
+    const sessionCode = await createNewSession({ client: name, table: tableNumber })
+    onClose()
+    router.push(`/join/${sessionCode}`)
   }
-
+  
   return (
     <>
       <Flex

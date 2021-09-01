@@ -1,4 +1,4 @@
-import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
+import { useFirestoreListQuery, useFirestoreObjectQuery } from '@/hooks/useFirestoreQuery'
 import {
   Button,
   Flex,
@@ -12,13 +12,15 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { db } from '@/config/firebaseClient'
 import { useRouter } from 'next/router'
 import debounce from 'lodash.debounce'
+import useSession from '@/hooks/useSession'
 
 const AccessTableForm = () => {
   const [sessionCode, setSessionCode] = useState<string>('')
   const router = useRouter()
-  const { data: session } = useFirestoreListQuery(
+  const { data: session } = useFirestoreListQuery<Session>(
     db.collection('sessions').where('code', '==', sessionCode),
   )
+  const { joinSession } = useSession()
 
   const handlePinChange = (value: string) => setSessionCode(value)
   const debouncedHandlePinChange = useMemo(
@@ -32,10 +34,14 @@ const AccessTableForm = () => {
     }
   }, [])
 
-  const handleSubmit = () => {
-    if (session != null && session.length) {
-      router.push('/')
+  const handleSubmit = async () => {
+    if (!session || !joinSession) {
+      console.log('lalalal')
+      return
     }
+    console.log(session)
+    await joinSession({ sessionId: session[0].id })
+    router.push('/')
   }
 
   return (

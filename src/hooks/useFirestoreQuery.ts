@@ -68,14 +68,14 @@ type FirestoreObjectQueryResponse<Entity> = {
 }
 
 export function useFirestoreObjectQuery<Entity>(
-  query: FirestoreQuery,
+  query: FirestoreQuery | null,
 ): FirestoreObjectQueryResponse<Entity> {
   const [doc, setDoc] = useState<EntityWithID<Entity> | null>(null)
   const [error, setError] = useState<firebase.firestore.FirestoreError | null>(
     null,
   )
 
-  const queryRef = useRef<FirestoreQuery>(query)
+  const queryRef = useRef<FirestoreQuery | null>(query)
 
   useEffect(() => {
     if (!isEqual(queryRef.current, query)) {
