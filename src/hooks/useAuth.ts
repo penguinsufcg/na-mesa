@@ -47,7 +47,7 @@ export function useAuth(): AuthContextProps {
       setLoading(false)
       return
     }
-    console.log(authState)
+
     setAuth(formatAuth(authState))
     setLoading(false)
   }
