@@ -40,7 +40,7 @@ interface OrderItem {
 
 type EntityWithID<P> = P & { id: string }
 interface Item {
-  dishId: string
+  dishId?: string
   comments: string
   quantity: number
   name: string

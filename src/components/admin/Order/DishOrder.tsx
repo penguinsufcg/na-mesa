@@ -1,14 +1,7 @@
 import React, { FC } from 'react'
 import { Box, Flex, Image, Heading, Text, Spacer } from '@chakra-ui/react'
 
-interface Dish {
-  comments: string
-  quantity: number
-  name: string
-  price: number
-}
-
-const DishOrder = ({ comments, quantity, name, price }: Dish) => {
+const DishOrder = ({ comments, quantity, name, price }: Item) => {
   return (
     <Box sx={{ width: '90%', display: 'flex' }}>
       <Spacer />
