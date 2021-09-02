@@ -8,11 +8,10 @@ import {
   NumberInputField,
   useDisclosure,
 } from '@chakra-ui/react'
-import { createSession } from 'api/session'
 import { useRouter } from 'next/router'
 import React, { FC, useState } from 'react'
-import { generateRandomCode } from 'utils/codeGenerator'
 import LoadingModal from './components/LoadingModal'
+import TableSelect from './components/TableSelect'
 
 const JoinTableForm: FC = () => {
   const [tableNumber, setTableNumber] = useState<string>('')
@@ -26,11 +25,14 @@ const JoinTableForm: FC = () => {
       return
     }
     onOpen()
-    const sessionCode = await createNewSession({ client: name, table: tableNumber })
+    const sessionCode = await createNewSession({
+      client: name,
+      table: tableNumber,
+    })
     onClose()
     router.push(`/join/${sessionCode}`)
   }
-  
+
   return (
     <>
       <Flex
@@ -39,16 +41,9 @@ const JoinTableForm: FC = () => {
         <Heading size="lg" color="gray.600" fontWeight="medium" mb="10px">
           Entrar na mesa
         </Heading>
-        <NumberInput width="100%">
-          <NumberInputField
-            placeholder="Número da mesa"
-            isRequired
-            value={tableNumber}
-            onChange={(e) => {
-              setTableNumber(e.target.value)
-            }}
-          />
-        </NumberInput>
+
+        <TableSelect onSelect={setTableNumber} />
+
         <Input
           placeholder="Nome do consumidor"
           isRequired

@@ -9,6 +9,13 @@ interface Dish {
   servings: number
 }
 
+interface Table {
+  id: string
+  name: string
+  available: boolean
+  currentSession: Session
+}
+
 interface Session {
   client: string
   code: string
