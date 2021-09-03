@@ -21,7 +21,6 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
   return (
     <Flex
       sx={{
-        width: '329px',
         padding: '2px',
         _hover: {
           shadow: 'md',
