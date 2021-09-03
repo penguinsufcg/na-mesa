@@ -10,7 +10,6 @@ const DishOrder = ({ comments, quantity, name, price }: Item) => {
       </Text>
       <Text isTruncated width="150px">
         {name}
-        <Spacer />
         {comments}
       </Text>
       <Text isTruncated width="150px">
