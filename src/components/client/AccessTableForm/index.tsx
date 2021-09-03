@@ -22,6 +22,7 @@ const AccessTableForm = () => {
   const router = useRouter()
   const { data: session } = useFirestoreListQuery<Session>(
     db.collection('sessions').where('code', '==', sessionCode),
+    [sessionCode],
   )
   const { joinSession } = useSession()
 

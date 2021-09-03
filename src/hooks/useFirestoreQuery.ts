@@ -1,6 +1,6 @@
 import type firebase from 'firebase'
 import isEqual from 'lodash.isequal'
-import react from 'react'
+import react, { useCallback } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 type FirestoreQuery =
@@ -110,6 +110,7 @@ type FirestoreListQueryResponse<Entity> = {
 
 export function useFirestoreListQuery<Entity>(
   query: firebase.firestore.Query,
+  deps: any[] = [],
 ): FirestoreListQueryResponse<Entity> {
   const [collection, setCollection] = useState<[EntityWithID<Entity>] | null>(
     null,
@@ -118,19 +119,21 @@ export function useFirestoreListQuery<Entity>(
     null,
   )
 
-  useEffect(() => {
-    const unsubscriber = query.onSnapshot(
-      (snapshot) => {
-        setCollection(
-          snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
-            EntityWithID<Entity>,
-          ],
-        )
-      },
-      (error) => setError(error),
+  const onCollectionChange = useCallback((snapshot) => {
+    setCollection(
+      snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() })) as [
+        EntityWithID<Entity>,
+      ],
     )
+  }, [])
+
+  useEffect(() => {
+    const unsubscriber = query.onSnapshot(onCollectionChange, (error) =>
+      setError(error),
+    )
+
     return unsubscriber
-  }, [query])
+  }, [...deps])
 
   return {
     data: collection,
