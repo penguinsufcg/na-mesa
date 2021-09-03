@@ -21,7 +21,9 @@ const TableSelect: FC<TableSelectProps> = ({ onSelect }: TableSelectProps) => {
           placeholder="Número da mesa"
           onChange={(event) => onSelect(event.target.value)}>
           {data?.map((table) => (
-            <option value={table.name}>{table.name}</option>
+            <option key={table.id} value={table.name}>
+              {table.name}
+            </option>
           ))}
         </Select>
       </Flex>

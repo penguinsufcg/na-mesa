@@ -1,4 +1,7 @@
-import { useFirestoreListQuery, useFirestoreObjectQuery } from '@/hooks/useFirestoreQuery'
+import {
+  useFirestoreListQuery,
+  useFirestoreObjectQuery,
+} from '@/hooks/useFirestoreQuery'
 import {
   Button,
   Flex,
