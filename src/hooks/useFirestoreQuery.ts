@@ -1,7 +1,5 @@
 import type firebase from 'firebase'
-import isEqual from 'lodash.isequal'
-import react, { useCallback } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import react, { useEffect, useState } from 'react'
 
 type FirestoreQuery =
   | firebase.firestore.Query
@@ -68,76 +66,25 @@ type FirestoreObjectQueryResponse<Entity> = {
 }
 
 export function useFirestoreObjectQuery<Entity>(
-  query: FirestoreQuery | null,
+  query: FirestoreQuery,
+  deps: any[] = [],
 ): FirestoreObjectQueryResponse<Entity> {
   const [doc, setDoc] = useState<EntityWithID<Entity> | null>(null)
   const [error, setError] = useState<firebase.firestore.FirestoreError | null>(
     null,
   )
 
-  const queryRef = useRef<FirestoreQuery | null>(query)
-
   useEffect(() => {
-    if (!isEqual(queryRef.current, query)) {
-      queryRef.current = query
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!queryRef.current) {
-      return () => {}
-    }
-
-    const unsubscriber = isDocumentReference(queryRef.current)
-      ? onFirebaseDocChange<Entity>(queryRef.current, setDoc, setError)
-      : onFirebaseCollectionChange<Entity>(queryRef.current, setDoc, setError)
+    const unsubscriber = isDocumentReference(query)
+      ? onFirebaseDocChange<Entity>(query, setDoc, setError)
+      : onFirebaseCollectionChange<Entity>(query, setDoc, setError)
 
     return () => unsubscriber()
-  }, [queryRef])
+  }, [...deps])
 
   return {
     data: doc,
     isLoading: !doc && !error,
-    error,
-  }
-}
-
-type FirestoreListQueryResponse<Entity> = {
-  data: [EntityWithID<Entity>] | null
-  isLoading: boolean
-  error: firebase.firestore.FirestoreError | null
-}
-
-export function useFirestoreListQuery<Entity>(
-  query: firebase.firestore.Query,
-  deps: any[] = [],
-): FirestoreListQueryResponse<Entity> {
-  const [collection, setCollection] = useState<[EntityWithID<Entity>] | null>(
-    null,
-  )
-  const [error, setError] = useState<firebase.firestore.FirestoreError | null>(
-    null,
-  )
-
-  const onCollectionChange = useCallback((snapshot) => {
-    setCollection(
-      snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() })) as [
-        EntityWithID<Entity>,
-      ],
-    )
-  }, [])
-
-  useEffect(() => {
-    const unsubscriber = query.onSnapshot(onCollectionChange, (error) =>
-      setError(error),
-    )
-
-    return unsubscriber
-  }, [...deps])
-
-  return {
-    data: collection,
-    isLoading: !collection && !error,
     error,
   }
 }

@@ -1,7 +1,5 @@
-import {
-  useFirestoreListQuery,
-  useFirestoreObjectQuery,
-} from '@/hooks/useFirestoreQuery'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
+import useSession from '@/hooks/useSession'
 import {
   Button,
   Flex,
@@ -11,17 +9,16 @@ import {
   PinInputField,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState } from 'react'
-import { db } from '@/config/firebaseClient'
-import { useRouter } from 'next/router'
 import debounce from 'lodash.debounce'
-import useSession from '@/hooks/useSession'
+import { useRouter } from 'next/router'
+import React, { useEffect, useMemo, useState } from 'react'
 
 const AccessTableForm = () => {
   const [sessionCode, setSessionCode] = useState<string>('')
   const router = useRouter()
   const { data: session } = useFirestoreListQuery<Session>(
-    db.collection('sessions').where('code', '==', sessionCode),
+    'sessions',
+    { where: ['code', '==', sessionCode] },
     [sessionCode],
   )
   const { joinSession } = useSession()

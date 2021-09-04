@@ -1,5 +1,4 @@
-import { db } from '@/config/firebaseClient'
-import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import { Flex, Select } from '@chakra-ui/react'
 import React, { FC } from 'react'
 
@@ -8,9 +7,9 @@ type TableSelectProps = {
 }
 
 const TableSelect: FC<TableSelectProps> = ({ onSelect }: TableSelectProps) => {
-  const { data } = useFirestoreListQuery<Table>(
-    db.collection('tables').where('available', '==', true),
-  )
+  const { data } = useFirestoreListQuery<Table>('tables', {
+    where: ['available', '==', true],
+  })
 
   return (
     <>
