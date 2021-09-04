@@ -5,13 +5,7 @@ import { db } from '@/config/firebaseClient'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
 import OrderCard from 'components/admin/Order'
 import '@atlaskit/css-reset'
-import {
-  Flex,
-  Text,
-  Container,
-  List,
-  Spacer
-} from '@chakra-ui/react'
+import { Flex, Text, Container, List, Spacer } from '@chakra-ui/react'
 
 interface Orders {
   id: string
@@ -29,21 +23,21 @@ const Orders = memo(({ order, index }: OrderProps) => {
     <Draggable draggableId={order.id} index={index}>
       {(provided, snapshot) => (
         <Container
-          bg ={snapshot.isDragging ? "red.100" : "white"}
-          padding="0"
+          bg={snapshot.isDragging ? 'red.100' : 'white'}
+          padding="0.5rem"
           borderRadius="5"
           marginBottom="2"
+          width="20.5rem"
           border="1px solid #D2D6E2"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          ref={provided.innerRef}
-        >
+          ref={provided.innerRef}>
           <OrderCard
             id={index}
             code={order.id}
             subtotal={50.3}
             time={'20:31'}
-            dishs={order.items}  
+            dishs={order.items}
           />
         </Container>
       )}
@@ -67,22 +61,25 @@ const Column = memo(({ column, orders }: ColumnProps) => (
   <Droppable droppableId={column.id} type="order">
     {(provided, snapshot) => (
       <Container
-        bg={snapshot.isDraggingOver ? "#F5F5F5" : '#ECECEC'}
+        bg={snapshot.isDraggingOver ? '#F5F5F5' : '#ECECEC'}
         padding="3"
         margin="3"
         height="900"
         borderRadius="10"
-      >
+        width="22.5rem">
         <Flex marginBottom="24px">
-          <Text fontSize="md" color="secondary.700">{column.title}</Text>
+          <Text fontSize="md" color="secondary.700">
+            {column.title}
+          </Text>
           <Spacer />
-          <Text fontSize="md" color="secondary.700">{orders.length}</Text>
+          <Text fontSize="md" color="secondary.700">
+            {orders.length}
+          </Text>
         </Flex>
         <List
           height="100%"
           ref={provided.innerRef}
-          {...provided.droppableProps}
-        >
+          {...provided.droppableProps}>
           {orders.map((o, i) => (
             <Orders key={o.id} order={o} index={i} />
           ))}
@@ -199,22 +196,26 @@ function DragAndDrop() {
     }
 
     setStateColumns(newStateColumns)
-    updateStatusOrder(draggableId, destination.droppableId.toUpperCase())
-      .catch((error) => {
+    updateStatusOrder(draggableId, destination.droppableId.toUpperCase()).catch(
+      (error) => {
         setStateColumns(prevStateColumns)
         console.error('Error: ', error)
-      })
+      },
+    )
   }
 
   return (
     <DragDropContext
-      onDragEnd={({ destination, source, draggableId, type }) => handleDragEnd(destination, source, draggableId, type)}>
+      onDragEnd={({ destination, source, draggableId, type }) =>
+        handleDragEnd(destination, source, draggableId, type)
+      }>
       {winReady && (
         <Flex>
           {columnOrder.map((id, i) => {
             const col = stateColumns[id]
-            const orders = col.ordersIds.map((orderId:string) =>
-              state.find((o:Order) => o.id === orderId))
+            const orders = col.ordersIds.map((orderId: string) =>
+              state.find((o: Order) => o.id === orderId),
+            )
             return <Column key={id} column={col} orders={orders} index={i} />
           })}
         </Flex>

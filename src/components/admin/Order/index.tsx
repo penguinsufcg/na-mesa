@@ -30,14 +30,10 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
         },
         overflow: 'hidden',
       }}>
-      <Box sx={{ width: '100%' }}>
-        <Flex sx={{ width: '100%' }}>
-          <Text isTruncated width="150px">
-            {`MESA ${id}`}
-          </Text>
-          <Text isTruncated width="150px">
-            {time}
-          </Text>
+      <Box sx={{ width: '90%' }}>
+        <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
+          <Text>{`MESA ${id}`}</Text>
+          <Text sx={{ textAlign: 'right' }}>{time}</Text>
         </Flex>
 
         {dishs?.map((dish, i) => {
