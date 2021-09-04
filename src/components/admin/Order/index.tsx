@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Box, Flex, Image, Heading, Text, Spacer } from '@chakra-ui/react'
+import { GrDrag } from 'react-icons/gr'
 import DishOrder from './DishOrder'
 
 interface Dish {
@@ -32,7 +33,10 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
       }}>
       <Box sx={{ width: '90%' }}>
         <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
-          <Text>{`MESA ${id}`}</Text>
+          <Flex>
+            <GrDrag size='14'/>
+            <Text>{`MESA ${id}`}</Text>
+          </Flex>
           <Text sx={{ textAlign: 'right' }}>{time}</Text>
         </Flex>
 

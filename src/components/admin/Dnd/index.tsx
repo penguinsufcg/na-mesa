@@ -64,8 +64,8 @@ const Column = memo(({ column, orders }: ColumnProps) => (
         bg={snapshot.isDraggingOver ? '#F5F5F5' : '#ECECEC'}
         padding="3"
         margin="3"
-        height="900"
         borderRadius="10"
+        height="800"
         width="22.5rem">
         <Flex marginBottom="24px">
           <Text fontSize="md" color="secondary.700">
