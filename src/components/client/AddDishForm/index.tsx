@@ -1,7 +1,7 @@
 import { Button, HStack, VStack } from '@chakra-ui/react'
 import React from 'react'
-import DishQuantityInput from '../DishQuantityInput'
 import CommentInput from './components/CommentsInput'
+import QuantityInput from './components/QuantityInput'
 
 type AddDishFormProps = {
   onSubmit: (quantity: number, comments: string) => void
@@ -33,7 +33,7 @@ const AddDishForm = ({ onSubmit }: AddDishFormProps) => {
       }}>
       <CommentInput onChange={handleCommentsChange} />
       <HStack spacing={4} width="full">
-        <DishQuantityInput onChange={handleQuantityChange} />
+        <QuantityInput onChange={handleQuantityChange} />
         <Button width="full" size="sm" onClick={handleSubmit}>
           Adicionar ao pedido
         </Button>
