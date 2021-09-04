@@ -32,7 +32,7 @@ const MenuPage = () => {
   const [searchKey, setSearchKey] = useState<string>()
 
   // TODO: add integration with context
-  const userLogged = false
+  const userLogged = true
 
   return (
     <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
@@ -61,13 +61,5 @@ const MenuPage = () => {
     </Grid>
   )
 }
-
-/**
- *         <Center>
-          <Link href={'/join'} passHref>
-            <Button>Entrar na mesa</Button>
-          </Link>
-        </Center>
- */
 
 export default MenuPage
