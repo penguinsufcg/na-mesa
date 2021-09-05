@@ -1,6 +1,6 @@
 import { useCallback, useEffect, ReactNode, useMemo, useState } from 'react'
 import { db } from '@/config/firebaseClient'
-import { useFirestoreObjectQuery } from '@/hooks/useFirestoreQuery'
+import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 import { SessionContext } from '@/hooks/useSession'
 import { createSession } from 'api/session'
 import { generateRandomCode } from 'utils/codeGenerator'
@@ -12,8 +12,8 @@ type SessionContextProps = {
 function SessionProvider({ children }: SessionContextProps): JSX.Element {
   const [session, setSession] = useState<EntityWithID<Session> | null>(null)
   const [sessionId, setSessionId] = useState<string | undefined>(undefined)
-  const { data, isLoading, error } = useFirestoreObjectQuery<Session>(
-    sessionId ? db.collection('sessions').doc(sessionId) : null
+  const { data, isLoading } = useFirestoreObjectQuery<Session>(
+    `sessions/${sessionId}`,
   )
 
   const getSessionLocal = () => {
@@ -29,7 +29,13 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     localStorage.setItem('sessionId', session.id)
   }, [session])
 
-  const createNewSession = async ({ table, client }: { table: string, client: string }) => {
+  const createNewSession = async ({
+    table,
+    client,
+  }: {
+    table: string
+    client: string
+  }) => {
     const secretCode = generateRandomCode()
 
     const session = await createSession({
@@ -55,7 +61,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   useEffect(() => {
     const sessionId = getSessionLocal()
 
-    if(!sessionId) {
+    if (!sessionId) {
       return
     }
     setSessionId(sessionId)
@@ -73,13 +79,16 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     saveSessionLocal()
   }, [session, saveSessionLocal])
 
-  const context = useMemo(() => ({
-    session,
-    logged: !!session,
-    isLoading,
-    createNewSession,
-    joinSession,
-  }), [session, isLoading])
+  const context = useMemo(
+    () => ({
+      session,
+      logged: !!session,
+      isLoading,
+      createNewSession,
+      joinSession,
+    }),
+    [session, isLoading],
+  )
 
   return (
     <SessionContext.Provider value={context}>

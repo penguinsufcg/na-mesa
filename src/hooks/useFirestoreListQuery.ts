@@ -73,13 +73,16 @@ export function useFirestoreListQuery<Entity>(
     null,
   )
 
-  const onCollectionChange = useCallback((snapshot) => {
-    setCollection(
-      snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() })) as [
-        EntityWithID<Entity>,
-      ],
-    )
-  }, [])
+  const onCollectionChange = useCallback(
+    (snapshot: firebase.firestore.QuerySnapshot) => {
+      setCollection(
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as [
+          EntityWithID<Entity>,
+        ],
+      )
+    },
+    [],
+  )
 
   useEffect(() => {
     const unsubscriber = firestoreRef.onSnapshot(onCollectionChange, (error) =>
