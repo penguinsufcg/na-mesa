@@ -3,7 +3,7 @@ import React, { Context, useContext } from 'react'
 type SessionContextProps = {
   isLoading: boolean
   session?: EntityWithID<Session> | null,
-  logged: boolean,
+  isLogged: boolean,
   createNewSession?: (params: {table: string, client: string }) => Promise<string>
   joinSession?: (params: { sessionId: string }) => void
 }
@@ -11,7 +11,7 @@ type SessionContextProps = {
 export const SessionContext: Context<SessionContextProps> =
   React.createContext<SessionContextProps>({
     session: null,
-    logged: false,
+    isLogged: false,
     isLoading: false,
   })
 

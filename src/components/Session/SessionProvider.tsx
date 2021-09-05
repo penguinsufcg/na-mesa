@@ -80,7 +80,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   const context = useMemo(
     () => ({
       session,
-      logged: !!session,
+      isLogged: !!sessionId ,
       isLoading,
       createNewSession,
       joinSession,

@@ -1,24 +1,28 @@
 import React from 'react'
 import { VStack } from '@chakra-ui/react'
 import CartItem from './components/CartItem'
+import useMinicart from '@/hooks/useMinicart'
 
-type Item = {
-  name: string
-  price: number
-  quantity: number
-  comments: string
-  imageURL: string
-}
+const CartList = () => {
+  const { items, removeItem, updateItem } = useMinicart()
 
-type CartListProps = {
-  data: Item[]
-}
+  const handleDelete = (id: number) => {
+    removeItem?.({ id })
+  }
+  
+  const handleUpdate = (id: number, updatedItem: Partial<OrderItem>) => {
+    updateItem?.({ id, updatedItem })
+  }
 
-const CartList = ({ data }: CartListProps) => {
   return (
     <VStack direction="column" sx={{ width: 'full', paddingBottom: 2 }}>
-      {data.map((item, index) => (
-        <CartItem key={`item-${item.name}-${index}`} data={item} />
+      {items.map((item, index) => (
+        <CartItem
+          key={index}
+          data={item}
+          onDelete={() => handleDelete(index)}
+          onUpdate={(updatedItem) => handleUpdate(index, updatedItem)}
+          />
       ))}
     </VStack>
   )

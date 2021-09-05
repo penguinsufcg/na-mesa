@@ -10,10 +10,11 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
-import { DATA } from './mockedData'
 import CartList from '@/components/client/CartList'
 import ProcessingOrderModal from '@/components/client/ProcessingOrderModal'
 import PageHeader from '@/components/client/PageHeader'
+import useMinicart from '@/hooks/useMinicart'
+import { useRouter } from 'next/router'
 
 type FooterProps = {
   onSendOrder: () => void
@@ -47,22 +48,24 @@ const Footer = ({ onSendOrder, totalValue }: FooterProps) => {
 }
 
 const CartPage = () => {
+  const { total, sendOrder } = useMinicart()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
+  const router = useRouter()
 
-  // TODO: add integration with context
-  const onSendOrder = () => {
+  const onSendOrder = async () => {
+    console.log(sendOrder)
     onOpen()
-    setTimeout(() => {
-      onClose()
-      toast({
-        title: 'Pedido realizado!',
-        description: 'Veja detalhes na tela da conta da mesa',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      })
-    }, 3000)
+    await sendOrder?.()
+    onClose()
+    toast({
+      title: 'Pedido realizado!',
+      description: 'Veja detalhes na tela da conta da mesa',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    })
+    router.push('/')
   }
 
   return (
@@ -71,10 +74,10 @@ const CartPage = () => {
         <PageHeader title="Carrinho" />
       </GridItem>
       <GridItem rowSpan={8} sx={{ overflowY: 'auto', paddingX: 5 }}>
-        <CartList data={DATA} />
+        <CartList />
       </GridItem>
       <GridItem rowSpan={1}>
-        <Footer totalValue={56.7} onSendOrder={onSendOrder} />
+        <Footer totalValue={total} onSendOrder={onSendOrder} />
       </GridItem>
 
       <ProcessingOrderModal isOpen={isOpen} onClose={onClose} />

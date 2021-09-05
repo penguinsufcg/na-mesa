@@ -36,7 +36,7 @@ export function useAuth(): AuthContextProps {
   const signIn = () =>
     firebaseAuth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((_) => console.log('User logged in'))
+      .then((_) => console.log('User isLogged in'))
       .catch((e) => console.log(e))
 
   const signOut = () => firebaseAuth.signOut().then(clear)

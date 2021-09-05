@@ -4,7 +4,7 @@ import DishImage from './components/DishImage'
 import DishTitle from './components/DishTitle'
 
 type DishDetailsProps = {
-  dish: Dish
+  dish: EntityWithID<Dish>
 }
 
 const DishDetails = ({ dish }: DishDetailsProps) => {

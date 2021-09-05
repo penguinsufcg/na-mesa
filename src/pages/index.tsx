@@ -12,6 +12,7 @@ import Logo from '@/components/Logo'
 import Menu from '@/components/client/Menu'
 import { useState } from 'react'
 import Navbar from '@/components/client/Navbar'
+import useSession from '@/hooks/useSession'
 
 type FooterProps = {
   children: ReactNode
@@ -30,10 +31,9 @@ const Footer = ({ children }: FooterProps) => (
 
 const MenuPage = () => {
   const [searchKey, setSearchKey] = useState<string>()
-
+  const { isLogged } = useSession()
   // TODO: add integration with context
-  const userLogged = true
-
+  console.log(isLogged)
   return (
     <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
       <GridItem rowSpan={1}>
@@ -47,7 +47,7 @@ const MenuPage = () => {
       </GridItem>
       <GridItem rowSpan={1}>
         <Footer>
-          {userLogged ? (
+          {isLogged ? (
             <Navbar />
           ) : (
             <Link href={'/join'} passHref>
