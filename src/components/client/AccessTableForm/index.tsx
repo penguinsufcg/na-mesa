@@ -37,10 +37,9 @@ const AccessTableForm = () => {
 
   const handleSubmit = async () => {
     if (!session || !joinSession) {
-      console.log('lalalal')
       return
     }
-    console.log(session)
+    console.log('My session: ', session)
     await joinSession({ sessionId: session[0].id })
     router.push('/')
   }

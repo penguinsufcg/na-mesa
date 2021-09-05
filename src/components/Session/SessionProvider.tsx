@@ -1,8 +1,7 @@
-import { useCallback, useEffect, ReactNode, useMemo, useState } from 'react'
-import { db } from '@/config/firebaseClient'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 import { SessionContext } from '@/hooks/useSession'
 import { createSession } from 'api/session'
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { generateRandomCode } from 'utils/codeGenerator'
 
 type SessionContextProps = {
@@ -14,6 +13,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   const [sessionId, setSessionId] = useState<string | undefined>(undefined)
   const { data, isLoading } = useFirestoreObjectQuery<Session>(
     `sessions/${sessionId}`,
+    [sessionId],
   )
 
   const getSessionLocal = () => {
@@ -64,6 +64,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     if (!sessionId) {
       return
     }
+
     setSessionId(sessionId)
   }, [])
 
