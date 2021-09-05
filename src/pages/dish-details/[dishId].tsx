@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Flex, useToast } from '@chakra-ui/react'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 
-import DATA from './mockedData'
 import AddDishForm from '@/components/client/AddDishForm'
 import DishDetails from '@/components/client/DishDetails.tsx'
 import { useRouter } from 'next/router'
@@ -13,25 +12,24 @@ const DishPage = () => {
   const router = useRouter()
   const { dishId } = router.query
   const { data: dishData } = useFirestoreObjectQuery<Dish>(`dishes/${dishId}`)
-  const { items, addItem } = useMinicart()
+  const { addItem } = useMinicart()
 
   const toast = useToast()
 
-  // TODO: add integration with context
   const handleSubmit = (quantity: number, comments: string) => {
     if (!dishId || !dishData) {
       return
     }
-    
+
     addItem?.({
       item: {
         ...dishData,
         dishId: dishId.toString(),
         quantity,
-        comments
-      }
+        comments,
+      },
     })
-    
+
     toast({
       title: 'Item adicionado ao carrinho!',
       description: 'Veja detalhes na tela do carrinho',
@@ -56,11 +54,7 @@ const DishPage = () => {
         onClick={() => router.back()}>
         <ChevronLeftIcon />
       </Button>
-      {
-        dishData && (
-          <DishDetails dish={dishData} />
-        )
-      }
+      {dishData && <DishDetails dish={dishData} />}
       <AddDishForm onSubmit={handleSubmit} />
     </Flex>
   )
