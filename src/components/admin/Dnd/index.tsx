@@ -9,6 +9,7 @@ import { Flex, Text, List, Spacer, Box } from '@chakra-ui/react'
 
 interface Orders {
   id: string
+  time: string
   items: any[]
 }
 
@@ -26,7 +27,7 @@ const Orders = memo(({ order, index }: OrderProps) => {
           bg={snapshot.isDragging ? 'red.100' : 'white'}
           borderRadius="5"
           marginBottom="2"
-          _hover= {{
+          _hover={{
             shadow: 'md',
             borderWidth: '1px',
             borderRadius: 'md',
@@ -39,8 +40,7 @@ const Orders = memo(({ order, index }: OrderProps) => {
           <OrderCard
             id={index}
             code={order.id}
-            subtotal={50.3}
-            time={'20:31'}
+            time={order.time}
             dishs={order.items}
           />
         </Box>
@@ -95,9 +95,9 @@ const Column = memo(({ column, orders }: ColumnProps) => (
 ))
 
 const columns = {
-  preparing: {
-    id: 'preparing',
-    title: 'PREPARING',
+  pending: {
+    id: 'pending',
+    title: 'PENDING',
     ordersIds: [],
   },
   kitchen: {
@@ -117,7 +117,7 @@ const columns = {
   },
 }
 
-const columnOrder = ['preparing', 'kitchen', 'ready', 'delivered']
+const columnOrder = ['pending', 'kitchen', 'ready', 'delivered']
 
 function DragAndDrop() {
   const ordersData = useFirestoreListQuery<Order>(db.collection('orders'))
@@ -139,9 +139,9 @@ function DragAndDrop() {
           .map((o) => o.id),
       }
     })
-    
+
     setStateColumns((prev) => {
-      if(prev != columns) {
+      if (prev != columns) {
         return prev
       }
       return cols
