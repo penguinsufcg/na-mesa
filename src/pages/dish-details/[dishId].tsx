@@ -6,22 +6,32 @@ import DATA from './mockedData'
 import AddDishForm from '@/components/client/AddDishForm'
 import DishDetails from '@/components/client/DishDetails.tsx'
 import { useRouter } from 'next/router'
+import useMinicart from '@/hooks/useMinicart'
+import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 
 const DishPage = () => {
   const router = useRouter()
   const { dishId } = router.query
-
-  //TODO: get dish data from Firebase using dishId
-  const dish = DATA[0]
+  const { data: dishData } = useFirestoreObjectQuery<Dish>(`dishes/${dishId}`)
+  const { items, addItem } = useMinicart()
 
   const toast = useToast()
 
   // TODO: add integration with context
   const handleSubmit = (quantity: number, comments: string) => {
-    console.log('submiting')
-    console.log(quantity)
-    console.log(comments)
-
+    if (!dishId || !dishData) {
+      return
+    }
+    
+    addItem?.({
+      item: {
+        ...dishData,
+        dishId: dishId.toString(),
+        quantity,
+        comments
+      }
+    })
+    
     toast({
       title: 'Item adicionado ao carrinho!',
       description: 'Veja detalhes na tela do carrinho',
@@ -46,7 +56,11 @@ const DishPage = () => {
         onClick={() => router.back()}>
         <ChevronLeftIcon />
       </Button>
-      <DishDetails dish={dish} />
+      {
+        dishData && (
+          <DishDetails dish={dishData} />
+        )
+      }
       <AddDishForm onSubmit={handleSubmit} />
     </Flex>
   )

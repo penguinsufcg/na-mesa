@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Button,
   ButtonProps,
@@ -24,14 +24,15 @@ const QuantityButton = ({ children, ...props }: ButtonProps) => (
   </Button>
 )
 type QuantityInputProps = {
-  onChange: () => void
+  onChange: (newQuantity: number) => void
+  value?: number
 }
 
-const QuantityInput = ({ onChange }: QuantityInputProps) => {
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+const QuantityInput = ({ onChange, value }: QuantityInputProps) => {
+  const { valueAsNumber, getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
-      defaultValue: 1,
+      defaultValue: value ?? 1,
       min: 1,
       max: 30,
       precision: 0,
@@ -40,6 +41,10 @@ const QuantityInput = ({ onChange }: QuantityInputProps) => {
   const incrementProps = getIncrementButtonProps()
   const decrementProps = getDecrementButtonProps()
   const inputProps = getInputProps({ readOnly: true })
+
+  useEffect(() => {
+    onChange(valueAsNumber)
+  }, [valueAsNumber])
 
   return (
     <Flex
@@ -59,7 +64,6 @@ const QuantityInput = ({ onChange }: QuantityInputProps) => {
       </QuantityButton>
       <Input
         {...inputProps}
-        onChange={onChange}
         size="xs"
         sx={{
           border: 'none',

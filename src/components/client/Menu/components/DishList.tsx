@@ -3,7 +3,7 @@ import { Stack, StackProps } from '@chakra-ui/react'
 import DishCard from './DishCard'
 
 interface Props {
-  items: Dish[]
+  items: EntityWithID<Dish>[]
 }
 
 const DishList: FC<Props & StackProps> = ({ items, ...props }) => {

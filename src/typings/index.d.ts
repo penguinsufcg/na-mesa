@@ -35,6 +35,7 @@ interface OrderItem {
   price: number
   comments: string
   quantity: number
+  imageURL: string
 }
 
 type EntityWithID<P> = P & { id: string }

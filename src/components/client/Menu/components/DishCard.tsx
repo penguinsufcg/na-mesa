@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import { Box, Flex, Image, Heading, Text, Spacer } from '@chakra-ui/react'
+import Link from 'next/link'
 
 interface Props {
-  item: Dish
+  item: EntityWithID<Dish>
 }
 const DishCard: FC<Props> = ({ item }) => {
   const { name, description, price, imageURL } = item
@@ -13,8 +14,11 @@ const DishCard: FC<Props> = ({ item }) => {
       currency: 'BRL',
     }).format(price)
 
+
   return (
+  <Link href={`dish-details/${item.id}`} passHref>
     <Flex
+      // onClick={}
       sx={{
         width: '355px',
         maxWidth: '355px',
@@ -52,6 +56,7 @@ const DishCard: FC<Props> = ({ item }) => {
         </Text>
       </Box>
     </Flex>
+  </Link>
   )
 }
 export default DishCard

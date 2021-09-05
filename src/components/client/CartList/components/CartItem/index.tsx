@@ -5,24 +5,18 @@ import DeleteItemButton from './components/DeleteItemButton'
 import DeleteItemModal from './components/DeleteItemModal'
 import ItemImage from './components/ItemImage'
 
-type Item = {
-  name: string
-  price: number
-  quantity: number
-  comments: string
-  imageURL: string
-}
-
 type CartItemProps = {
-  data: Item
+  data: OrderItem
+  onDelete: () => void
+  onUpdate: (updatedItem: Partial<OrderItem>) => void
 }
 
-const CartItem = ({ data }: CartItemProps) => {
+const CartItem = ({ data, onDelete, onUpdate }: CartItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
 
-  // TODO: add integration with context
   const handleDeleteItem = () => {
+    onDelete()
     toast({
       title: 'Produto excluído',
       status: 'success',
@@ -31,9 +25,10 @@ const CartItem = ({ data }: CartItemProps) => {
     })
   }
 
-  // TODO: add integration with context
-  const handleChangeItemQuantity = () => {
-    console.log('Quantity changed')
+  const handleChangeItemQuantity = (newQuantity: number) => {
+    onUpdate({
+      quantity: newQuantity,
+    })
   }
 
   return (
@@ -62,7 +57,7 @@ const CartItem = ({ data }: CartItemProps) => {
           {data.comments}
         </Text>
         <Flex mt="auto" justifyContent="space-between" alignItems="center">
-          <QuantityInput onChange={handleChangeItemQuantity} />
+          <QuantityInput value={data.quantity} onChange={handleChangeItemQuantity} />
           <DeleteItemButton onClick={onOpen} />
         </Flex>
       </Flex>
