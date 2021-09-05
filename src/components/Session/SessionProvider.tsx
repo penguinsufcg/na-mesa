@@ -22,13 +22,6 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     return sessionId
   }
 
-  const saveSessionLocal = useCallback(() => {
-    if (!session) {
-      return
-    }
-    localStorage.setItem('sessionId', session.id)
-  }, [session])
-
   const createNewSession = async ({
     table,
     client,
@@ -77,8 +70,12 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   }, [data])
 
   useEffect(() => {
-    saveSessionLocal()
-  }, [session, saveSessionLocal])
+    if (!session) {
+      return
+    }
+
+    localStorage.setItem('sessionId', session.id)
+  }, [session])
 
   const context = useMemo(
     () => ({
