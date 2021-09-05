@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { Box, Flex, Image, Heading, Text, Spacer } from '@chakra-ui/react'
-import { GrDrag } from 'react-icons/gr'
+import { Box, Flex, Text, HStack, VStack } from '@chakra-ui/react'
+import { DragHandleIcon, TimeIcon } from '@chakra-ui/icons'
 import DishOrder from './DishOrder'
 
 interface Dish {
@@ -20,26 +20,24 @@ type Order = {
 
 const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
   return (
-    <Flex
+    <Box 
       sx={{
-        padding: '2px',
-        _hover: {
-          shadow: 'md',
-          borderWidth: '1px',
-          borderRadius: 'md',
-          cursor: 'pointer',
-        },
+        width: '100%',
+        padding: '15px',
         overflow: 'hidden',
-      }}>
-      <Box sx={{ width: '90%' }}>
-        <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
-          <Flex>
-            <GrDrag size='14'/>
-            <Text>{`MESA ${id}`}</Text>
-          </Flex>
-          <Text sx={{ textAlign: 'right' }}>{time}</Text>
-        </Flex>
-
+      }}
+    >
+      <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
+        <HStack spacing='8px' alignItems='baseline'>
+          <DragHandleIcon h='12px' color='primary.300'/>
+          <Text fontSize='16px'>{`MESA ${id}`}</Text>
+        </HStack>
+        <HStack spacing='6px' alignItems='baseline' color='secondary.500'>
+          <TimeIcon h='10px'/>
+          <Text fontSize='12px'>{time}</Text>
+        </HStack>
+      </Flex>
+      <VStack margin='12px 0'>
         {dishs?.map((dish, i) => {
           return (
             <DishOrder
@@ -51,14 +49,13 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
             />
           )
         })}
-
-        <Flex>
-          <Text isTruncated width="150px">
-            {`Subtotal: ${subtotal}`}
-          </Text>
-        </Flex>
-      </Box>
-    </Flex>
+      </VStack>
+      <Flex>
+        <Text isTruncated width="150px" color='secondary.700'>
+          {`Subtotal: R$ ${subtotal}`}
+        </Text>
+      </Flex>
+    </Box>
   )
 }
 export default OrderCard
