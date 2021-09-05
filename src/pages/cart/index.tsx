@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Button,
+  Center,
   Flex,
   Grid,
   GridItem,
@@ -15,6 +16,21 @@ import ProcessingOrderModal from '@/components/client/ProcessingOrderModal'
 import PageHeader from '@/components/client/PageHeader'
 import useMinicart from '@/hooks/useMinicart'
 import { useRouter } from 'next/router'
+
+const EmptyCart = () => (
+  <Center h="full">
+    <Text
+      sx={{
+        fontSize: "lg",
+        color: "secondary.600",
+        fontWeight: "light",
+        maxWidth: "3xs",
+        textAlign: "center",
+      }}>
+      Nenhum produto adicionado até o momento!
+    </Text>
+  </Center>
+)
 
 type FooterProps = {
   onSendOrder: () => void
@@ -48,7 +64,7 @@ const Footer = ({ onSendOrder, totalValue }: FooterProps) => {
 }
 
 const CartPage = () => {
-  const { total, sendOrder } = useMinicart()
+  const { total, sendOrder, items } = useMinicart()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
   const router = useRouter()
@@ -69,15 +85,21 @@ const CartPage = () => {
   }
 
   return (
-    <Grid h="100vh">
+    <Grid h="100vh" templateRows="repeat(10, 1fr)">
       <GridItem rowSpan={1}>
         <PageHeader title="Carrinho" />
       </GridItem>
       <GridItem rowSpan={8} sx={{ overflowY: 'auto', paddingX: 5 }}>
-        <CartList />
+        {items.length !== 0 ? (
+          <CartList />
+        ) : (
+          <EmptyCart />
+        )}
       </GridItem>
       <GridItem rowSpan={1}>
-        <Footer totalValue={total} onSendOrder={onSendOrder} />
+        {items.length !== 0 && (
+          <Footer totalValue={total} onSendOrder={onSendOrder} />
+        )}
       </GridItem>
 
       <ProcessingOrderModal isOpen={isOpen} onClose={onClose} />

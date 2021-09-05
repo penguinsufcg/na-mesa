@@ -32,13 +32,12 @@ const Footer = ({ children }: FooterProps) => (
 const MenuPage = () => {
   const [searchKey, setSearchKey] = useState<string>()
   const { isLogged } = useSession()
-  // TODO: add integration with context
-  console.log(isLogged)
+
   return (
     <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
       <GridItem rowSpan={1}>
         <Logo />
-        <Center>
+        <Center paddingX={5}>
           <Menu.Search onSearch={(key: string) => setSearchKey(key)} />
         </Center>
       </GridItem>

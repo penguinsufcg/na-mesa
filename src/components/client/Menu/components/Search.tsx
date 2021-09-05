@@ -8,12 +8,11 @@ interface Props {
 
 const Search: FC<Props> = ({ onSearch }) => {
   return (
-    <InputGroup width={335}>
+    <InputGroup>
       <InputLeftElement pointerEvents="none">
         <SearchIcon color="gray.300" />
       </InputLeftElement>
       <Input
-        width={355}
         placeholder="Pesquisar"
         size="md"
         onChange={(e) => onSearch(e.target.value)}
