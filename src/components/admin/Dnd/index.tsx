@@ -5,7 +5,7 @@ import { db } from '@/config/firebaseClient'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
 import OrderCard from 'components/admin/Order'
 import '@atlaskit/css-reset'
-import { Flex, Text, Container, List, Spacer } from '@chakra-ui/react'
+import { Flex, Text, List, Spacer, Box } from '@chakra-ui/react'
 
 interface Orders {
   id: string
@@ -22,12 +22,16 @@ const Orders = memo(({ order, index }: OrderProps) => {
   return (
     <Draggable draggableId={order.id} index={index}>
       {(provided, snapshot) => (
-        <Container
+        <Box
           bg={snapshot.isDragging ? 'red.100' : 'white'}
-          padding="0.5rem"
           borderRadius="5"
           marginBottom="2"
-          width="20.5rem"
+          _hover= {{
+            shadow: 'md',
+            borderWidth: '1px',
+            borderRadius: 'md',
+            cursor: 'pointer',
+          }}
           border="1px solid #D2D6E2"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -39,7 +43,7 @@ const Orders = memo(({ order, index }: OrderProps) => {
             time={'20:31'}
             dishs={order.items}
           />
-        </Container>
+        </Box>
       )}
     </Draggable>
   )
@@ -60,11 +64,11 @@ interface ColumnProps {
 const Column = memo(({ column, orders }: ColumnProps) => (
   <Droppable droppableId={column.id} type="order">
     {(provided, snapshot) => (
-      <Container
+      <Box
         bg={snapshot.isDraggingOver ? '#F5F5F5' : '#ECECEC'}
         padding="3"
         margin="3"
-        borderRadius="10"
+        borderRadius="md"
         height="800"
         width="22.5rem">
         <Flex marginBottom="24px">
@@ -85,7 +89,7 @@ const Column = memo(({ column, orders }: ColumnProps) => (
           ))}
           {provided.placeholder}
         </List>
-      </Container>
+      </Box>
     )}
   </Droppable>
 ))
@@ -116,9 +120,8 @@ const columns = {
 const columnOrder = ['preparing', 'kitchen', 'ready', 'delivered']
 
 function DragAndDrop() {
-  const [stateColumns, setStateColumns] = useState<any>(columns)
   const ordersData = useFirestoreListQuery<Order>(db.collection('orders'))
-  const [state, setState] = useState<any>([])
+  const [stateColumns, setStateColumns] = useState<any>(columns)
   const [winReady, setwinReady] = useState(false)
 
   useEffect(() => {
@@ -127,18 +130,22 @@ function DragAndDrop() {
       return
     }
     const cols = {}
-    columnOrder.forEach((col) => {
-      cols[col] = {
-        id: col,
-        title: col.toUpperCase(),
+    columnOrder.forEach((colId) => {
+      cols[colId] = {
+        id: colId,
+        title: colId.toUpperCase(),
         ordersIds: ordersData
-          .filter((order) => order.status === col.toUpperCase())
+          .filter((order) => order.status === colId.toUpperCase())
           .map((o) => o.id),
       }
     })
-
-    setStateColumns(cols)
-    setState(ordersData)
+    
+    setStateColumns((prev) => {
+      if(prev != columns) {
+        return prev
+      }
+      return cols
+    })
   }, [ordersData])
 
   const handleDragEnd = (destination, source, draggableId, type) => {
@@ -194,7 +201,6 @@ function DragAndDrop() {
       [newStart.id]: newStart,
       [newEnd.id]: newEnd,
     }
-
     setStateColumns(newStateColumns)
     updateStatusOrder(draggableId, destination.droppableId.toUpperCase()).catch(
       (error) => {
@@ -214,7 +220,7 @@ function DragAndDrop() {
           {columnOrder.map((id, i) => {
             const col = stateColumns[id]
             const orders = col.ordersIds.map((orderId: string) =>
-              state.find((o: Order) => o.id === orderId),
+              ordersData?.find((o: Order) => o.id === orderId),
             )
             return <Column key={id} column={col} orders={orders} index={i} />
           })}
