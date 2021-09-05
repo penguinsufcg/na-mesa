@@ -1,11 +1,9 @@
-import { Heading, Flex, Spacer, Button, useDisclosure } from '@chakra-ui/react'
-import { BiPlus } from 'react-icons/bi'
-import DishTable from '@/components/admin/DishTable'
 import DishModal from '@/components/admin/DishModal'
+import DishTable from '@/components/admin/DishTable'
 import Layout from '@/components/admin/Layout'
-
-import { db } from '@/config/firebaseClient'
-import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
+import { Button, Flex, Heading, Spacer, useDisclosure } from '@chakra-ui/react'
+import { BiPlus } from 'react-icons/bi'
 
 const Menu = () => {
   const {
@@ -14,7 +12,7 @@ const Menu = () => {
     onClose: onCloseDishModal,
   } = useDisclosure()
 
-  const data = useFirestoreListQuery<Dish>(db.collection('dishes'))
+  const { data } = useFirestoreListQuery<Dish>('dishes')
 
   return (
     <Layout>

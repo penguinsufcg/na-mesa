@@ -1,4 +1,5 @@
-import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
+import useSession from '@/hooks/useSession'
 import {
   Button,
   Flex,
@@ -8,17 +9,19 @@ import {
   PinInputField,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState } from 'react'
-import { db } from '@/config/firebaseClient'
-import { useRouter } from 'next/router'
 import debounce from 'lodash.debounce'
+import { useRouter } from 'next/router'
+import React, { useEffect, useMemo, useState } from 'react'
 
 const AccessTableForm = () => {
   const [sessionCode, setSessionCode] = useState<string>('')
   const router = useRouter()
-  const { data: session } = useFirestoreListQuery(
-    db.collection('sessions').where('code', '==', sessionCode),
+  const { data: session } = useFirestoreListQuery<Session>(
+    'sessions',
+    { where: ['code', '==', sessionCode] },
+    [sessionCode],
   )
+  const { joinSession } = useSession()
 
   const handlePinChange = (value: string) => setSessionCode(value)
   const debouncedHandlePinChange = useMemo(
@@ -32,10 +35,13 @@ const AccessTableForm = () => {
     }
   }, [])
 
-  const handleSubmit = () => {
-    if (session != null && session.length) {
-      router.push('/')
+  const handleSubmit = async () => {
+    if (!session || !joinSession) {
+      return
     }
+    console.log('My session: ', session)
+    await joinSession({ sessionId: session[0].id })
+    router.push('/')
   }
 
   return (

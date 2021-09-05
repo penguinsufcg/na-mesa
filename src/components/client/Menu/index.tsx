@@ -1,20 +1,18 @@
-import React, { FC, useState } from 'react'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import { Flex } from '@chakra-ui/layout'
+import { Skeleton } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import DishList from './components/DishList'
 import Search from './components/Search'
-import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
-import { db } from '@/config/firebaseClient'
-import { useEffect } from 'react'
-import { Skeleton } from '@chakra-ui/react'
 
 interface Props {
   searchKey?: string
 }
 
 const Menu = ({ searchKey }: Props) => {
-  const { data, isLoading, error } = useFirestoreListQuery<Dish>(
-    db.collection('dishes').where('available', '==', true),
-  )
+  const { data, isLoading, error } = useFirestoreListQuery<Dish>('dishes', {
+    where: ['available', '==', true],
+  })
 
   const [filteredDishes, setFilteredDishes] = useState<
     EntityWithID<Dish>[] | null

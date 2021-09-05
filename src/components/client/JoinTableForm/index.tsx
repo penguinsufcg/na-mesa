@@ -1,3 +1,4 @@
+import useSession from '@/hooks/useSession'
 import {
   Button,
   Flex,
@@ -7,33 +8,29 @@ import {
   NumberInputField,
   useDisclosure,
 } from '@chakra-ui/react'
-import { createSession } from 'api/session'
 import { useRouter } from 'next/router'
 import React, { FC, useState } from 'react'
-import { generateRandomCode } from 'utils/codeGenerator'
 import LoadingModal from './components/LoadingModal'
+import TableSelect from './components/TableSelect'
 
 const JoinTableForm: FC = () => {
   const [tableNumber, setTableNumber] = useState<string>('')
   const [name, setName] = useState<string>('')
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { createNewSession, isLoading } = useSession()
 
-  const handleSubmit = () => {
-    const secretCode = generateRandomCode()
-
+  const handleSubmit = async () => {
+    if (!createNewSession) {
+      return
+    }
     onOpen()
-    createSession({
-      code: secretCode.toString(),
+    const sessionCode = await createNewSession({
       client: name,
-      orders: [],
       table: tableNumber,
     })
-      .then((_) => {
-        onClose()
-        router.push(`/join/${secretCode}`)
-      })
-      .catch((error) => `[createSessionError] ${error}`)
+    onClose()
+    router.push(`/join/${sessionCode}`)
   }
 
   return (
@@ -44,16 +41,9 @@ const JoinTableForm: FC = () => {
         <Heading size="lg" color="gray.600" fontWeight="medium" mb="10px">
           Entrar na mesa
         </Heading>
-        <NumberInput width="100%">
-          <NumberInputField
-            placeholder="Número da mesa"
-            isRequired
-            value={tableNumber}
-            onChange={(e) => {
-              setTableNumber(e.target.value)
-            }}
-          />
-        </NumberInput>
+
+        <TableSelect onSelect={setTableNumber} />
+
         <Input
           placeholder="Nome do consumidor"
           isRequired
