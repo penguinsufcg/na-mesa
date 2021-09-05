@@ -1,21 +1,25 @@
-import React, { FC } from 'react'
-import { Box, Flex, Image, Heading, Text, Spacer } from '@chakra-ui/react'
+import React from 'react'
+import { Text, Grid, GridItem } from '@chakra-ui/react'
 
 const DishOrder = ({ comments, quantity, name, price }: Item) => {
   return (
-    <Box>
-      <Flex sx={{ textAlign: 'left' }}>
+    <Grid
+      w='100%'
+      templateColumns="1fr 3fr 1fr"
+    >
+      <GridItem colSpan={1} display='flex'>
         <Text>{`${quantity}X`}</Text>
-        <Text sx={{ paddingLeft: '2.7rem' }}>{name}</Text>
-
-        <Flex sx={{ marginLeft: 'auto' }}>
-          <Text>{`R$ ${price}`}</Text>
-        </Flex>
-      </Flex>
-
-      <Text sx={{ textAlign: 'left', paddingLeft: '3.5rem' }}>{comments}</Text>
-      <Spacer />
-    </Box>
+      </GridItem>
+      <GridItem colSpan={1}>
+        <Text>{name}</Text>
+      </GridItem>
+      <GridItem colSpan={1} textAlign='right'>
+        <Text>{`R$ ${price}`}</Text>
+      </GridItem>
+      <GridItem colStart={2} colEnd={3}>
+        <Text color='secondary.600' fontSize='11px'>{comments}</Text>
+      </GridItem>
+    </Grid>
   )
 }
 export default DishOrder

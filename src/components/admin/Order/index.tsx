@@ -19,6 +19,11 @@ type Order = {
 }
 
 const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
+
+  const calcSubtotal = (dishs: Dish[]) => {
+    return dishs.reduce((prevSum, dish) => prevSum + (dish.price * dish.quantity), 0)
+  }
+
   return (
     <Box 
       sx={{
@@ -37,7 +42,7 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
           <Text fontSize='12px'>{time}</Text>
         </HStack>
       </Flex>
-      <VStack margin='12px 0'>
+      <VStack margin='15px 0'>
         {dishs?.map((dish, i) => {
           return (
             <DishOrder
@@ -52,7 +57,7 @@ const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
       </VStack>
       <Flex>
         <Text isTruncated width="150px" color='secondary.700'>
-          {`Subtotal: R$ ${subtotal}`}
+          {`Subtotal: R$ ${calcSubtotal(dishs)}`}
         </Text>
       </Flex>
     </Box>
