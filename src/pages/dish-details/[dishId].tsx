@@ -15,7 +15,7 @@ const DishPage = () => {
   const { data: dishData } = useFirestoreObjectQuery<Dish>(`dishes/${dishId}`)
   const { addItem } = useMinicart()
   const { isLogged } = useSession()
-
+  
   const toast = useToast()
 
   const handleSubmit = (quantity: number, comments: string) => {
