@@ -20,8 +20,7 @@ const DishCard: FC<Props> = ({ item }) => {
     <Flex
       // onClick={}
       sx={{
-        width: '355px',
-        maxWidth: '355px',
+        width: 'full',
         padding: '2px',
         _hover: {
           shadow: 'md',
@@ -37,8 +36,9 @@ const DishCard: FC<Props> = ({ item }) => {
         alt={`Foto do prato ${name}`}
         boxSize="80px"
         objectFit="cover"
+        borderRadius="5px"
         sx={{
-          paddingRight: 1,
+          marginRight: 2,
         }}
       />
       <Box sx={{ width: '100%' }}>

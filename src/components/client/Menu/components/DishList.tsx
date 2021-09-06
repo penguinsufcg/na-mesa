@@ -8,7 +8,7 @@ interface Props {
 
 const DishList: FC<Props & StackProps> = ({ items, ...props }) => {
   return (
-    <Stack direction="column" {...props}>
+    <Stack direction="column" {...props} w="full">
       {items.map((item) => (
         <DishCard key={item.id} item={item} />
       ))}
