@@ -68,7 +68,7 @@ const Column = memo(({ column, orders }: ColumnProps) => (
         padding="3"
         margin="3"
         borderRadius="md"
-        height="800"
+        minHeight="800"
         width="22.5rem">
         <Flex marginBottom="24px">
           <Text fontSize="md" color="secondary.700">
@@ -139,12 +139,7 @@ function DragAndDrop() {
       }
     })
     
-    setStateColumns((prev) => {
-      if(prev != columns) {
-        return prev
-      }
-      return cols
-    })
+    setStateColumns(cols)
   }, [ordersData])
 
   const handleDragEnd = (destination, source, draggableId, type) => {

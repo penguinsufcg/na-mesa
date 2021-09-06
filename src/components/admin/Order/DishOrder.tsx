@@ -14,7 +14,7 @@ const DishOrder = ({ comments, quantity, name, price }: Item) => {
         <Text>{name}</Text>
       </GridItem>
       <GridItem colSpan={1} textAlign='right'>
-        <Text>{`R$ ${price}`}</Text>
+        <Text>{`R$ ${price.toFixed(2)}`}</Text>
       </GridItem>
       <GridItem colStart={2} colEnd={3}>
         <Text color='secondary.600' fontSize='11px'>{comments}</Text>

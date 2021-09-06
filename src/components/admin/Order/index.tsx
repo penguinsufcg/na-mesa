@@ -23,6 +23,11 @@ const OrderCard = ({ id, code, time, dishs }: Order) => {
     return dishs.reduce((prevSum, dish) => prevSum + (dish.price * dish.quantity), 0)
   }
 
+  const getDate = (time: string) => {
+    const newDate = new Date(time)
+    return `${newDate.getHours()}:${newDate.getMinutes()}`
+  }
+
   return (
     <Box 
       sx={{
@@ -38,7 +43,7 @@ const OrderCard = ({ id, code, time, dishs }: Order) => {
         </HStack>
         <HStack spacing='6px' alignItems='baseline' color='secondary.500'>
           <TimeIcon h='10px'/>
-          <Text fontSize='12px'>{time}</Text>
+          <Text fontSize='12px'>{getDate(time)}</Text>
         </HStack>
       </Flex>
       <VStack margin='15px 0'>
@@ -56,7 +61,7 @@ const OrderCard = ({ id, code, time, dishs }: Order) => {
       </VStack>
       <Flex>
         <Text isTruncated width="150px" color='secondary.700'>
-          {`Subtotal: R$ ${calcSubtotal(dishs)}`}
+          {`Subtotal: R$ ${calcSubtotal(dishs).toFixed(2)}`}
         </Text>
       </Flex>
     </Box>
