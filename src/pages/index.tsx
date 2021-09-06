@@ -57,7 +57,7 @@ const MenuPage = () => {
           )}
         </Footer>
       </GridItem>
-    </Grid>
+  </Grid>
   )
 }
 
