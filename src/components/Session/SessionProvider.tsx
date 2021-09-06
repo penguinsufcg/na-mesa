@@ -75,17 +75,18 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     }
 
     localStorage.setItem('sessionId', session.id)
+    setSessionId(session.id)
   }, [session])
 
   const context = useMemo(
     () => ({
       session,
-      isLogged: !!sessionId ,
+      isLogged: (sessionId && sessionId !== 'undefined') ? true : false,
       isLoading,
       createNewSession,
       joinSession,
     }),
-    [session, isLoading],
+    [session, sessionId, isLoading],
   )
 
   return (
