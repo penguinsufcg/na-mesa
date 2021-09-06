@@ -37,7 +37,7 @@ const MenuPage = () => {
     <Grid h="100vh" templateRows="repeat(10, 1fr)" gap={2}>
       <GridItem rowSpan={1}>
         <Logo />
-        <Center paddingX={5}>
+        <Center paddingX={5} marginBottom={3}>
           <Menu.Search onSearch={(key: string) => setSearchKey(key)} />
         </Center>
       </GridItem>
