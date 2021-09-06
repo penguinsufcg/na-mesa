@@ -1,8 +1,7 @@
 import React, { useEffect, useState, memo } from 'react'
 import { updateStatusOrder } from 'api/order'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { db } from '@/config/firebaseClient'
-import { useFirestoreListQuery } from '@/hooks/useFirestoreQuery'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import OrderCard from 'components/admin/Order'
 import '@atlaskit/css-reset'
 import { Flex, Text, List, Spacer, Box } from '@chakra-ui/react'
@@ -120,7 +119,7 @@ const columns = {
 const columnOrder = ['pending', 'kitchen', 'ready', 'delivered']
 
 function DragAndDrop() {
-  const ordersData = useFirestoreListQuery<Order>(db.collection('orders'))
+  const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders')
   const [stateColumns, setStateColumns] = useState<any>(columns)
   const [winReady, setwinReady] = useState(false)
 
