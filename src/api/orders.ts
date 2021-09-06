@@ -6,6 +6,7 @@ export function createOrder(items: OrderItem[], sessionId: string) {
   orderCollection.add({
     session: db.doc(`sessions/${sessionId}`),
     status: 'PENDING',
-    items
+    items,
+    time: new Date().toString()
   })
 }
