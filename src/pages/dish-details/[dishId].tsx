@@ -7,13 +7,15 @@ import DishDetails from '@/components/client/DishDetails.tsx'
 import { useRouter } from 'next/router'
 import useMinicart from '@/hooks/useMinicart'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
+import useSession from '@/hooks/useSession'
 
 const DishPage = () => {
   const router = useRouter()
   const { dishId } = router.query
   const { data: dishData } = useFirestoreObjectQuery<Dish>(`dishes/${dishId}`)
   const { addItem } = useMinicart()
-
+  const { isLogged } = useSession()
+  
   const toast = useToast()
 
   const handleSubmit = (quantity: number, comments: string) => {
@@ -55,7 +57,7 @@ const DishPage = () => {
         <ChevronLeftIcon />
       </Button>
       {dishData && <DishDetails dish={dishData} />}
-      <AddDishForm onSubmit={handleSubmit} />
+      {isLogged && <AddDishForm onSubmit={handleSubmit} />}
     </Flex>
   )
 }
