@@ -13,12 +13,11 @@ interface Dish {
 type Order = {
   id: number
   code: string
-  subtotal: number
   time: string
   dishs: Dish[]
 }
 
-const OrderCard = ({ id, code, subtotal, time, dishs }: Order) => {
+const OrderCard = ({ id, code, time, dishs }: Order) => {
 
   const calcSubtotal = (dishs: Dish[]) => {
     return dishs.reduce((prevSum, dish) => prevSum + (dish.price * dish.quantity), 0)
