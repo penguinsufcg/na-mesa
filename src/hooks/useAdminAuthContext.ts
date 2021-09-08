@@ -5,7 +5,7 @@ export const AdminAuthContext: Context<AdminAuthContextProps> =
   React.createContext<AdminAuthContextProps>({
     auth: null,
     loading: true,
-    signIn: async () => {},
+    signIn: async () => false,
     signOut: async () => {},
   })
 

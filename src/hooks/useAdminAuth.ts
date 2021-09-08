@@ -10,7 +10,7 @@ interface Auth {
 export interface AdminAuthContextProps {
   auth: Auth | null
   loading: boolean
-  signIn: (email: string, password: string) => Promise<void>
+  signIn: (email: string, password: string) => Promise<boolean>
   signOut: () => void
 }
 
@@ -36,6 +36,7 @@ export function useAdminAuth(): AdminAuthContextProps {
 
     setLoading(false)
     setAuth({ uid: authData.id, ...authData.data() })
+    return true
   }
 
   const signOut = () => {

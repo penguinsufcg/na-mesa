@@ -3,17 +3,23 @@ import useAdminAuthContext from '@/hooks/useAdminAuthContext'
 import { Button } from '@chakra-ui/button'
 import { Input } from '@chakra-ui/input'
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/layout'
+import { useRouter } from 'next/router'
 import { FC, useState } from 'react'
 import TableImage from './TableImage'
 
 const Login: FC = () => {
   const { signIn } = useAdminAuthContext()
+  const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
   const handleSubmit = async () => {
-    console.log(signIn)
-    await signIn(email, password)
+    const isLogged = await signIn(email, password)
+    // TODO: Handle Error, put a loading modal
+    if (isLogged) {
+      console.log('a')
+      router.push('/admin')
+    }
   }
 
   return (
