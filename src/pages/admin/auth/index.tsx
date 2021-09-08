@@ -1,11 +1,20 @@
 import Logo from '@/components/Logo'
+import { useAdminAuth } from '@/hooks/useAdminAuth'
 import { Button } from '@chakra-ui/button'
 import { Input } from '@chakra-ui/input'
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/layout'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import TableImage from './TableImage'
 
 const Login: FC = () => {
+  const { signIn } = useAdminAuth()
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+
+  const handleSubmit = async () => {
+    await signIn(email, password)
+  }
+
   return (
     <Grid
       h="100vh"
@@ -42,10 +51,26 @@ const Login: FC = () => {
             Pronto para acessar sua lista de pedidos?
           </Text>
         </Box>
-        <Input variant="outline" placeholder="Email" size="md" m={4} />
-        <Input variant="outline" placeholder="Senha" size="md" m={4} />
+        <Input
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(event.target.value)
+          }
+          variant="outline"
+          placeholder="Email"
+          size="md"
+          m={4}
+        />
+        <Input
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(event.target.value)
+          }
+          variant="outline"
+          placeholder="Senha"
+          size="md"
+          m={4}
+        />
 
-        <Button width="full" colorScheme="blue" m={4}>
+        <Button onClick={handleSubmit} width="full" colorScheme="blue" m={4}>
           Entrar
         </Button>
       </GridItem>
