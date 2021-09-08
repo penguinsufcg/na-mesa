@@ -1,5 +1,5 @@
 import Logo from '@/components/Logo'
-import { useAdminAuth } from '@/hooks/useAdminAuth'
+import useAdminAuthContext from '@/hooks/useAdminAuthContext'
 import { Button } from '@chakra-ui/button'
 import { Input } from '@chakra-ui/input'
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/layout'
@@ -7,11 +7,12 @@ import { FC, useState } from 'react'
 import TableImage from './TableImage'
 
 const Login: FC = () => {
-  const { signIn } = useAdminAuth()
+  const { signIn } = useAdminAuthContext()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
   const handleSubmit = async () => {
+    console.log(signIn)
     await signIn(email, password)
   }
 

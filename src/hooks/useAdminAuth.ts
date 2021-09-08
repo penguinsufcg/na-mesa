@@ -1,31 +1,20 @@
-import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
-import firebase, { firebaseAuth } from '@/config/firebaseClient'
-import { useEffect, useState } from 'react'
+import { db } from '@/config/firebaseClient'
+import { useState } from 'react'
 
 interface Auth {
   uid?: string
   email?: string | null
-  name: string | null
-  photoUrl?: string | null
+  name?: string | null
 }
 
-export interface AuthContextProps {
+export interface AdminAuthContextProps {
   auth: Auth | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => void
 }
 
-function formatAuth(auth: firebase.User) {
-  return {
-    uid: auth.uid,
-    email: auth.email,
-    name: auth.displayName,
-    photoUrl: auth.photoURL,
-  }
-}
-
-export function useAdminAuth(): AuthContextProps {
+export function useAdminAuth(): AdminAuthContextProps {
   const [auth, setAuth] = useState<Auth | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -35,15 +24,23 @@ export function useAdminAuth(): AuthContextProps {
   }
 
   const signIn = async (email: string, password: string) => {
-    const authData = await firebaseAuth.
+    setLoading(true)
+    const authQuery = await db
       .collection('users')
       .where('email', '==', email)
+      .where('password', '==', password)
+      .limit(1)
       .get()
 
-    console.log(authData.docs[0].data())
+    const authData = authQuery.docs[0]
+
+    setLoading(false)
+    setAuth({ uid: authData.id, ...authData.data() })
   }
 
-  const signOut = () => {}
+  const signOut = () => {
+    clear()
+  }
 
   return {
     auth,

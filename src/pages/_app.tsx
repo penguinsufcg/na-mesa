@@ -1,25 +1,30 @@
+import { MinicartProvider } from '@/components/client/Minicart'
+import SessionProvider from '@/components/Session/SessionProvider'
+import '@/styles/globals.css'
+import theme from '@/theme/index'
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
-
-import theme from '@/theme/index'
-import '@/styles/globals.css'
-import AuthProvider from '@/components/Auth/AuthProvider'
+import { useRouter } from 'next/router'
 import React from 'react'
-
-import SessionProvider from '@/components/Session/SessionProvider'
-import { MinicartProvider } from '@/components/client/Minicart'
+import AdminAuthProvider from './admin/auth/AdminAuthProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+
   return (
-    <AuthProvider>
-      <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
+      {router.pathname.startsWith('/admin') ? (
+        <AdminAuthProvider>
+          <Component {...pageProps} />
+        </AdminAuthProvider>
+      ) : (
         <SessionProvider>
           <MinicartProvider>
             <Component {...pageProps} />
           </MinicartProvider>
         </SessionProvider>
-      </ChakraProvider>
-    </AuthProvider>
+      )}
+    </ChakraProvider>
   )
 }
 
