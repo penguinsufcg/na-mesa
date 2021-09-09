@@ -39,3 +39,17 @@ interface OrderItem {
 }
 
 type EntityWithID<P> = P & { id: string }
+interface Item {
+  dishId?: string
+  comments: string
+  quantity: number
+  name: string
+  price: number
+}
+
+type Order = {
+  id: string
+  status: string
+  session: string
+  items: Item[]
+}

@@ -33,7 +33,7 @@ const Menu = ({ searchKey }: Props) => {
 
   return (
     <Skeleton isLoaded={!isLoading}>
-      <Flex direction="column" alignItems="center">
+      <Flex direction="column" alignItems="center" paddingX={5}>
         <DishList items={filteredDishes ?? []} />
       </Flex>
     </Skeleton>
