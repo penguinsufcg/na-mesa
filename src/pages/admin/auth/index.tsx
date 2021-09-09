@@ -32,9 +32,10 @@ const Login: FC = () => {
       w="100vw"
       alignItems="center"
       templateRows="repeat(auto-fill, minmax(250px, 1fr))"
-      templateColumns="repeat(2, 1fr)"
+      templateColumns="repeat(auto-fill, 50em)"
+      autoFlow="row dense"
       gap={2}>
-      <GridItem justifySelf="center" rowSpan={1} colSpan={1} m={8}>
+      <GridItem justifySelf="center" rowSpan={1} colSpan={1} m={4}>
         <Heading size="xl" color="gray.600" fontWeight="medium" mb="10px">
           Seja bem-vindo ao NaMesa
         </Heading>
@@ -43,17 +44,17 @@ const Login: FC = () => {
         </Text>
       </GridItem>
 
-      <GridItem width="full" justifySelf="start" rowSpan={1} colSpan={1}>
+      <GridItem justifySelf="center" rowSpan={1} colSpan={1}>
         <Box>
           <Logo padding={0} />
         </Box>
       </GridItem>
 
-      <GridItem justifySelf="center" rowSpan={2}>
+      <GridItem justifySelf="center" rowSpan={1}>
         <TableImage />
       </GridItem>
 
-      <GridItem justifySelf="start" rowSpan={1}>
+      <GridItem justifySelf="center" rowSpan={1}>
         <Box>
           <Heading size="xl" color="gray.600" fontWeight="medium" mb="10px">
             Login
@@ -70,7 +71,7 @@ const Login: FC = () => {
           variant="outline"
           placeholder="Email"
           size="md"
-          m={4}
+          m={8}
         />
         <Input
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -80,10 +81,10 @@ const Login: FC = () => {
           variant="outline"
           placeholder="Senha"
           size="md"
-          m={4}
+          m={8}
         />
 
-        <Button onClick={handleSubmit} width="full" colorScheme="blue" m={4}>
+        <Button onClick={handleSubmit} width="full" colorScheme="blue" m={8}>
           Entrar
         </Button>
       </GridItem>
