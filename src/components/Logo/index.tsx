@@ -1,7 +1,11 @@
 import { Flex, Text } from '@chakra-ui/react'
 import { BiCoffee } from 'react-icons/bi'
 
-const Logo = ({ padding = 4 }: { padding: number }) => {
+type LogoProps = {
+  padding?: number
+}
+
+const Logo = ({ padding = 4 }: LogoProps) => {
   return (
     <Flex padding={padding} align="center" color="secondary.700">
       <BiCoffee size={35} />
