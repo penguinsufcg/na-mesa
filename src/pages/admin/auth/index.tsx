@@ -1,6 +1,8 @@
+import SignInModal from '@/components/admin/SignInModal'
 import Logo from '@/components/Logo'
 import useAdminAuthContext from '@/hooks/useAdminAuthContext'
 import { Button } from '@chakra-ui/button'
+import { useDisclosure } from '@chakra-ui/hooks'
 import { Input } from '@chakra-ui/input'
 import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/layout'
 import { useRouter } from 'next/router'
@@ -8,16 +10,18 @@ import { FC, useState } from 'react'
 import TableImage from './TableImage'
 
 const Login: FC = () => {
+  const { onOpen, onClose, isOpen } = useDisclosure()
   const { signIn } = useAdminAuthContext()
   const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
   const handleSubmit = async () => {
+    onOpen()
     const isLogged = await signIn(email, password)
-    // TODO: Handle Error, put a loading modal
+    // TODO: Handle Error
     if (isLogged) {
-      console.log('a')
+      onClose()
       router.push('/admin')
     }
   }
@@ -81,6 +85,8 @@ const Login: FC = () => {
           Entrar
         </Button>
       </GridItem>
+
+      <SignInModal isOpen={isOpen} onClose={onClose} />
     </Grid>
   )
 }

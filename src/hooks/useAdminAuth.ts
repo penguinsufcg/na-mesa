@@ -23,6 +23,8 @@ export function useAdminAuth(): AdminAuthContextProps {
     setAuth(null)
   }
 
+  console.log(auth)
+
   const signIn = async (email: string, password: string) => {
     setLoading(true)
     const authQuery = await db
@@ -35,7 +37,7 @@ export function useAdminAuth(): AdminAuthContextProps {
     const authData = authQuery.docs[0]
 
     setLoading(false)
-    setAuth({ uid: authData.id, ...authData.data() })
+    setAuth({ uid: authData.id, ...(authData.data() as Auth) })
     return true
   }
 
