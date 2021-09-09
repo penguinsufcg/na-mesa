@@ -66,6 +66,7 @@ const Login: FC = () => {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setEmail(event.target.value)
           }
+          type="email"
           variant="outline"
           placeholder="Email"
           size="md"
@@ -75,6 +76,7 @@ const Login: FC = () => {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setPassword(event.target.value)
           }
+          type="password"
           variant="outline"
           placeholder="Senha"
           size="md"
