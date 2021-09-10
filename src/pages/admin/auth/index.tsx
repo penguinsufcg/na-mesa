@@ -2,9 +2,19 @@ import SignInModal from '@/components/admin/SignInModal'
 import Logo from '@/components/Logo'
 import useAdminAuthContext from '@/hooks/useAdminAuthContext'
 import { Button } from '@chakra-ui/button'
+import { FormControl, FormLabel } from '@chakra-ui/form-control'
 import { useDisclosure } from '@chakra-ui/hooks'
 import { Input } from '@chakra-ui/input'
-import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/layout'
+import {
+  Box,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+  VStack,
+} from '@chakra-ui/layout'
 import { useRouter } from 'next/router'
 import { FC, useState } from 'react'
 import TableImage from './TableImage'
@@ -27,70 +37,88 @@ const Login: FC = () => {
   }
 
   return (
-    <Grid
-      h="100vh"
-      w="100vw"
-      alignItems="center"
-      templateRows="repeat(auto-fill, minmax(250px, 1fr))"
-      templateColumns="repeat(auto-fill, 50em)"
-      autoFlow="row dense"
-      gap={2}>
-      <GridItem justifySelf="center" rowSpan={1} colSpan={1} m={4}>
-        <Heading size="xl" color="gray.600" fontWeight="medium" mb="10px">
+    <Flex
+      flexWrap="wrap"
+      height="100vh"
+      align="center"
+      justifyContent="space-around">
+      <Center flexDirection="column">
+        <Heading
+          fontSize="4xl"
+          color="secondary.700"
+          fontWeight="medium"
+          mb="10px">
           Seja bem-vindo ao NaMesa
         </Heading>
-        <Text fontFamily="body">
+        <Text
+          width="490px"
+          fontSize="xl"
+          color="secondary.500"
+          fontWeight="light"
+          fontFamily="body">
           Sua solução de cardápio digital e atendimento presencial de mesas
         </Text>
-      </GridItem>
-
-      <GridItem justifySelf="center" rowSpan={1} colSpan={1}>
-        <Box>
-          <Logo padding={0} />
-        </Box>
-      </GridItem>
-
-      <GridItem justifySelf="center" rowSpan={1}>
         <TableImage />
-      </GridItem>
+      </Center>
 
-      <GridItem justifySelf="center" rowSpan={1}>
-        <Box>
-          <Heading size="xl" color="gray.600" fontWeight="medium" mb="10px">
+      <Center width="450px" alignItems="start" flexDirection="column">
+        <Logo padding={0} />
+
+        <Box sx={{ marginTop: 12 }}>
+          <Heading
+            fontSize="4xl"
+            color="secondary.700"
+            fontWeight="medium"
+            mb="10px">
             Login
           </Heading>
-          <Text fontFamily="body" mb="50px">
+          <Text
+            fontSize="md"
+            color="secondary.500"
+            fontWeight="light"
+            fontFamily="body"
+            sx={{ marginBottom: 10 }}>
             Pronto para acessar sua lista de pedidos?
           </Text>
         </Box>
-        <Input
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(event.target.value)
-          }
-          type="email"
-          variant="outline"
-          placeholder="Email"
-          size="md"
-          m={8}
-        />
-        <Input
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(event.target.value)
-          }
-          type="password"
-          variant="outline"
-          placeholder="Senha"
-          size="md"
-          m={8}
-        />
+        <VStack spacing={10} width="full">
+          <FormControl id="email">
+            <FormLabel fontWeight="medium" color="secondary.600">
+              Email
+            </FormLabel>
+            <Input
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
+              type="email"
+              variant="outline"
+              placeholder="Email"
+              size="md"
+            />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel fontWeight="medium" color="secondary.600">
+              Senha
+            </FormLabel>
+            <Input
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
+              type="password"
+              variant="outline"
+              placeholder="Senha"
+              size="md"
+            />
+          </FormControl>
 
-        <Button onClick={handleSubmit} width="full" colorScheme="blue" m={8}>
-          Entrar
-        </Button>
-      </GridItem>
+          <Button onClick={handleSubmit} width="full" colorScheme="blue">
+            Entrar
+          </Button>
+        </VStack>
+      </Center>
 
       <SignInModal isOpen={isOpen} onClose={onClose} />
-    </Grid>
+    </Flex>
   )
 }
 
