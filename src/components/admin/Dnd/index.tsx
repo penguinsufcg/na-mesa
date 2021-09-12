@@ -96,22 +96,22 @@ const Column = memo(({ column, orders }: ColumnProps) => (
 const columns = {
   pending: {
     id: 'pending',
-    title: 'PENDING',
+    title: 'PENDENTE',
     ordersIds: [],
   },
   kitchen: {
     id: 'kitchen',
-    title: 'KITCHEN',
+    title: 'COZINHA',
     ordersIds: [],
   },
   ready: {
     id: 'ready',
-    title: 'READY',
+    title: 'PRONTO',
     ordersIds: [],
   },
   delivered: {
     id: 'delivered',
-    title: 'DELIVERED',
+    title: 'ENTREGUE',
     ordersIds: [],
   },
 }
