@@ -17,7 +17,7 @@ const OrderCard: FC<Props> = () => {
         borderColor: 'secondary.100',
       }}
       direction="column">
-      <HStack sx={{ marginBottom: 12 }} justify="space-between">
+      <HStack sx={{ marginBottom: 8 }} justify="space-between">
         <Text
           lineHeight="normal"
           fontSize="sm"
@@ -33,7 +33,7 @@ const OrderCard: FC<Props> = () => {
         </HStack>
       </HStack>
 
-      <HStack sx={{ marginBottom: 12 }} justify="space-between">
+      <HStack sx={{ marginBottom: 4 }} justify="space-between">
         <Text
           lineHeight="normal"
           fontSize="sm"
