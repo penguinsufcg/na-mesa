@@ -5,7 +5,7 @@ import Navbar from '@/components/admin/Navbar'
 
 const Layout: FC = ({ children }) => {
   return (
-    <Flex h="full">
+    <Flex w="full" h="full">
       <Navbar />
       {children}
     </Flex>

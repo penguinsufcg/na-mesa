@@ -40,3 +40,5 @@ type Order = {
   items: OrderItem[]
   time: string
 }
+
+type TableStatus = ''
