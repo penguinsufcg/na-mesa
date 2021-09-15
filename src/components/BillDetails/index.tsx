@@ -32,7 +32,7 @@ const BillDetails: FC<Props> = ({ items, total }) => {
 
   return (
     <Flex direction="column" sx={{ gap: 12 }}>
-      <Heading size="md">Conta</Heading>
+      <Heading size="md" fontWeight="medium" color="secondary.700">Conta</Heading>
       <Table size="sm" variant="unstyled">
         <Thead>
           <Tr>
