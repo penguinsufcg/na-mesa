@@ -2,25 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { Box, Flex, Heading, Text, Spacer } from '@chakra-ui/react'
 import { BiTimeFive } from 'react-icons/bi'
 import TableDrawer from './TableDrawer'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 
 const TableCard = ({ table }: { table : Table }) => {
   const [session, setSession] = useState<Session | null>()
   const { id, name, available, currentSession } = table
   const [isOpenDetails, setIsOpenDetails] = useState<boolean>(false)
+  const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders', { where: ['session', '==', currentSession] }, [currentSession])
   
-  // useEffect(() => {
-  //   if (!currentSession) {
-  //     return
-  //   }
+  // console.log(currentSession)
+  useEffect(() => {
+    if (!currentSession || typeof currentSession === 'string' || currentSession === null) {
+      return
+    }
+    // @ts-ignore
+    currentSession?.get().then((s) => setSession(s.data()))
+  }, [currentSession])
 
-  //   currentSession.firestore().then((e) => console.log(e))
-  //   // // @ts-ignore
-  //   // currentSession.get().then(snap => {
-  //   //   console.log(snap)
-  //   //   setSession(snap.data())
-  //   // })
-  //   // // @ts-ignore
-  // }, [currentSession])
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
   return (
     <>
     <Box
@@ -43,9 +44,9 @@ const TableCard = ({ table }: { table : Table }) => {
             20:30
           </Text>
         </Flex>
-        {!available  && (
+        {session && (
           <Flex direction="column" fontSize="xs" color="gray.500">
-            <Text> Cliente: Maria</Text>
+            <Text> Cliente: {session?.client}</Text>
             <Text> Total: R$ 00.00</Text>
           </Flex>
         )}
