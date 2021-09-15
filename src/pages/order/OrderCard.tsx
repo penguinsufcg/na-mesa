@@ -1,7 +1,8 @@
-import { Box, Flex, Grid, GridItem, HStack, Text } from '@chakra-ui/layout'
-import { BiTimeFive } from 'react-icons/bi'
-import react, { FC } from 'react'
+import { Flex, HStack, Text } from '@chakra-ui/layout'
 import { Tag, TagLabel } from '@chakra-ui/tag'
+import { FC } from 'react'
+import { BiTimeFive } from 'react-icons/bi'
+import { formatCurrency } from 'utils/formaters'
 
 type Props = {}
 
@@ -33,46 +34,29 @@ const OrderCard: FC<Props> = () => {
         </HStack>
       </HStack>
 
-      <HStack sx={{ marginBottom: 4 }} justify="space-between">
-        <Text
-          lineHeight="normal"
-          fontSize="sm"
-          color="secondary.700"
-          fontWeight="normal">
-          1x
-        </Text>
-        <Text
-          lineHeight="normal"
-          fontSize="sm"
-          color="secondary.700"
-          fontWeight="normal">
-          Macarrão com carne
-        </Text>
-        <Text
-          lineHeight="normal"
-          fontSize="sm"
-          color="secondary.700"
-          fontWeight="normal">
-          {new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(15.0)}
-        </Text>
+      <HStack
+        sx={{ marginBottom: 4 }}
+        justify="space-between"
+        fontFamily="heading"
+        lineHeight="normal"
+        fontSize="sm"
+        color="secondary.700"
+        fontWeight="normal">
+        <Text>1x</Text>
+        <Text>Macarrão com carne</Text>
+        <Text>{formatCurrency(15.0)}</Text>
       </HStack>
 
       <HStack justify="space-between">
         <Text
+          fontFamily="heading"
           lineHeight="normal"
           fontSize="sm"
           color="secondary.700"
           fontWeight="normal">
-          Subtotal:{' '}
-          {new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(15.0)}
+          Subtotal: {formatCurrency(15.0)}
         </Text>
-        <Tag size="md" borderRadius="full" variant="solid" colorScheme="green">
+        <Tag size="sm" borderRadius="full" variant="solid" colorScheme="green">
           <TagLabel>Pendente</TagLabel>
         </Tag>
       </HStack>
