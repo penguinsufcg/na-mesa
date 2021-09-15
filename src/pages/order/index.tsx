@@ -1,6 +1,6 @@
 import PageHeader from '@/components/client/PageHeader'
 import { Button } from '@chakra-ui/button'
-import { Box, Divider, Flex, HStack, Text } from '@chakra-ui/layout'
+import { Box, Divider, Flex, HStack, Text, VStack } from '@chakra-ui/layout'
 import React from 'react'
 import OrderCard from './OrderCard'
 
@@ -9,18 +9,24 @@ const MenuPage = () => {
     <Flex h="100vh" direction="column">
       <PageHeader title="Conta" />
       <OrderCard />
-      <Divider color="secondary.100" />
 
       {/**To fix to be at the bottom, fix spacing */}
-      <Box w="full" alignSelf="flex-end">
-        <HStack justify="space-between">
+      <VStack
+        w="full"
+        spacing={4}
+        sx={{
+          padding: 5,
+          borderTopWidth: '1px',
+          borderTopColor: 'secondary.100',
+        }}>
+        <HStack w="full" justify="space-between" fontFamily="heading">
           <Text>Total</Text>
           <Text>R$ 50.00</Text>
         </HStack>
-        <Button w="full" size="sm" background="primary.400">
+        <Button w="100%" size="sm" background="primary.400">
           Fechar Conta
         </Button>
-      </Box>
+      </VStack>
     </Flex>
   )
 }
