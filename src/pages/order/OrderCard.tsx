@@ -7,6 +7,43 @@ import ordersData from './mockData'
 
 type Props = {}
 
+const OrderComments = ({ comments }: { comments: any }) => {
+  return (
+    <>
+      {comments && (
+        <>
+          <GridItem />
+          <GridItem
+            fontSize="xs"
+            fontFamily="body"
+            fontWeight="light"
+            colSpan={2}>
+            <Text>{comments}</Text>
+          </GridItem>
+          <GridItem />
+        </>
+      )}
+    </>
+  )
+}
+
+const OrderItem = ({ order }: { order: any }) => {
+  return (
+    <>
+      <GridItem colSpan={1}>
+        <Text>{order.quantity}</Text>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <Text>{order.name}</Text>
+      </GridItem>
+      <GridItem justifySelf="end">
+        <Text>{formatCurrency(order.price)}</Text>
+      </GridItem>
+      <OrderComments comments={order.comments} />
+    </>
+  )
+}
+
 const OrderCard: FC<Props> = () => {
   return (
     <Flex
@@ -46,30 +83,7 @@ const OrderCard: FC<Props> = () => {
         color="secondary.700"
         fontWeight="normal">
         {ordersData.map((order, index) => (
-          <>
-            <GridItem colSpan={1}>
-              <Text>{order.quantity}</Text>
-            </GridItem>
-            <GridItem colSpan={2}>
-              <Text>{order.name}</Text>
-            </GridItem>
-            <GridItem justifySelf="end">
-              <Text>{formatCurrency(order.price)}</Text>
-            </GridItem>
-            {order.comments && (
-              <>
-                <GridItem />
-                <GridItem
-                  fontSize="xs"
-                  fontFamily="body"
-                  fontWeight="light"
-                  colSpan={2}>
-                  <Text>{order.comments}</Text>
-                </GridItem>
-                <GridItem />
-              </>
-            )}
-          </>
+          <OrderItem key={index} order={order} />
         ))}
       </Grid>
 
