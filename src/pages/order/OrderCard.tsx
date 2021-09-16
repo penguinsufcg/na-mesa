@@ -44,7 +44,7 @@ const OrderItem = ({ order }: { order: any }) => {
   )
 }
 
-const OrderCard: FC<Props> = () => {
+const OrderCard: FC = ({ order }: { order: any }) => {
   return (
     <Flex
       sx={{
@@ -62,12 +62,12 @@ const OrderCard: FC<Props> = () => {
           fontSize="sm"
           fontWeight="normal"
           color="secondary.700">
-          PEDIDO #4
+          PEDIDO #{order.orderNumber}
         </Text>
         <HStack>
           <BiTimeFive />
           <Text color="secondary.500" fontWeight="light" fontSize="xs">
-            18:30
+            {order.time}
           </Text>
         </HStack>
       </HStack>
@@ -82,8 +82,8 @@ const OrderCard: FC<Props> = () => {
         fontSize="sm"
         color="secondary.700"
         fontWeight="normal">
-        {ordersData.map((order, index) => (
-          <OrderItem key={index} order={order} />
+        {order.items.map((value, index) => (
+          <OrderItem key={index} order={value} />
         ))}
       </Grid>
 
@@ -94,10 +94,10 @@ const OrderCard: FC<Props> = () => {
           fontSize="sm"
           color="secondary.700"
           fontWeight="normal">
-          Subtotal: {formatCurrency(15.0)}
+          Subtotal: {formatCurrency(order.subTotal)}
         </Text>
         <Tag size="sm" borderRadius="full" variant="solid" colorScheme="green">
-          <TagLabel>Pendente</TagLabel>
+          <TagLabel>{order.status}</TagLabel>
         </Tag>
       </HStack>
     </Flex>

@@ -2,6 +2,7 @@ import PageHeader from '@/components/client/PageHeader'
 import { Button } from '@chakra-ui/button'
 import { Flex, HStack, Text, VStack } from '@chakra-ui/layout'
 import React from 'react'
+import ordersData from './mockData'
 import OrderCard from './OrderCard'
 
 const Footer = () => {
@@ -30,7 +31,10 @@ const MenuPage = () => {
   return (
     <Flex h="100vh" direction="column">
       <PageHeader title="Conta" />
-      <OrderCard />
+      {ordersData.map((order, index) => (
+        <OrderCard order={order} key={index} />
+      ))}
+
       <Footer />
     </Flex>
   )
