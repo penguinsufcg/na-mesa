@@ -1,49 +1,17 @@
-import { Flex, Grid, GridItem, HStack, Text } from '@chakra-ui/layout'
-import { Tag, TagLabel } from '@chakra-ui/tag'
+import { Flex } from '@chakra-ui/layout'
 import { FC } from 'react'
-import { BiTimeFive } from 'react-icons/bi'
-import { formatCurrency } from 'utils/formaters'
+import CardBody, { CardBodyProps } from './components/CardBody'
+import CardFooter, { CardFooterProps } from './components/CardFooter'
+import CardHeader, { CardHeaderProps } from './components/CardHeader'
 
 type Props = { order: any }
-
-const OrderComments = ({ comments }: { comments: any }) => {
-  return (
-    <>
-      {comments && (
-        <>
-          <GridItem />
-          <GridItem
-            fontSize="xs"
-            fontFamily="body"
-            fontWeight="light"
-            colSpan={2}>
-            <Text>{comments}</Text>
-          </GridItem>
-          <GridItem />
-        </>
-      )}
-    </>
-  )
+interface OrderCardComposition {
+  Header: React.FC<CardHeaderProps>
+  Body: React.FC<CardBodyProps>
+  Footer: React.FC<CardFooterProps>
 }
 
-const OrderItem = ({ order }: { order: any }) => {
-  return (
-    <>
-      <GridItem colSpan={1}>
-        <Text>{order.quantity}</Text>
-      </GridItem>
-      <GridItem colSpan={2}>
-        <Text>{order.name}</Text>
-      </GridItem>
-      <GridItem justifySelf="end">
-        <Text>{formatCurrency(order.price)}</Text>
-      </GridItem>
-      <OrderComments comments={order.comments} />
-    </>
-  )
-}
-
-const OrderCard: FC<Props> = ({ order }) => {
+const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
   return (
     <Flex
       sx={{
@@ -55,56 +23,18 @@ const OrderCard: FC<Props> = ({ order }) => {
         borderColor: 'secondary.100',
       }}
       direction="column">
-      <HStack
-        sx={{ marginBottom: 4 }}
-        justify="space-between"
-        alignItems="stretch">
-        <Text
-          color="secondary.700"
-          lineHeight="normal"
-          fontSize="sm"
-          fontWeight="normal"
-          fontFamily="heading">
-          PEDIDO #{order.orderNumber}
-        </Text>
-        <HStack color="secondary.500">
-          <BiTimeFive />
-          <Text fontWeight="light" fontSize="xs">
-            {order.time}
-          </Text>
-        </HStack>
-      </HStack>
-
-      <Grid
-        sx={{ marginBottom: 4 }}
-        templateRows="repeat(auto, minmax(250px, 1fr))"
-        templateColumns="repeat(4, 1fr)"
-        justify="space-between"
-        fontFamily="heading"
-        lineHeight="normal"
-        fontSize="sm"
-        color="secondary.700"
-        fontWeight="normal">
-        {order.items.map((value, index) => (
-          <OrderItem key={index} order={value} />
-        ))}
-      </Grid>
-
-      <HStack justify="space-between">
-        <Text
-          fontFamily="heading"
-          lineHeight="normal"
-          fontSize="sm"
-          color="secondary.700"
-          fontWeight="normal">
-          Subtotal: {formatCurrency(order.subTotal)}
-        </Text>
-        <Tag size="sm" borderRadius="full" variant="solid" colorScheme="green">
-          <TagLabel>{order.status}</TagLabel>
-        </Tag>
-      </HStack>
+      <OrderCard.Header
+        orderNumber={order.orderNumber}
+        orderTime={order.time}
+      />
+      <OrderCard.Body orders={order.items} />
+      <OrderCard.Footer subTotal={order.subTotal} status={order.status} />
     </Flex>
   )
 }
+
+OrderCard.Header = CardHeader
+OrderCard.Body = CardBody
+OrderCard.Footer = CardFooter
 
 export default OrderCard
