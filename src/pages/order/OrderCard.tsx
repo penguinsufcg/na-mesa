@@ -1,11 +1,10 @@
-import { Box, Flex, Grid, GridItem, HStack, Text } from '@chakra-ui/layout'
+import { Flex, Grid, GridItem, HStack, Text } from '@chakra-ui/layout'
 import { Tag, TagLabel } from '@chakra-ui/tag'
 import { FC } from 'react'
 import { BiTimeFive } from 'react-icons/bi'
 import { formatCurrency } from 'utils/formaters'
-import ordersData from './mockData'
 
-type Props = {}
+type Props = { order: any }
 
 const OrderComments = ({ comments }: { comments: any }) => {
   return (
@@ -44,7 +43,7 @@ const OrderItem = ({ order }: { order: any }) => {
   )
 }
 
-const OrderCard: FC = ({ order }: { order: any }) => {
+const OrderCard: FC<Props> = ({ order }) => {
   return (
     <Flex
       sx={{
