@@ -3,7 +3,7 @@ import { Text, VStack, HStack } from '@chakra-ui/layout'
 import react, { FC } from 'react'
 import { formatCurrency } from 'utils/formaters'
 
-type Props = {
+export type FooterProps = {
   value: number
   buttonProps: {
     label: string
@@ -11,7 +11,7 @@ type Props = {
   }
 }
 
-const Footer: FC<Props> = ({ value, buttonProps }) => {
+const Footer: FC<FooterProps> = ({ value, buttonProps }) => {
   return (
     <VStack
       w="full"
