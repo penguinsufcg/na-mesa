@@ -30,7 +30,7 @@ const MenuPage = () => {
   return (
     <Flex h="100vh" direction="column">
       <PageHeader title="Conta" />
-      <Container p={4}>
+      <Container p={4} sx={{ overflowY: 'auto' }}>
         {ordersData.map((order, index) => (
           <OrderCard order={order} key={index} />
         ))}
