@@ -56,12 +56,16 @@ const OrderCard: FC = ({ order }: { order: any }) => {
         borderColor: 'secondary.100',
       }}
       direction="column">
-      <HStack sx={{ marginBottom: 8 }} justify="space-between">
+      <HStack
+        sx={{ marginBottom: 4 }}
+        justify="space-between"
+        color="secondary.700"
+        alignItems="stretch">
         <Text
           lineHeight="normal"
           fontSize="sm"
           fontWeight="normal"
-          color="secondary.700">
+          fontFamily="heading">
           PEDIDO #{order.orderNumber}
         </Text>
         <HStack>
