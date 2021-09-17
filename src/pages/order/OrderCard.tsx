@@ -59,18 +59,18 @@ const OrderCard: FC = ({ order }: { order: any }) => {
       <HStack
         sx={{ marginBottom: 4 }}
         justify="space-between"
-        color="secondary.700"
         alignItems="stretch">
         <Text
+          color="secondary.700"
           lineHeight="normal"
           fontSize="sm"
           fontWeight="normal"
           fontFamily="heading">
           PEDIDO #{order.orderNumber}
         </Text>
-        <HStack>
+        <HStack color="secondary.500">
           <BiTimeFive />
-          <Text color="secondary.500" fontWeight="light" fontSize="xs">
+          <Text fontWeight="light" fontSize="xs">
             {order.time}
           </Text>
         </HStack>
