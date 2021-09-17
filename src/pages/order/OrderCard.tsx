@@ -49,7 +49,7 @@ const OrderCard: FC = ({ order }: { order: any }) => {
     <Flex
       sx={{
         shadow: 'sm',
-        margin: 4,
+        marginBottom: 4,
         padding: 4,
         borderWidth: 1,
         borderRadius: 'md',
