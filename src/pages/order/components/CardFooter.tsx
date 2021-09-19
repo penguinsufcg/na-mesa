@@ -1,11 +1,31 @@
 import { HStack, Text } from '@chakra-ui/layout'
 import { Tag, TagLabel } from '@chakra-ui/tag'
 import { FC } from 'react'
-import { formatCurrency } from 'utils/formaters'
+import { formatCurrency } from 'utils/formatters'
 
 export type CardFooterProps = {
   subTotal: number
   status: string
+}
+
+const StatusLabel = ({ status }: { status: string }) => {
+  const getColor: { [key: string]: string } = {
+    Pendente: '#EFA238',
+    'Na cozinha': '#8BA451',
+    Pronto: '#3EA299',
+    Entregue: '#2B2D57',
+  }
+
+  return (
+    <Tag
+      size="md"
+      borderRadius="full"
+      variant="solid"
+      fontSize="xs"
+      backgroundColor={getColor[status]}>
+      <TagLabel>{status}</TagLabel>
+    </Tag>
+  )
 }
 
 const CardFooter: FC<CardFooterProps> = ({ subTotal, status }) => {
@@ -19,9 +39,7 @@ const CardFooter: FC<CardFooterProps> = ({ subTotal, status }) => {
         fontWeight="normal">
         Subtotal: {formatCurrency(subTotal)}
       </Text>
-      <Tag size="sm" borderRadius="full" variant="solid" colorScheme="green">
-        <TagLabel>{status}</TagLabel>
-      </Tag>
+      <StatusLabel status={status} />
     </HStack>
   )
 }

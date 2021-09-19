@@ -1,6 +1,6 @@
 import { Grid, GridItem, Text } from '@chakra-ui/layout'
 import { FC } from 'react'
-import { formatCurrency } from 'utils/formaters'
+import { formatCurrency } from 'utils/formatters'
 
 export type CardBodyProps = {
   orders: any
@@ -55,7 +55,7 @@ const CardBody: FC<CardBodyProps> = ({ orders }) => {
       fontSize="sm"
       color="secondary.700"
       fontWeight="normal">
-      {orders.map((value, index) => (
+      {orders.map((value: any, index: number) => (
         <OrderItem key={index} order={value} />
       ))}
     </Grid>
