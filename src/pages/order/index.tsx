@@ -1,12 +1,10 @@
 import Layout from '@/components/client/Layout'
-import PageHeader from '@/components/client/PageHeader'
-import { Button } from '@chakra-ui/button'
-import { Container, Flex, HStack, Text, VStack } from '@chakra-ui/layout'
-import React from 'react'
+import { Container } from '@chakra-ui/layout'
+import React, { FC } from 'react'
 import ordersData from './mockData'
-import OrderCard from './OrderCard'
+import OrderCard from './components/OrderCard'
 
-const MenuPage = () => {
+const CloseOrder: FC = () => {
   return (
     <Layout
       headerProps={{ title: 'Conta' }}
@@ -23,4 +21,4 @@ const MenuPage = () => {
   )
 }
 
-export default MenuPage
+export default CloseOrder

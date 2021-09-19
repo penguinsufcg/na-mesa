@@ -1,6 +1,6 @@
 import { HStack, Text } from '@chakra-ui/layout'
 import { Tag, TagLabel } from '@chakra-ui/tag'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { formatCurrency } from 'utils/formatters'
 
 export type CardFooterProps = {

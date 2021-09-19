@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/layout'
 import { FC } from 'react'
-import CardBody, { CardBodyProps } from './components/CardBody'
-import CardFooter, { CardFooterProps } from './components/CardFooter'
-import CardHeader, { CardHeaderProps } from './components/CardHeader'
+import CardBody, { CardBodyProps } from './Card/CardBody'
+import CardFooter, { CardFooterProps } from './Card/CardFooter'
+import CardHeader, { CardHeaderProps } from './Card/CardHeader'
 
 type Props = { order: any }
 interface OrderCardComposition {

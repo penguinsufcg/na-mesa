@@ -1,12 +1,12 @@
 import { Grid, GridItem, Text } from '@chakra-ui/layout'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { formatCurrency } from 'utils/formatters'
 
 export type CardBodyProps = {
   orders: any
 }
 
-const OrderComments = ({ comments }: { comments: any }) => {
+const CardSubItem = ({ comments }: { comments: any }) => {
   return (
     <>
       {comments && (
@@ -26,7 +26,7 @@ const OrderComments = ({ comments }: { comments: any }) => {
   )
 }
 
-const OrderItem = ({ order }: { order: any }) => {
+const CardItem = ({ order }: { order: any }) => {
   return (
     <>
       <GridItem colSpan={1}>
@@ -38,7 +38,7 @@ const OrderItem = ({ order }: { order: any }) => {
       <GridItem justifySelf="end">
         <Text>{formatCurrency(order.price)}</Text>
       </GridItem>
-      <OrderComments comments={order.comments} />
+      <CardSubItem comments={order.comments} />
     </>
   )
 }
@@ -56,7 +56,7 @@ const CardBody: FC<CardBodyProps> = ({ orders }) => {
       color="secondary.700"
       fontWeight="normal">
       {orders.map((value: any, index: number) => (
-        <OrderItem key={index} order={value} />
+        <CardItem key={index} order={value} />
       ))}
     </Grid>
   )

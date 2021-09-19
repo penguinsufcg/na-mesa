@@ -1,5 +1,5 @@
 import { HStack, Text } from '@chakra-ui/layout'
-import react, { FC } from 'react'
+import React, { FC } from 'react'
 import { BiTimeFive } from 'react-icons/bi'
 
 export type CardHeaderProps = {
