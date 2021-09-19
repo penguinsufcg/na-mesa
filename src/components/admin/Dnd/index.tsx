@@ -9,6 +9,7 @@ import { Flex, Text, List, Spacer, Box } from '@chakra-ui/react'
 interface Orders {
   id: string
   time: string
+  session: any
   items: any[]
 }
 
@@ -19,6 +20,18 @@ interface OrderProps {
 
 // eslint-disable-next-line react/display-name
 const Orders = memo(({ order, index }: OrderProps) => {
+  const {data: sessions} =  useFirestoreListQuery<Session>('sessions')
+
+  const getTable = (sessions: any) => {
+    const table = sessions?.filter((d) => {
+      return d.id === order.session.id
+    }).map((s) => {
+      return s.table
+    })
+
+    return table as string
+  }
+
   return (
     <Draggable draggableId={order.id} index={index}>
       {(provided, snapshot) => (
@@ -41,6 +54,7 @@ const Orders = memo(({ order, index }: OrderProps) => {
             code={order.id}
             time={order.time}
             dishs={order.items}
+            table={getTable(sessions)}
           />
         </Box>
       )}

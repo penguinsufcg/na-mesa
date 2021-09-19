@@ -34,7 +34,7 @@ const DishTitle = ({ dish }: DishTitleProps) => {
     <>
       <Flex justifyContent="space-between" marginBottom={1.5}>
         <TitleItem text={dish.name} />
-        <TitleItem text={`R$ ${dish.price.toFixed(2)}`} />
+        <TitleItem text={`R$ ${dish.price?.toFixed(2)}`} />
       </Flex>
       <HStack spacing={4} color="secondary.500" marginBottom={3}>
         <SubtitleItem
