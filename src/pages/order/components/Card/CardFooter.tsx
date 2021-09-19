@@ -3,7 +3,7 @@ import { Tag, TagLabel } from '@chakra-ui/tag'
 import React, { FC } from 'react'
 import { formatCurrency } from 'utils/formatters'
 
-export type CardFooterProps = {
+export type OrderCardFooterProps = {
   subTotal: number
   status: string
 }
@@ -28,7 +28,7 @@ const StatusLabel = ({ status }: { status: string }) => {
   )
 }
 
-const CardFooter: FC<CardFooterProps> = ({ subTotal, status }) => {
+const OrderCardFooter: FC<OrderCardFooterProps> = ({ subTotal, status }) => {
   return (
     <HStack justify="space-between">
       <Text
@@ -44,4 +44,4 @@ const CardFooter: FC<CardFooterProps> = ({ subTotal, status }) => {
   )
 }
 
-export default CardFooter
+export default OrderCardFooter

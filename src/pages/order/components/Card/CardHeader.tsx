@@ -2,12 +2,15 @@ import { HStack, Text } from '@chakra-ui/layout'
 import React, { FC } from 'react'
 import { BiTimeFive } from 'react-icons/bi'
 
-export type CardHeaderProps = {
+export type OrderCardHeaderProps = {
   orderNumber: number
   orderTime: string
 }
 
-const CardHeader: FC<CardHeaderProps> = ({ orderNumber, orderTime }) => {
+const OrderCardHeader: FC<OrderCardHeaderProps> = ({
+  orderNumber,
+  orderTime,
+}) => {
   return (
     <HStack
       sx={{ marginBottom: 4 }}
@@ -31,4 +34,4 @@ const CardHeader: FC<CardHeaderProps> = ({ orderNumber, orderTime }) => {
   )
 }
 
-export default CardHeader
+export default OrderCardHeader

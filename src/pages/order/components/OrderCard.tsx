@@ -1,14 +1,14 @@
 import { Flex } from '@chakra-ui/layout'
 import { FC } from 'react'
-import CardBody, { CardBodyProps } from './Card/CardBody'
-import CardFooter, { CardFooterProps } from './Card/CardFooter'
-import CardHeader, { CardHeaderProps } from './Card/CardHeader'
+import CardBody, { OrderCardBodyProps } from './Card/CardBody'
+import CardFooter, { OrderCardFooterProps } from './Card/CardFooter'
+import CardHeader, { OrderCardHeaderProps } from './Card/CardHeader'
 
 type Props = { order: any }
 interface OrderCardComposition {
-  Header: React.FC<CardHeaderProps>
-  Body: React.FC<CardBodyProps>
-  Footer: React.FC<CardFooterProps>
+  Header: React.FC<OrderCardHeaderProps>
+  Body: React.FC<OrderCardBodyProps>
+  Footer: React.FC<OrderCardFooterProps>
 }
 
 const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
