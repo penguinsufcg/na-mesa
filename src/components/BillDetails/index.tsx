@@ -21,9 +21,9 @@ const ItemRow = ({ item }: { item: Item }) => {
 
   return (
     <Tr>
-      <Td>{item.quantity}</Td>
-      <Td>{item.name}</Td>
-      <Td isNumeric>{formattedPrice(item.price)}</Td>
+      <Td paddingY="4px" paddingX={0}>{item.quantity}</Td>
+      <Td paddingY="4px" paddingX={0}>{item.name}</Td>
+      <Td paddingY="4px" paddingX={0} textAlign="end" isNumeric>{formattedPrice(item.price)}</Td>
     </Tr>
   )
 } 
@@ -36,9 +36,9 @@ const BillDetails: FC<Props> = ({ items, total }) => {
       <Table size="sm" variant="unstyled">
         <Thead>
           <Tr>
-            <Th>Qtd.</Th>
-            <Th>Item</Th>
-            <Th isNumeric>Preço</Th>
+            <Th textTransform="none" paddingX={0}>Qtd.</Th>
+            <Th textTransform="none" paddingX={0}>Item</Th>
+            <Th textTransform="none" paddingX={0} textAlign="end" isNumeric>Preço</Th>
           </Tr>
         </Thead>
         <Tbody>
