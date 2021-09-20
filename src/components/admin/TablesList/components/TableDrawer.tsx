@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerProps, Flex, Heading, useDisclosure, VStack } from '@chakra-ui/react'
+import { makeAvailable } from '@/api/tables'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
@@ -14,6 +15,12 @@ const TableDrawer: FC<Props> = ({ isOpen, onClose, table }) => {
     onOpen: onOpenModal,
     onClose: onCloseModal,
   } = useDisclosure()
+
+  const closeTable = () => {
+    makeAvailable(table.id)
+      .then(onClose)
+      .catch((e) => console.log(e))
+  }
 
   return (
     <>
@@ -57,7 +64,7 @@ const TableDrawer: FC<Props> = ({ isOpen, onClose, table }) => {
         message={'Tem certeza que deseja encerrar a mesa?'}
         isOpen={isOpenModal}
         onClose={onCloseModal}
-        handleSubmit={() => {}}
+        handleSubmit={closeTable}
       />
     </>
   )

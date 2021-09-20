@@ -10,3 +10,10 @@ export function createTable(name: string) {
     currentSession: null,
   })
 }
+
+export function makeAvailable(id: string) {
+  return tablesCollection.doc(id).update({
+    available: true,
+    currentSession: null,
+  })
+}
