@@ -24,6 +24,7 @@ interface Session {
 }
 
 interface Order {
+  id?: string
   sessionId: string
   status: string
   items: [OrderItem] | []

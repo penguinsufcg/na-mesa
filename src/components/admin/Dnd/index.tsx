@@ -1,6 +1,11 @@
 import React, { useEffect, useState, memo } from 'react'
 import { updateStatusOrder } from 'api/order'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DraggableLocation,
+} from 'react-beautiful-dnd'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import OrderCard from 'components/admin/Order'
 import '@atlaskit/css-reset'
@@ -24,10 +29,10 @@ const Orders = memo(({ order, index }: OrderProps) => {
 
   const getTable = (sessions: any) => {
     const table = sessions
-      ?.filter((d) => {
+      ?.filter((d: any) => {
         return d.id === order.session.id
       })
-      .map((s) => {
+      .map((s: any) => {
         return s.table
       })
 
@@ -158,7 +163,7 @@ function DragAndDrop() {
     if (!ordersData) {
       return
     }
-    const cols = {}
+    const cols: any = {}
     columnOrder.forEach((colId) => {
       cols[colId] = {
         id: colId,
@@ -172,7 +177,12 @@ function DragAndDrop() {
     setStateColumns(cols)
   }, [ordersData])
 
-  const handleDragEnd = (destination, source, draggableId, type) => {
+  const handleDragEnd = (
+    destination: DraggableLocation | undefined,
+    source: DraggableLocation,
+    draggableId: string,
+    type: string,
+  ) => {
     if (!destination) {
       return
     }
