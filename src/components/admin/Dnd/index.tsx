@@ -20,14 +20,16 @@ interface OrderProps {
 
 // eslint-disable-next-line react/display-name
 const Orders = memo(({ order, index }: OrderProps) => {
-  const {data: sessions} =  useFirestoreListQuery<Session>('sessions')
+  const { data: sessions } = useFirestoreListQuery<Session>('sessions')
 
   const getTable = (sessions: any) => {
-    const table = sessions?.filter((d) => {
-      return d.id === order.session.id
-    }).map((s) => {
-      return s.table
-    })
+    const table = sessions
+      ?.filter((d) => {
+        return d.id === order.session.id
+      })
+      .map((s) => {
+        return s.table
+      })
 
     return table as string
   }
@@ -39,7 +41,7 @@ const Orders = memo(({ order, index }: OrderProps) => {
           bg={snapshot.isDragging ? 'red.100' : 'white'}
           borderRadius="5"
           marginBottom="2"
-          _hover= {{
+          _hover={{
             shadow: 'md',
             borderWidth: '1px',
             borderRadius: 'md',
@@ -130,6 +132,20 @@ const columns = {
   },
 }
 
+const getTransladeWord = (status: string): string => {
+  switch (status) {
+    case 'pending':
+      return 'PENDENTE'
+    case 'kitchen':
+      return 'COZINHA'
+    case 'ready':
+      return 'PRONTO'
+    case 'delivered':
+      return 'ENTREGUE'
+  }
+  return ''
+}
+
 const columnOrder = ['pending', 'kitchen', 'ready', 'delivered']
 
 function DragAndDrop() {
@@ -146,13 +162,13 @@ function DragAndDrop() {
     columnOrder.forEach((colId) => {
       cols[colId] = {
         id: colId,
-        title: colId.toUpperCase(),
+        title: getTransladeWord(colId),
         ordersIds: ordersData
           .filter((order) => order.status === colId.toUpperCase())
           .map((o) => o.id),
       }
     })
-    
+
     setStateColumns(cols)
   }, [ordersData])
 

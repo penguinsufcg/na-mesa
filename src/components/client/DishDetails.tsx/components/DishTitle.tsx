@@ -42,7 +42,7 @@ const DishTitle = ({ dish }: DishTitleProps) => {
           icon={<BiTime size={14} />}
         />
         <SubtitleItem
-          text={dish.servings.toString()}
+          text={dish.servings?.toString()}
           icon={<BiGroup size={14} />}
         />
       </HStack>
