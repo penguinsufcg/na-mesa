@@ -7,7 +7,7 @@ export async function createSession(session: Session) {
 
   const newSession = {
     id: sessionDocument.id,
-    ...sessionDocument.data() as Session
+    ...(sessionDocument.data() as Session),
   }
 
   return newSession
