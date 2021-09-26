@@ -8,5 +8,5 @@ export const formatCurrency = (money: number): string => {
 export const formatTime = (date: string): string => {
   const dateObject = new Date(date)
 
-  return `${dateObject.toLocaleTimeString('pt-br')}`
+  return dateObject.toLocaleTimeString('pt-br')
 }
