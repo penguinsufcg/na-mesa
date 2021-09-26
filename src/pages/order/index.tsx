@@ -7,7 +7,7 @@ import OrderCard from './components/OrderCard'
 
 const CloseOrder: FC = () => {
   const { session } = useSession()
-  const { data } = useFirestoreListQuery(
+  const { data } = useFirestoreListQuery<Order>(
     `orders`,
     {
       where: ['session', '==', `sessions/${session?.id}`],

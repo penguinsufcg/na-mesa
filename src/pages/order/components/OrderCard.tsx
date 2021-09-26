@@ -5,7 +5,7 @@ import CardBody, { OrderCardBodyProps } from './Card/CardBody'
 import CardFooter, { OrderCardFooterProps } from './Card/CardFooter'
 import CardHeader, { OrderCardHeaderProps } from './Card/CardHeader'
 
-type Props = { order: any }
+type Props = { order: EntityWithID<Order> }
 interface OrderCardComposition {
   Header: React.FC<OrderCardHeaderProps>
   Body: React.FC<OrderCardBodyProps>
@@ -13,7 +13,7 @@ interface OrderCardComposition {
 }
 
 const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
-  const getSubTotal = (orders: any[]) =>
+  const getSubTotal = (orders: OrderItem[]) =>
     orders.reduce((acc, current) => acc + current.price, 0)
   return (
     <Flex

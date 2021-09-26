@@ -3,10 +3,10 @@ import React, { FC } from 'react'
 import { formatCurrency } from 'utils/formatters'
 
 export type OrderCardBodyProps = {
-  orders: any
+  orders: OrderItem[]
 }
 
-const OrderCardSubItem = ({ comments }: { comments: any }) => {
+const OrderCardSubItem = ({ comments }: { comments: string }) => {
   return (
     <>
       {comments && (
@@ -26,7 +26,7 @@ const OrderCardSubItem = ({ comments }: { comments: any }) => {
   )
 }
 
-const OrderCardItem = ({ order }: { order: any }) => {
+const OrderCardItem = ({ order }: { order: OrderItem }) => {
   return (
     <>
       <GridItem colSpan={1}>

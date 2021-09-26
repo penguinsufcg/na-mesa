@@ -23,23 +23,8 @@ interface Session {
   table: string
 }
 
-interface Order {
-  sessionId: string
-  status: string
-  items: [OrderItem] | []
-}
-
-interface OrderItem {
-  dishId: string
-  name: string
-  price: number
-  comments: string
-  quantity: number
-  imageURL: string
-}
-
 type EntityWithID<P> = P & { id: string }
-interface Item {
+interface OrderItem {
   dishId?: string
   comments: string
   quantity: number
@@ -51,5 +36,6 @@ type Order = {
   id: string
   status: string
   session: string
-  items: Item[]
+  items: OrderItem[]
+  time: string
 }
