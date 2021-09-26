@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/layout'
 import { FC } from 'react'
+import { formatTime } from 'utils/formatters'
 import CardBody, { OrderCardBodyProps } from './Card/CardBody'
 import CardFooter, { OrderCardFooterProps } from './Card/CardFooter'
 import CardHeader, { OrderCardHeaderProps } from './Card/CardHeader'
@@ -12,6 +13,8 @@ interface OrderCardComposition {
 }
 
 const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
+  const getSubTotal = (orders: any[]) =>
+    orders.reduce((acc, current) => acc + current.price, 0)
   return (
     <Flex
       sx={{
@@ -25,10 +28,13 @@ const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
       direction="column">
       <OrderCard.Header
         orderNumber={order.orderNumber}
-        orderTime={order.time}
+        orderTime={formatTime(order.time)}
       />
       <OrderCard.Body orders={order.items} />
-      <OrderCard.Footer subTotal={order.subTotal} status={order.status} />
+      <OrderCard.Footer
+        subTotal={getSubTotal(order.items)}
+        status={order.status}
+      />
     </Flex>
   )
 }
