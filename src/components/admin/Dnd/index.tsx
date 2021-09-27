@@ -115,43 +115,29 @@ const Column = memo(({ column, orders }: ColumnProps) => (
 ))
 
 const columns = {
-  pending: {
-    id: 'pending',
+  pendente: {
+    id: 'pendente',
     title: 'PENDENTE',
     ordersIds: [],
   },
-  kitchen: {
-    id: 'kitchen',
+  cozinha: {
+    id: 'cozinha',
     title: 'COZINHA',
     ordersIds: [],
   },
-  ready: {
-    id: 'ready',
+  pronto: {
+    id: 'pronto',
     title: 'PRONTO',
     ordersIds: [],
   },
-  delivered: {
-    id: 'delivered',
+  entregue: {
+    id: 'entregue',
     title: 'ENTREGUE',
     ordersIds: [],
   },
 }
 
-const getTransladeWord = (status: string): string => {
-  switch (status) {
-    case 'pending':
-      return 'PENDENTE'
-    case 'kitchen':
-      return 'COZINHA'
-    case 'ready':
-      return 'PRONTO'
-    case 'delivered':
-      return 'ENTREGUE'
-  }
-  return ''
-}
-
-const columnOrder = ['pending', 'kitchen', 'ready', 'delivered']
+const columnOrder = ['pendente', 'cozinha', 'pronto', 'entregue']
 
 function DragAndDrop() {
   const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders')
@@ -167,7 +153,7 @@ function DragAndDrop() {
     columnOrder.forEach((colId) => {
       cols[colId] = {
         id: colId,
-        title: getTransladeWord(colId),
+        title: colId.toUpperCase(),
         ordersIds: ordersData
           .filter((order) => order.status === colId.toUpperCase())
           .map((o) => o.id),
