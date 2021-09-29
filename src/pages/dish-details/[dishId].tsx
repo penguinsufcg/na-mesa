@@ -12,10 +12,12 @@ import useSession from '@/hooks/useSession'
 const DishPage = () => {
   const router = useRouter()
   const { dishId } = router.query
-  const { data: dishData } = useFirestoreObjectQuery<Dish>(`dishes/${dishId}`)
+  const { data: dishData } = useFirestoreObjectQuery<Dish>(`dishes/${dishId}`, [
+    dishId,
+  ])
   const { addItem } = useMinicart()
   const { isLogged } = useSession()
-  
+
   const toast = useToast()
 
   const handleSubmit = (quantity: number, comments: string) => {
