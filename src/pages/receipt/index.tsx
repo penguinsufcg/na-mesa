@@ -15,15 +15,27 @@ const CloseOrder: FC = () => {
     [session],
   )
 
+  const getSubtotal = (orders: OrderItem[]) =>
+    orders.reduce((acc, current) => acc + current.quantity * current.price, 0)
+
+  const ordersWithSubtotal =
+    data?.map((order) => ({ ...order, subtotal: getSubtotal(order.items) })) ||
+    []
+
+  const total = ordersWithSubtotal.reduce(
+    (acc, current) => acc + current.subtotal,
+    0,
+  )
+
   return (
     <Layout
       headerProps={{ title: 'Conta' }}
       footerProps={{
-        value: 50.0,
+        value: total || 0,
         buttonProps: { label: 'Fechar Conta', onClick: () => {} },
       }}>
       <Container p={4} sx={{ overflowY: 'auto' }}>
-        {data?.map((order, index) => (
+        {ordersWithSubtotal.map((order, index) => (
           <OrderCard order={order} key={index} />
         ))}
       </Container>
