@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, Grid, GridItem } from '@chakra-ui/react'
 
-const DishOrder = ({ comments, quantity, name, price }: Item) => {
+const DishOrder = ({ comments, quantity, name, price }: OrderItem) => {
   return (
     <Grid
       w='100%'

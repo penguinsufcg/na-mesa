@@ -4,7 +4,7 @@ const orderCollection = db.collection('orders')
 
 export function createOrder(items: OrderItem[], sessionId: string) {
   orderCollection.add({
-    session: db.doc(`sessions/${sessionId}`),
+    session: `sessions/${sessionId}`,
     status: 'PENDENTE',
     items,
     time: new Date().toString(),
