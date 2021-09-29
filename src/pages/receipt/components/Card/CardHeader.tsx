@@ -3,14 +3,10 @@ import React, { FC } from 'react'
 import { BiTimeFive } from 'react-icons/bi'
 
 export type OrderCardHeaderProps = {
-  orderNumber: number
   orderTime: string
 }
 
-const OrderCardHeader: FC<OrderCardHeaderProps> = ({
-  orderNumber,
-  orderTime,
-}) => {
+const OrderCardHeader: FC<OrderCardHeaderProps> = ({ orderTime }) => {
   return (
     <HStack
       sx={{ marginBottom: 4 }}
@@ -22,7 +18,7 @@ const OrderCardHeader: FC<OrderCardHeaderProps> = ({
         fontSize="sm"
         fontWeight="normal"
         fontFamily="heading">
-        PEDIDO #{orderNumber}
+        PEDIDO
       </Text>
       <HStack color="secondary.500">
         <BiTimeFive />

@@ -26,10 +26,7 @@ const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
         borderColor: 'secondary.100',
       }}
       direction="column">
-      <OrderCard.Header
-        orderNumber={order.orderNumber}
-        orderTime={formatTime(order.time)}
-      />
+      <OrderCard.Header orderTime={formatTime(order.time)} />
       <OrderCard.Body orders={order.items} />
       <OrderCard.Footer
         subTotal={getSubTotal(order.items)}
