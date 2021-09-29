@@ -34,7 +34,7 @@ const DishTitle = ({ dish }: DishTitleProps) => {
     <>
       <Flex justifyContent="space-between" marginBottom={1.5}>
         <TitleItem text={dish.name} />
-        <TitleItem text={`R$ ${dish.price.toFixed(2)}`} />
+        <TitleItem text={`R$ ${dish.price?.toFixed(2)}`} />
       </Flex>
       <HStack spacing={4} color="secondary.500" marginBottom={3}>
         <SubtitleItem
@@ -42,7 +42,7 @@ const DishTitle = ({ dish }: DishTitleProps) => {
           icon={<BiTime size={14} />}
         />
         <SubtitleItem
-          text={dish.servings.toString()}
+          text={dish.servings?.toString()}
           icon={<BiGroup size={14} />}
         />
       </HStack>

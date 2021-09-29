@@ -54,6 +54,9 @@ function DishModal({
     createDish(newDish)
       .then(() => {
         onClose()
+        setNewDish(DEFAULT_DISH)
+        setUploadImg(false)
+
       })
       .catch((error) => {
         console.error('Error: ', error)
@@ -64,6 +67,7 @@ function DishModal({
     updateDish({ id: dish?.id, ...newDish })
       .then(() => {
         onClose()
+        setUploadImg(false)
       })
       .catch((error) => {
         console.error('Error: ', error)
@@ -71,8 +75,8 @@ function DishModal({
   }
 
   const closeModal = async () => {
-    setUploadImg(false)
     onClose()
+    setUploadImg(false)
   }
 
   const setBase64 = (file: File) => {
