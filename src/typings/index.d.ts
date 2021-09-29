@@ -19,7 +19,7 @@ interface Table {
 interface Session {
   client: string
   code: string
-  orders: [Order] | []
+  orders: [OrderItem] | []
   table: string
 }
 

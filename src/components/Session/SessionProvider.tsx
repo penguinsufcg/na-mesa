@@ -1,3 +1,4 @@
+import { occupyTable } from '@/api/tables'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 import { SessionContext } from '@/hooks/useSession'
 import { createSession } from 'api/session'
@@ -31,7 +32,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   }) => {
     const secretCode = generateRandomCode()
 
-    const session = await createSession({
+    const [session, sessionRef] = await createSession({
       code: secretCode.toString(),
       client,
       orders: [],
@@ -41,6 +42,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     if (!session) {
       throw new Error('Error creating session')
     }
+    await occupyTable(table, sessionRef)
 
     setSession(session)
 
