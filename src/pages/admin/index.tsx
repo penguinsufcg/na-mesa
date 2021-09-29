@@ -1,9 +1,15 @@
-import { Button, Center, Flex, Spacer, Heading, Box } from '@chakra-ui/react'
 import DishModal from '@/components/admin/DishModal'
-import ConfirmationModal from '@/components/admin/ConfirmationModal'
-import useAuthContext from '@/hooks/useAuthContext'
-import { useDisclosure } from '@chakra-ui/react'
 import Layout from '@/components/admin/Layout'
+import useAuthContext from '@/hooks/useAuthContext'
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Spacer,
+  useDisclosure,
+} from '@chakra-ui/react'
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
