@@ -14,7 +14,7 @@ interface OrderCardComposition {
 
 const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
   const getSubTotal = (orders: OrderItem[]) =>
-    orders.reduce((acc, current) => acc + current.price, 0)
+    orders.reduce((acc, current) => acc + current.quantity * current.price, 0)
   return (
     <Flex
       sx={{
