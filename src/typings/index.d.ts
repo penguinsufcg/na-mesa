@@ -24,6 +24,7 @@ interface Session {
 }
 
 type EntityWithID<P> = P & { id: string }
+
 interface OrderItem {
   dishId?: string
   comments: string

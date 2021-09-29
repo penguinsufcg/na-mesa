@@ -15,9 +15,10 @@ type Order = {
   code: string
   time: string
   dishs: Dish[]
+  table: string
 }
 
-const OrderCard = ({ id, code, time, dishs }: Order) => {
+const OrderCard = ({ id, code, time, dishs, table }: Order) => {
 
   const calcSubtotal = (dishs: Dish[]) => {
     return dishs.reduce((prevSum, dish) => prevSum + (dish.price * dish.quantity), 0)
@@ -39,7 +40,7 @@ const OrderCard = ({ id, code, time, dishs }: Order) => {
       <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
         <HStack spacing='8px' alignItems='baseline'>
           <DragHandleIcon h='12px' color='primary.300'/>
-          <Text fontSize='16px'>{`MESA ${id}`}</Text>
+          <Text fontSize='16px'>{`MESA ${table ?? '' }`}</Text>
         </HStack>
         <HStack spacing='6px' alignItems='baseline' color='secondary.500'>
           <TimeIcon h='10px'/>
