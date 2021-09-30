@@ -9,6 +9,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerProps,
+  Heading,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react'
@@ -16,10 +17,13 @@ import { makeAvailable } from '@/api/tables'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
+import useSessionReceipt from '@/hooks/useSessionReceipt'
+import { formatCurrency, formatTime } from 'utils/formatters'
 
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
   session?: Session | null
+  sessionRef?: Session | null
 }
 
 const TableDrawer: FC<Props> = ({
@@ -34,6 +38,10 @@ const TableDrawer: FC<Props> = ({
     onOpen: onOpenModal,
     onClose: onCloseModal,
   } = useDisclosure()
+
+  const { items: receiptItems, total: receiptTotal } = useSessionReceipt({
+    sessionRef,
+  })
 
   const closeTable = () => {
     makeAvailable(table.id)
@@ -58,16 +66,17 @@ const TableDrawer: FC<Props> = ({
             <VStack spacing="20px" align="stretch">
               {session && (
                 <TableStatus
-                  time="20:20"
-                  status="Aguardando pagamento"
+                  time={session?.openTime}
+                  status={table.status}
                   clientName={session.client}
                 />
               )}
-              <BillDetails sessionRef={sessionRef} />
+              <BillDetails items={receiptItems} />
             </VStack>
           </DrawerBody>
 
           <DrawerFooter flexDirection="column" alignItems="flex-start">
+            <Heading size="sm">Total: {formatCurrency(receiptTotal)}</Heading>
             <Button marginX="0" width="100%" onClick={onOpenModal}>
               Encerrar mesa
             </Button>

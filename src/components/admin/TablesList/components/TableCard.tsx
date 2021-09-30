@@ -3,18 +3,13 @@ import { Box, Flex, Heading, Text, Spacer } from '@chakra-ui/react'
 import { BiTimeFive } from 'react-icons/bi'
 import TableDrawer from './TableDrawer'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
+import { formatTime } from 'utils/formatters'
 
 const TableCard = ({ table }: { table: Table }) => {
   const [session, setSession] = useState<Session | null>()
-  const { id, name, available, currentSession } = table
+  const { name, currentSession } = table
   const [isOpenDetails, setIsOpenDetails] = useState<boolean>(false)
-  const { data: ordersData, isLoading } = useFirestoreListQuery<Order>(
-    'orders',
-    { where: ['session', '==', currentSession] },
-    [currentSession],
-  )
 
-  // console.log(currentSession)
   useEffect(() => {
     if (
       !currentSession ||
@@ -27,9 +22,6 @@ const TableCard = ({ table }: { table: Table }) => {
     currentSession?.get().then((s) => setSession(s.data()))
   }, [currentSession])
 
-  if (isLoading) {
-    return <Text>Loading...</Text>
-  }
   return (
     <>
       <Box
@@ -50,21 +42,27 @@ const TableCard = ({ table }: { table: Table }) => {
             Mesa {name}
           </Text>
           <Spacer />
-          <Text
-            fontSize="xs"
-            color="gray.500"
-            orientation="horizontal"
-            sx={{ marginRight: 1 }}>
-            <BiTimeFive />
-          </Text>
-          <Text fontSize="xs" color="gray.500" orientation="horizontal">
-            20:30
-          </Text>
+          {session?.openTime && (
+            <>
+              <Text
+                fontSize="xs"
+                color="gray.500"
+                orientation="horizontal"
+                sx={{ marginRight: 1 }}>
+                <BiTimeFive />
+              </Text>
+              <Text fontSize="xs" color="gray.500" orientation="horizontal">
+                {formatTime(session?.openTime, {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </Text>
+            </>
+          )}
         </Flex>
         {session && (
           <Flex direction="column" fontSize="xs" color="gray.500">
             <Text> Cliente: {session?.client}</Text>
-            <Text> Total: R$ 00.00</Text>
           </Flex>
         )}
       </Box>

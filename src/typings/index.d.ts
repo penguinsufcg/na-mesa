@@ -1,3 +1,5 @@
+type TableStatus = 'AVAILABLE' | 'OCCUPIED' | 'PAYMENT'
+
 interface Dish {
   id?: string
   available: boolean
@@ -13,6 +15,7 @@ interface Table {
   id: string
   name: string
   available: boolean
+  status: TableStatus
   currentSession: Session
 }
 
@@ -21,6 +24,7 @@ interface Session {
   code: string
   orders: [OrderItem] | []
   table: string
+  openTime?: string
 }
 
 type EntityWithID<P> = P & { id: string }

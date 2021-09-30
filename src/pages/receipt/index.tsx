@@ -1,3 +1,4 @@
+import { updateTableStatus } from '@/api/tables'
 import Layout from '@/components/client/Layout'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import useSession from '@/hooks/useSession'
@@ -32,7 +33,15 @@ const CloseOrder: FC = () => {
       headerProps={{ title: 'Conta' }}
       footerProps={{
         value: total || 0,
-        buttonProps: { label: 'Fechar Conta', onClick: () => {} },
+        buttonProps: {
+          label: 'Fechar Conta',
+          onClick: async () => {
+            if (!session?.table) {
+              return
+            }
+            await updateTableStatus(session?.table, 'PAYMENT')
+          },
+        },
       }}>
       <Container p={4} sx={{ overflowY: 'auto' }}>
         {ordersWithSubtotal.map((order, index) => (

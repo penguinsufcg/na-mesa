@@ -19,8 +19,7 @@ interface Item {
 }
 
 interface Props {
-  items: Item[]
-  total: number
+  items: OrderItem[]
 }
 
 const ItemRow = ({ item }: { item: Item }) => {
@@ -45,47 +44,7 @@ const ItemRow = ({ item }: { item: Item }) => {
   )
 }
 
-const BillDetails: FC<Props> = ({ sessionRef }) => {
-  const [items, setItems] = useState([])
-  const [total, setTotal] = useState(0)
-
-  const { data } = useFirestoreListQuery<Order>(
-    'orders',
-    { where: ['session', '==', sessionRef] },
-    [sessionRef],
-  )
-
-  useEffect(() => {
-    const generateReceipt = (orders: Order[]) => {
-      const receiptItems: OrderItem[] = []
-      let total = 0
-      orders.forEach((order) => {
-        order.items.forEach((item) => {
-          const itemIndex = receiptItems.findIndex(
-            (i) => item.dishId === i.dishId,
-          )
-          if (itemIndex === -1) {
-            receiptItems.push(item)
-          } else {
-            receiptItems[itemIndex] = {
-              ...receiptItems[itemIndex],
-              quantity: receiptItems[itemIndex].quantity + item.quantity,
-            }
-          }
-          total += item.quantity * item.price
-        })
-      })
-
-      return [receiptItems, total]
-    }
-    if (!data) {
-      return
-    }
-    const [receiptItems, total] = generateReceipt(data)
-    setItems(receiptItems)
-    setTotal(total)
-  }, [data])
-
+const BillDetails: FC<Props> = ({ items }) => {
   return (
     <Flex direction="column" sx={{ gap: 12, height: '100%' }}>
       <Heading size="md" fontWeight="medium" color="secondary.700">
@@ -111,9 +70,6 @@ const BillDetails: FC<Props> = ({ sessionRef }) => {
           ))}
         </Tbody>
       </Table>
-      <Heading size="sm" alignSelf="flex-end" justifySelf="flex-end">
-        Total R$ {total}{' '}
-      </Heading>
     </Flex>
   )
 }

@@ -23,8 +23,7 @@ export async function createSession(session: Session) {
 
 export async function updateSessionOrders(sessionId: string, newOrders: OrderItem[]) {
   const sessionDocument = await getSession(sessionId)
-  const session = await (await sessionDocument.get()).data() as Session
-  console.log(session)
+
   const mergedOrders = newOrders.map(order => {
     const orderIndex = newOrders.findIndex(o => o.dishId === order.dishId)
     if (orderIndex !== -1) {
@@ -36,8 +35,6 @@ export async function updateSessionOrders(sessionId: string, newOrders: OrderIte
       return order
     }
   })
-
-  console.log(mergedOrders)
 
   await sessionDocument.update({
     orders: mergedOrders

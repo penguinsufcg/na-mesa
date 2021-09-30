@@ -37,6 +37,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
       client,
       orders: [],
       table,
+      openTime: new Date().toISOString(),
     })
 
     if (!session) {
