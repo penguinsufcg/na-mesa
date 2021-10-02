@@ -23,7 +23,7 @@ const InfoRow = ({ label, info }: InfoRowProps) => {
 }
 
 interface Props {
-  time: string
+  time?: string
   status: TableStatus
   clientName: string
 }

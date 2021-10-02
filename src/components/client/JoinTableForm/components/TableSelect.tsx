@@ -8,7 +8,7 @@ type TableSelectProps = {
 
 const TableSelect: FC<TableSelectProps> = ({ onSelect }: TableSelectProps) => {
   const { data } = useFirestoreListQuery<Table>('tables', {
-    where: ['available', '==', true],
+    where: ['status', '==', 'AVAILABLE'],
   })
 
   return (

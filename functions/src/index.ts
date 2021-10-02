@@ -25,7 +25,7 @@ export const onSessionCreate = functions.firestore
         const [tableDoc] = snapshot.docs
 
         tableCollection.doc(tableDoc.id).update({
-          available: false,
+          status: 'OCCUPIED',
           currentSession,
         })
       })

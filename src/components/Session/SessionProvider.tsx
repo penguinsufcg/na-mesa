@@ -1,4 +1,4 @@
-import { occupyTable } from '@/api/tables'
+import { updateTableStatus } from '@/api/tables'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 import { SessionContext } from '@/hooks/useSession'
 import { createSession } from 'api/session'
@@ -43,7 +43,11 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     if (!session) {
       throw new Error('Error creating session')
     }
-    await occupyTable(table, sessionRef)
+    await updateTableStatus({
+      id: table,
+      currentSession: sessionRef,
+      newStatus: 'OCCUPIED',
+    })
 
     setSession(session)
 

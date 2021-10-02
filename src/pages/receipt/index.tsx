@@ -39,7 +39,10 @@ const CloseOrder: FC = () => {
             if (!session?.table) {
               return
             }
-            await updateTableStatus(session?.table, 'PAYMENT')
+            await updateTableStatus({
+              id: session?.table,
+              newStatus: 'PAYMENT',
+            })
           },
         },
       }}>

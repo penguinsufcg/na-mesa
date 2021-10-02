@@ -14,7 +14,6 @@ interface Dish {
 interface Table {
   id: string
   name: string
-  available: boolean
   status: TableStatus
   currentSession: Session
 }

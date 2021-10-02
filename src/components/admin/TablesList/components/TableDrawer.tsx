@@ -13,7 +13,7 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react'
-import { makeAvailable } from '@/api/tables'
+import { updateTableStatus } from '@/api/tables'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
@@ -44,7 +44,11 @@ const TableDrawer: FC<Props> = ({
   })
 
   const closeTable = () => {
-    makeAvailable(table.id)
+    updateTableStatus({
+      id: table.id,
+      newStatus: 'AVAILABLE',
+      currentSession: null,
+    })
       .then(onClose)
       .catch((e) => console.log(e))
   }
@@ -66,7 +70,7 @@ const TableDrawer: FC<Props> = ({
             <VStack spacing="20px" align="stretch">
               {session && (
                 <TableStatus
-                  time={session?.openTime}
+                  time={session.openTime}
                   status={table.status}
                   clientName={session.client}
                 />
