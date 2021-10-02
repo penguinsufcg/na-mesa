@@ -11,7 +11,6 @@ type HeaderProps = {
 const PageHeader = ({ title }: HeaderProps) => {
   const router = useRouter()
   const { session } = useSession()
-  console.log(session)
 
   return (
     <Center sx={{ paddingY: 4, paddingX: 5 }}>
