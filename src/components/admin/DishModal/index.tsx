@@ -50,7 +50,6 @@ function DishModal({
 
   const [newDish, setNewDish] = useState<Dish>(dish ?? DEFAULT_DISH)
 
-  console.log('My data is:', dish, newDish)
   const saveDish = () => {
     createDish(newDish)
       .then(() => {
@@ -163,7 +162,7 @@ function DishModal({
           </FormControl>
           <FormControl mt={4}>
             <FormLabel>Preço</FormLabel>
-            <NumberInput precision={2}>
+            <NumberInput defaultValue={newDish.price} precision={2}>
               <NumberInputField
                 value={newDish.price}
                 onChange={handleChange('price')}
