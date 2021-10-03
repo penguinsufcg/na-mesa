@@ -97,7 +97,7 @@ function DishModal({
       const {
         target: { value, type },
       } = event
-      if (type === 'number') {
+      if (type === 'number' && isFinite(Number(value))) {
         setNewDish({ ...newDish, [attr]: Number(value) })
         return
       }
