@@ -33,7 +33,7 @@ const CartItem = ({ data, onDelete, onUpdate }: CartItemProps) => {
 
   return (
     <Flex width="full" maxHeight={20}>
-      <ItemImage src={data.imageURL} alt={`Foto do prato ${data.name}`} />
+      <ItemImage src={data.imageURL || ''} alt={`Foto do prato ${data.name}`} />
       <Flex direction="column" width="full">
         <Flex justifyContent="space-between">
           <Text
