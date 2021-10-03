@@ -10,7 +10,8 @@
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
       "@/theme/*": ["theme/*"],
-      "@/api/*": ["api/*"]
+      "@/api/*": ["api/*"],
+      "@/utils/*": ["utils/*"]
     },
     "skipLibCheck": true,
     "strict": true,

@@ -21,11 +21,11 @@ const EmptyCart = () => (
   <Center h="full">
     <Text
       sx={{
-        fontSize: "lg",
-        color: "secondary.600",
-        fontWeight: "light",
-        maxWidth: "3xs",
-        textAlign: "center",
+        fontSize: 'lg',
+        color: 'secondary.600',
+        fontWeight: 'light',
+        maxWidth: '3xs',
+        textAlign: 'center',
       }}>
       Nenhum produto adicionado até o momento!
     </Text>
@@ -70,7 +70,6 @@ const CartPage = () => {
   const router = useRouter()
 
   const onSendOrder = async () => {
-    console.log(sendOrder)
     onOpen()
     await sendOrder?.()
     onClose()
@@ -90,11 +89,7 @@ const CartPage = () => {
         <PageHeader title="Carrinho" />
       </GridItem>
       <GridItem rowSpan={8} sx={{ overflowY: 'auto', paddingX: 5 }}>
-        {items.length !== 0 ? (
-          <CartList />
-        ) : (
-          <EmptyCart />
-        )}
+        {items.length !== 0 ? <CartList /> : <EmptyCart />}
       </GridItem>
       <GridItem rowSpan={1}>
         {items.length !== 0 && (
