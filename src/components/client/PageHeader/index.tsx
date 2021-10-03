@@ -23,7 +23,7 @@ const PageHeader = ({ title }: HeaderProps) => {
         </Button>
       </Box>
       <Text sx={{ fontSize: 'lg' }}>
-        {title} - {session?.table ?? ''}
+        {title} - Mesa {session?.table ?? ''}
       </Text>
       <Box flex={1}></Box>
     </Center>

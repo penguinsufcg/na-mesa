@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFirestoreListQuery } from './useFirestoreListQuery'
 
 interface Props {
-  sessionRef?: Session | null
+  sessionRef?: Reference<Session> | null
 }
 
 const useSessionReceipt = ({ sessionRef }: Props) => {

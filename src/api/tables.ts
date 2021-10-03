@@ -11,7 +11,7 @@ export function createTable(name: string) {
   })
 }
 
-export function updateTableStatus({ id, newStatus, currentSession }: { id: string, newStatus: TableStatus, currentSession?: Session | null }) {
+export function updateTableStatus({ id, newStatus, currentSession }: { id: string, newStatus: TableStatus, currentSession?: Reference<Session> | null }) {
   return tablesCollection
     .where('name', '==', id)
     .limit(1)

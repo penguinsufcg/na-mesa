@@ -7,13 +7,13 @@ import React, { FC } from 'react'
 import OrderCard from './components/OrderCard'
 
 const CloseOrder: FC = () => {
-  const { session } = useSession()
+  const { session, sessionRef } = useSession()
   const { data } = useFirestoreListQuery<Order>(
     `orders`,
     {
-      where: ['session', '==', `sessions/${session?.id}`],
+      where: ['session', '==', sessionRef],
     },
-    [session],
+    [sessionRef],
   )
 
   const getSubtotal = (orders: OrderItem[]) =>

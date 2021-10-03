@@ -36,8 +36,8 @@ const MenuPage = () => {
       <GridItem rowSpan={1} colSpan={4}>
         <Logo />
       </GridItem>
-      <GridItem rowSpan={2} colSpan={1}>
-        {session && (
+      <GridItem rowSpan={1} colSpan={1}>
+        {session && isLogged && (
           <Text size="sm" color="gray.500" sx={{ paddingTop: 6 }}>
             MESA {session?.table}
           </Text>

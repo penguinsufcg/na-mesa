@@ -23,7 +23,7 @@ import { formatCurrency, formatTime } from 'utils/formatters'
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
   session?: Session | null
-  sessionRef?: Session | null
+  sessionRef?: Reference<Session> | null
 }
 
 const TableDrawer: FC<Props> = ({

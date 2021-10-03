@@ -1,3 +1,5 @@
+type Reference<T> = firebase.firestore.DocumentReference<T>
+
 type TableStatus = 'AVAILABLE' | 'OCCUPIED' | 'PAYMENT'
 
 interface Dish {

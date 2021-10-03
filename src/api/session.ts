@@ -18,7 +18,7 @@ export async function createSession(session: Session) {
     ...(sessionDocument.data() as Session),
   }
 
-  return [newSession, sessionRef]
+  return  { session: newSession, sessionRef }
 }
 
 export async function updateSessionOrders(sessionId: string, newOrders: OrderItem[]) {

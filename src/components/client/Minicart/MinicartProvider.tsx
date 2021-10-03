@@ -47,7 +47,6 @@ const MinicartProvider: FC = ({ children }) => {
       return
     }
     await createOrder(items, sessionId)
-    // await updateSessionOrders(sessionId, items)
     setItems([])
   }, [items])
 
