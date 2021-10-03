@@ -57,7 +57,10 @@ const CartItem = ({ data, onDelete, onUpdate }: CartItemProps) => {
           {data.comments}
         </Text>
         <Flex mt="auto" justifyContent="space-between" alignItems="center">
-          <QuantityInput value={data.quantity} onChange={handleChangeItemQuantity} />
+          <QuantityInput
+            value={data.quantity}
+            onChange={handleChangeItemQuantity}
+          />
           <DeleteItemButton onClick={onOpen} />
         </Flex>
       </Flex>
