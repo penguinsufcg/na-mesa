@@ -18,7 +18,6 @@ export function updateTableStatus({ id, newStatus, currentSession }: { id: strin
     .get()
     .then((snapshot) => {
       const [tableDoc] = snapshot.docs
-      console.log(typeof currentSession !== 'undefined')
 
       tablesCollection.doc(tableDoc.id).update({
         status: newStatus,
