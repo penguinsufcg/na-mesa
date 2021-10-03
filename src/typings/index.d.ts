@@ -31,7 +31,7 @@ interface OrderItem {
   quantity: number
   name: string
   price: number
-  imageURL: string
+  imageURL?: string
 }
 
 type Order = {
