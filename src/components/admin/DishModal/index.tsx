@@ -50,13 +50,13 @@ function DishModal({
 
   const [newDish, setNewDish] = useState<Dish>(dish ?? DEFAULT_DISH)
 
+  console.log('My data is:', dish, newDish)
   const saveDish = () => {
     createDish(newDish)
       .then(() => {
         onClose()
         setNewDish(DEFAULT_DISH)
         setUploadImg(false)
-
       })
       .catch((error) => {
         console.error('Error: ', error)
@@ -98,7 +98,7 @@ function DishModal({
       const {
         target: { value, type },
       } = event
-      if (type === 'number' || isFinite(Number(value))) {
+      if (type === 'number') {
         setNewDish({ ...newDish, [attr]: Number(value) })
         return
       }
