@@ -27,6 +27,8 @@ const CloseOrder: FC = () => {
     0,
   )
 
+  console.log(ordersWithSubtotal)
+
   return (
     <Layout
       headerProps={{ title: 'Conta' }}

@@ -44,6 +44,7 @@ const OrderCardItem = ({ order }: { order: OrderItem }) => {
 }
 
 const OrderCardBody: FC<OrderCardBodyProps> = ({ orders }) => {
+  console.log(orders)
   return (
     <Grid
       sx={{ marginBottom: 4 }}
