@@ -56,7 +56,6 @@ function DishModal({
         onClose()
         setNewDish(DEFAULT_DISH)
         setUploadImg(false)
-
       })
       .catch((error) => {
         console.error('Error: ', error)
@@ -98,7 +97,7 @@ function DishModal({
       const {
         target: { value, type },
       } = event
-      if (type === 'number' || isFinite(Number(value))) {
+      if (type === 'number' && isFinite(Number(value))) {
         setNewDish({ ...newDish, [attr]: Number(value) })
         return
       }
@@ -163,7 +162,7 @@ function DishModal({
           </FormControl>
           <FormControl mt={4}>
             <FormLabel>Preço</FormLabel>
-            <NumberInput precision={2}>
+            <NumberInput defaultValue={newDish.price} precision={2}>
               <NumberInputField
                 value={newDish.price}
                 onChange={handleChange('price')}

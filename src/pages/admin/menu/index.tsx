@@ -13,7 +13,6 @@ const Menu = () => {
   } = useDisclosure()
 
   const { data } = useFirestoreListQuery<Dish>('dishes')
-
   return (
     <Layout>
       <Flex width="full" direction="column" padding={12}>
