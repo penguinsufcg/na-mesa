@@ -35,7 +35,7 @@ export function useAdminAuth(): AdminAuthContextProps {
     const authData = authQuery.docs[0]
 
     setLoading(false)
-    setAuth({ uid: authData.id, ...(authData.data() as Auth) })
+    setAuth({ uid: authData?.id, ...(authData?.data() as Auth) })
     return true
   }
 

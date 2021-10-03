@@ -32,7 +32,7 @@ const Login: FC = () => {
     // TODO: Handle Error
     if (isLogged) {
       onClose()
-      router.push('/admin')
+      router.push('/admin/mesas')
     }
   }
 

@@ -6,7 +6,7 @@ export const NavbarData = [
   {
     id: 'op-mesas',
     title: 'Mesas',
-    path: '/admin',
+    path: '/admin/mesas',
     icon: <BiGridAlt size={iconSize} />,
   },
   {
