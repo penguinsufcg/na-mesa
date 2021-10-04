@@ -14,6 +14,8 @@ interface OrderCardComposition {
 }
 
 const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
+  if (!order) return <></>
+
   return (
     <Flex
       sx={{

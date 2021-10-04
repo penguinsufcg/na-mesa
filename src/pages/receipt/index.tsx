@@ -35,9 +35,9 @@ const CloseOrder: FC = () => {
         buttonProps: { label: 'Fechar Conta', onClick: () => {} },
       }}>
       <Container p={4} sx={{ overflowY: 'auto' }}>
-        {ordersWithSubtotal.map((order, index) =>
-          order ? <OrderCard order={order} key={index} /> : <></>,
-        )}
+        {ordersWithSubtotal.map((order, index) => (
+          <OrderCard order={order} key={index} />
+        ))}
       </Container>
     </Layout>
   )
