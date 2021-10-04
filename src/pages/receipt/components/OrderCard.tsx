@@ -27,7 +27,12 @@ const OrderCard: FC<Props> & OrderCardComposition = ({ order }) => {
         borderColor: 'secondary.100',
       }}
       direction="column">
-      <OrderCard.Header orderTime={formatTime(order.time)} />
+      <OrderCard.Header
+        orderTime={formatTime(order.time, {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}
+      />
       <OrderCard.Body orders={order.items} />
       <OrderCard.Footer subTotal={order.subtotal} status={order.status} />
     </Flex>

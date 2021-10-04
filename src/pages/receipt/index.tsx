@@ -1,3 +1,4 @@
+import { updateTableStatus } from '@/api/tables'
 import Layout from '@/components/client/Layout'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import useSession from '@/hooks/useSession'
@@ -6,13 +7,13 @@ import React, { FC } from 'react'
 import OrderCard from './components/OrderCard'
 
 const CloseOrder: FC = () => {
-  const { session } = useSession()
+  const { session, sessionRef } = useSession()
   const { data } = useFirestoreListQuery<Order>(
     `orders`,
     {
-      where: ['session', '==', `sessions/${session?.id}`],
+      where: ['session', '==', sessionRef],
     },
-    [session],
+    [sessionRef],
   )
 
   const getSubtotal = (orders: OrderItem[]) =>
@@ -32,7 +33,18 @@ const CloseOrder: FC = () => {
       headerProps={{ title: 'Conta' }}
       footerProps={{
         value: total || 0,
-        buttonProps: { label: 'Fechar Conta', onClick: () => {} },
+        buttonProps: {
+          label: 'Fechar Conta',
+          onClick: async () => {
+            if (!session?.table) {
+              return
+            }
+            await updateTableStatus({
+              id: session?.table,
+              newStatus: 'PAYMENT',
+            })
+          },
+        },
       }}>
       <Container p={4} sx={{ overflowY: 'auto' }}>
         {ordersWithSubtotal.map((order, index) => (

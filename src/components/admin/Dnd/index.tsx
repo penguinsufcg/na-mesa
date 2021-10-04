@@ -25,19 +25,22 @@ interface OrderProps {
 
 // eslint-disable-next-line react/display-name
 const Orders = memo(({ order, index }: OrderProps) => {
-  const { data: sessions } = useFirestoreListQuery<Session>('sessions')
+  const [session, setSession] = useState<Session | null>(null)
 
-  const getTable = (sessions: any) => {
-    const table = sessions
-      ?.filter((d: any) => {
-        return d.id === order.session.id
-      })
-      .map((s: any) => {
-        return s.table
-      })
-
-    return table as string
-  }
+  useEffect(() => {
+    if (!order || !order.session) {
+      return
+    }
+    if (
+      !order.session ||
+      typeof order.session === 'string' ||
+      order.session === null
+    ) {
+      return
+    }
+    // @ts-ignore
+    order.session.get().then((s) => setSession(s.data()))
+  }, [order])
 
   return (
     <Draggable draggableId={order.id} index={index}>
@@ -61,7 +64,7 @@ const Orders = memo(({ order, index }: OrderProps) => {
             code={order.id}
             time={order.time}
             dishs={order.items}
-            table={getTable(sessions)}
+            table={session?.table ?? ''}
           />
         </Box>
       )}

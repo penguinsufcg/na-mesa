@@ -1,3 +1,4 @@
+import { updateTableStatus } from '@/api/tables'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 import { SessionContext } from '@/hooks/useSession'
 import { createSession } from 'api/session'
@@ -10,6 +11,7 @@ type SessionContextProps = {
 
 function SessionProvider({ children }: SessionContextProps): JSX.Element {
   const [session, setSession] = useState<EntityWithID<Session> | null>(null)
+  const [sessionRef, setSessionRef] = useState<Reference<Session> | null>(null)
   const [sessionId, setSessionId] = useState<string | undefined>(undefined)
   const { data, isLoading } = useFirestoreObjectQuery<Session>(
     `sessions/${sessionId}`,
@@ -31,18 +33,24 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   }) => {
     const secretCode = generateRandomCode()
 
-    const session = await createSession({
+    const { session, sessionRef } = await createSession({
       code: secretCode.toString(),
       client,
       orders: [],
       table,
+      openTime: new Date().toISOString(),
     })
 
     if (!session) {
       throw new Error('Error creating session')
     }
-
+    await updateTableStatus({
+      id: table,
+      currentSession: sessionRef,
+      newStatus: 'OCCUPIED',
+    })
     setSession(session)
+    setSessionRef(sessionRef)
 
     return session?.code
   }
@@ -81,12 +89,13 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   const context = useMemo(
     () => ({
       session,
+      sessionRef,
       isLogged: sessionId && sessionId !== 'undefined' ? true : false,
       isLoading,
       createNewSession,
       joinSession,
     }),
-    [session, sessionId, isLoading],
+    [session, sessionRef, sessionId, isLoading],
   )
 
   return (

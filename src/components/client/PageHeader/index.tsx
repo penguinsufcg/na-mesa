@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, Center, Text } from '@chakra-ui/react'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
+import useSession from '@/hooks/useSession'
 
 type HeaderProps = {
   title: string
@@ -9,6 +10,7 @@ type HeaderProps = {
 
 const PageHeader = ({ title }: HeaderProps) => {
   const router = useRouter()
+  const { session } = useSession()
 
   return (
     <Center sx={{ paddingY: 4, paddingX: 5 }}>
@@ -20,7 +22,9 @@ const PageHeader = ({ title }: HeaderProps) => {
           <ChevronLeftIcon />
         </Button>
       </Box>
-      <Text sx={{ fontSize: 'lg' }}>{title}</Text>
+      <Text sx={{ fontSize: 'lg' }}>
+        {title} - Mesa {session?.table ?? ''}
+      </Text>
       <Box flex={1}></Box>
     </Center>
   )

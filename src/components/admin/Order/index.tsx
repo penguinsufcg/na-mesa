@@ -2,6 +2,7 @@ import { DragHandleIcon, TimeIcon } from '@chakra-ui/icons'
 import { Box, Flex, HStack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import DishOrder from './DishOrder'
+import { formatTime } from '@/utils/formatters'
 
 interface Dish {
   comments: string
@@ -26,11 +27,6 @@ const OrderCard = ({ time, dishs, table }: Order) => {
     )
   }
 
-  const getDate = (time: string) => {
-    const newDate = new Date(time)
-    return `${newDate.getHours()}:${newDate.getMinutes()}`
-  }
-
   return (
     <Box
       sx={{
@@ -45,7 +41,12 @@ const OrderCard = ({ time, dishs, table }: Order) => {
         </HStack>
         <HStack spacing="6px" alignItems="baseline" color="secondary.500">
           <TimeIcon h="10px" />
-          <Text fontSize="12px">{getDate(time)}</Text>
+          <Text fontSize="12px">
+            {formatTime(time, {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </Text>
         </HStack>
       </Flex>
       <VStack margin="15px 0">

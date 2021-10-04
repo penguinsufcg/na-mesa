@@ -1,49 +1,28 @@
-import DishModal from '@/components/admin/DishModal'
+import React from 'react'
 import Layout from '@/components/admin/Layout'
-import useAuthContext from '@/hooks/useAuthContext'
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Spacer,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Flex, Heading, Spacer } from '@chakra-ui/layout'
+import CreateTableModal from '@/components/admin/CreateTableModal'
+import TablesList from '@/components/admin/TablesList'
 
-export default function Home() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { signIn } = useAuthContext()
+const Header = () => {
+  return (
+    <Flex sx={{ width: '100%' }}>
+      <Heading>Mesas</Heading>
+      <Spacer />
+      <CreateTableModal />
+    </Flex>
+  )
+}
 
+const MesasPage = () => {
   return (
     <Layout>
-      <Center h="100vh" w="100vw">
-        <Flex direction="column">
-          <Heading marginBottom={5} textAlign="center">
-            <Box color="primary.500" display="initial">
-              NaMesa
-            </Box>{' '}
-            is online!
-          </Heading>
-          <Flex>
-            <Button variant="secondary" onClick={signIn}>
-              Secondary
-            </Button>
-            <Spacer />
-            <Button size="md" onClick={onOpen}>
-              Primary
-            </Button>
-          </Flex>
-        </Flex>
-        <DishModal update={false} isOpen={isOpen} onClose={onClose} />
-        {/*<ConfirmationModal
-          label={'Excluir Produto'}
-          message={'quer excluir gata?'}
-          isOpen={isOpen}
-          onClose={onClose}
-          handleSubmit={() => {}}
-        />*/}
-      </Center>
+      <Flex direction="column" sx={{ width: 'full', padding: 4 }}>
+        <Header />
+        <TablesList />
+      </Flex>
     </Layout>
   )
 }
+
+export default MesasPage
