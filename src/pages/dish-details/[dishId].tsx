@@ -3,7 +3,7 @@ import { Button, Flex, useToast } from '@chakra-ui/react'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 
 import AddDishForm from '@/components/client/AddDishForm'
-import DishDetails from '@/components/client/DishDetails.tsx'
+import DishDetails from '@/components/client/DishDetails'
 import { useRouter } from 'next/router'
 import useMinicart from '@/hooks/useMinicart'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'

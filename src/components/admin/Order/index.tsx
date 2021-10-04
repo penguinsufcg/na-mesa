@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import { Box, Flex, Text, HStack, VStack } from '@chakra-ui/react'
 import { DragHandleIcon, TimeIcon } from '@chakra-ui/icons'
+import { Box, Flex, HStack, Text, VStack } from '@chakra-ui/react'
+import React from 'react'
 import DishOrder from './DishOrder'
 import { formatTime } from '@/utils/formatters'
 
