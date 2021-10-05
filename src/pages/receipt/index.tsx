@@ -1,5 +1,6 @@
 import { updateTableStatus } from '@/api/tables'
 import Layout from '@/components/client/Layout'
+import { useRouter } from 'next/router'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import useSession from '@/hooks/useSession'
 import { Container } from '@chakra-ui/layout'
@@ -7,6 +8,7 @@ import React, { FC } from 'react'
 import OrderCard from './components/OrderCard'
 
 const CloseOrder: FC = () => {
+  const router = useRouter()
   const { session, sessionRef } = useSession()
   const { data } = useFirestoreListQuery<Order>(
     `orders`,
@@ -35,14 +37,8 @@ const CloseOrder: FC = () => {
         value: total || 0,
         buttonProps: {
           label: 'Fechar Conta',
-          onClick: async () => {
-            if (!session?.table) {
-              return
-            }
-            await updateTableStatus({
-              id: session?.table,
-              newStatus: 'PAYMENT',
-            })
+          onClick: () => {
+            router.push('bill')
           },
         },
       }}>

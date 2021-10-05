@@ -25,6 +25,7 @@ interface Session {
   code: string
   orders: [OrderItem] | []
   table: string
+  status: string
   openTime?: string
 }
 

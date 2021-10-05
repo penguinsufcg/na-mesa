@@ -12,8 +12,10 @@ import {
   Heading,
   useDisclosure,
   VStack,
+  Box,
 } from '@chakra-ui/react'
 import { updateTableStatus } from '@/api/tables'
+import { updateSessionStatus } from '@/api/session'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
@@ -43,7 +45,9 @@ const TableDrawer: FC<Props> = ({
     sessionRef,
   })
 
-  const closeTable = () => {
+  const closeTable = async () => {
+    updateSessionStatus(sessionRef?.id, 'FINISHED')
+      .catch((e) => console.log(e))
     updateTableStatus({
       id: table.id,
       newStatus: 'AVAILABLE',
@@ -67,7 +71,7 @@ const TableDrawer: FC<Props> = ({
           </DrawerHeader>
 
           <DrawerBody>
-            <VStack spacing="20px" align="stretch">
+            <VStack spacing="25px" align="stretch">
               {session && (
                 <TableStatus
                   time={session.openTime}
@@ -75,7 +79,12 @@ const TableDrawer: FC<Props> = ({
                   clientName={session.client}
                 />
               )}
-              <BillDetails items={receiptItems} />
+              <Box>
+                <Heading size="md" fontWeight="medium" color="secondary.700">
+                  Conta
+                </Heading>
+                <BillDetails items={receiptItems} />
+              </Box>
             </VStack>
           </DrawerBody>
 
