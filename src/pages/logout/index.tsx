@@ -2,7 +2,7 @@ import { Flex, Center, Text, VStack, Image, Button, Spacer, Box } from '@chakra-
 import Logo from '@/components/Logo'
 import { useRouter } from 'next/router'
 
-const LogOff = () => {
+const LogOut = () => {
   const router = useRouter()
 
   return (
@@ -18,11 +18,11 @@ const LogOff = () => {
       <Spacer />
       <Center p="20px">
         <Button onClick={() => { router.push('/') }}>
-          Voltar para o menu
+          Voltar para o inicio
         </Button>
       </Center>
     </Flex>
   )
 }
 
-export default LogOff
+export default LogOut

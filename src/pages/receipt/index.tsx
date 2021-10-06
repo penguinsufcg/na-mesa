@@ -36,7 +36,7 @@ const CloseOrder: FC = () => {
       footerProps={{
         value: total || 0,
         buttonProps: {
-          label: 'Fechar Conta',
+          children: 'Fechar Conta',
           onClick: () => {
             router.push('bill')
           },

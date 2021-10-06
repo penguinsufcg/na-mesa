@@ -1,14 +1,11 @@
-import { Button } from '@chakra-ui/button'
+import { Button, ButtonProps } from '@chakra-ui/button'
 import { Text, VStack, HStack } from '@chakra-ui/layout'
 import react, { FC } from 'react'
 import { formatCurrency } from 'utils/formatters'
 
 export type FooterProps = {
   value: number
-  buttonProps: {
-    label: string
-    onClick: () => void
-  }
+  buttonProps: ButtonProps
 }
 
 const Footer: FC<FooterProps> = ({ value, buttonProps }) => {
@@ -30,8 +27,9 @@ const Footer: FC<FooterProps> = ({ value, buttonProps }) => {
         w="100%"
         size="sm"
         background="primary.400"
-        onClick={buttonProps.onClick}>
-        {buttonProps.label}
+        {...buttonProps}
+      >
+        {buttonProps.children}
       </Button>
     </VStack>
   )
