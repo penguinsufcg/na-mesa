@@ -1,16 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
 import {
-  Box,
-  Flex,
-  Heading,
   Table,
   Tbody,
   Td,
   Th,
   Thead,
   Tr,
+  ResponsiveValue
 } from '@chakra-ui/react'
-import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 
 interface Item {
   quantity: number
@@ -31,46 +28,43 @@ const ItemRow = ({ item }: { item: Item }) => {
 
   return (
     <Tr>
-      <Td paddingY="4px" paddingX={0}>
+      <Td paddingY="4px" color="secondary.600" paddingX={0}>
         {item.quantity}
       </Td>
-      <Td paddingY="4px" paddingX={0}>
+      <Td paddingY="4px" color="secondary.600" paddingX={0}>
         {item.name}
       </Td>
-      <Td paddingY="4px" paddingX={0} textAlign="end" isNumeric>
+      <Td paddingY="4px" color="secondary.600" paddingX={0} textAlign="end">
         {formattedPrice(item.price)}
       </Td>
     </Tr>
   )
 }
 
+const ThCell = ({ label, align }: { label: string; align: ResponsiveValue<AlignSetting> }) => {
+  return (
+    <Th fontWeight="medium" textTransform="none" paddingX={0} textAlign={align}>
+      {label}
+    </Th>
+  )
+}
+
 const BillDetails: FC<Props> = ({ items }) => {
   return (
-    <Flex direction="column" sx={{ gap: 12, height: '100%' }}>
-      <Heading size="md" fontWeight="medium" color="secondary.700">
-        Conta
-      </Heading>
-      <Table size="sm" variant="unstyled">
-        <Thead>
-          <Tr>
-            <Th textTransform="none" paddingX={0}>
-              Qtd.
-            </Th>
-            <Th textTransform="none" paddingX={0}>
-              Item
-            </Th>
-            <Th textTransform="none" paddingX={0} textAlign="end" isNumeric>
-              Preço
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {items.map((item, index) => (
-            <ItemRow key={index} item={item} />
-          ))}
-        </Tbody>
-      </Table>
-    </Flex>
+    <Table fontSize="14px" variant="unstyled">
+      <Thead>
+        <Tr>
+          <ThCell label="Qtd." align="start" />
+          <ThCell label="Item" align="start" />
+          <ThCell label="Preço" align="end" />
+        </Tr>
+      </Thead>
+      <Tbody>
+        {items.map((item, index) => (
+          <ItemRow key={index} item={item} />
+        ))}
+      </Tbody>
+    </Table>
   )
 }
 

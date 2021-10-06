@@ -40,3 +40,7 @@ export async function updateSessionOrders(sessionId: string, newOrders: OrderIte
     orders: mergedOrders
   })
 }
+
+export async function updateSessionStatus(sessionId: string, newStatus: string) {
+  return await sessionCollection.doc(sessionId).update({ status: newStatus })
+}

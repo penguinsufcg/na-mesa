@@ -1,7 +1,8 @@
 import { updateTableStatus } from '@/api/tables'
 import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 import { SessionContext } from '@/hooks/useSession'
-import { createSession } from 'api/session'
+import { createSession, getSession } from 'api/session'
+import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { generateRandomCode } from 'utils/codeGenerator'
 
@@ -17,6 +18,17 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     `sessions/${sessionId}`,
     [sessionId],
   )
+  const router = useRouter()
+
+  const closeSession = () => {
+    localStorage.clear()
+
+    setSessionId(undefined)
+    setSession(null)
+    setSessionRef(null)
+    
+    router.push('/logout')
+  }
 
   const getSessionLocal = () => {
     const sessionId = localStorage.getItem('sessionId')
@@ -38,6 +50,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
       client,
       orders: [],
       table,
+      status: 'ACTIVE',
       openTime: new Date().toISOString(),
     })
 
@@ -60,12 +73,18 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   }
 
   useEffect(() => {
+    const updateSessionRef = async (sessionId: string) => {
+      const sessionRef = await getSession(sessionId)
+      setSessionRef(sessionRef)
+    }
+
     const sessionId = getSessionLocal()
 
     if (!sessionId) {
       return
     }
 
+    updateSessionRef(sessionId)
     setSessionId(sessionId)
   }, [])
 
@@ -84,6 +103,12 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
 
     localStorage.setItem('sessionId', session.id)
     setSessionId(session.id)
+  }, [session])
+
+  useEffect(() => {
+    if(session?.status === 'FINISHED') {
+      closeSession()
+    }
   }, [session])
 
   const context = useMemo(
