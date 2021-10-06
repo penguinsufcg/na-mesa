@@ -1,16 +1,15 @@
-import React, { useEffect, useState, memo } from 'react'
+import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
+import '@atlaskit/css-reset'
+import { Box, Flex, List, Spacer, Text } from '@chakra-ui/react'
 import { updateStatusOrder } from 'api/order'
+import OrderCard from 'components/admin/Order'
+import React, { memo, useEffect, useState } from 'react'
 import {
   DragDropContext,
-  Droppable,
   Draggable,
   DraggableLocation,
+  Droppable,
 } from 'react-beautiful-dnd'
-import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
-import OrderCard from 'components/admin/Order'
-import '@atlaskit/css-reset'
-import { Flex, Text, List, Spacer, Box } from '@chakra-ui/react'
-import { useFirestoreObjectQuery } from '@/hooks/useFirestoreObjectQuery'
 
 interface Orders {
   id: string
@@ -171,7 +170,6 @@ function DragAndDrop() {
     destination: DraggableLocation | undefined,
     source: DraggableLocation,
     draggableId: string,
-    type: string,
   ) => {
     if (!destination) {
       return
@@ -236,8 +234,8 @@ function DragAndDrop() {
 
   return (
     <DragDropContext
-      onDragEnd={({ destination, source, draggableId, type }) =>
-        handleDragEnd(destination, source, draggableId, type)
+      onDragEnd={({ destination, source, draggableId }) =>
+        handleDragEnd(destination, source, draggableId)
       }>
       {winReady && (
         <Flex>

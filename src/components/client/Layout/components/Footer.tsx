@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@chakra-ui/button'
 import { Text, VStack, HStack } from '@chakra-ui/layout'
-import react, { FC } from 'react'
+import React, { FC } from 'react'
 import { formatCurrency } from 'utils/formatters'
 
 export type FooterProps = {

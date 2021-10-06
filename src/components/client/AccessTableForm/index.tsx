@@ -39,7 +39,6 @@ const AccessTableForm = () => {
     if (!session || !joinSession) {
       return
     }
-
     await joinSession({ sessionId: session[0].id })
     router.push('/')
   }
