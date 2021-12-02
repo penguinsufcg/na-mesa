@@ -145,11 +145,14 @@ const columnOrder = ['pendente', 'cozinha', 'pronto', 'entregue']
 function DragAndDrop() {
   const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders')
   const [stateColumns, setStateColumns] = useState<any>(columns)
+  const [hasStateColumnChanged, setHasStateColumnChanged] =
+    useState<boolean>(false)
   const [winReady, setwinReady] = useState(false)
 
   useEffect(() => {
     setwinReady(true)
-    if (!ordersData) {
+    // [Workaround] If the state column has changed, we already have this change computed locally, so we don't need to update the stateColumn again with data coming from the DB.
+    if (!ordersData || hasStateColumnChanged) {
       return
     }
     const cols: any = {}
@@ -164,7 +167,7 @@ function DragAndDrop() {
     })
 
     setStateColumns(cols)
-  }, [ordersData])
+  }, [ordersData, hasStateColumnChanged])
 
   const handleDragEnd = (
     destination: DraggableLocation | undefined,
@@ -178,6 +181,7 @@ function DragAndDrop() {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
+      setHasStateColumnChanged(false)
       return
     }
 
@@ -188,7 +192,6 @@ function DragAndDrop() {
       const orders = Array.from(startcol.ordersIds)
       orders.splice(source.index, 1)
       orders.splice(destination.index, 0, draggableId)
-
       const newCol = {
         ...startcol,
         ordersIds: orders,
@@ -205,6 +208,7 @@ function DragAndDrop() {
 
     const startorderIds = Array.from(startcol.ordersIds)
     startorderIds.splice(source.index, 1)
+
     const newStart = {
       ...startcol,
       ordersIds: startorderIds,
@@ -224,6 +228,7 @@ function DragAndDrop() {
       [newEnd.id]: newEnd,
     }
     setStateColumns(newStateColumns)
+    setHasStateColumnChanged(true)
     updateStatusOrder(draggableId, destination.droppableId.toUpperCase()).catch(
       (error) => {
         setStateColumns(prevStateColumns)
