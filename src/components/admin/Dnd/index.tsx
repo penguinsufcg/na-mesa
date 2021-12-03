@@ -3,7 +3,7 @@ import '@atlaskit/css-reset'
 import { Box, Flex, List, Spacer, Text } from '@chakra-ui/react'
 import { updateStatusOrder } from 'api/order'
 import OrderCard from 'components/admin/Order'
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import {
   DragDropContext,
   Draggable,
@@ -145,14 +145,13 @@ const columnOrder = ['pendente', 'cozinha', 'pronto', 'entregue']
 function DragAndDrop() {
   const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders')
   const [stateColumns, setStateColumns] = useState<any>(columns)
-  const [hasStateColumnChanged, setHasStateColumnChanged] =
-    useState<boolean>(false)
   const [winReady, setwinReady] = useState(false)
+  const hasStateColumnChangedRef = useRef(false)
 
   useEffect(() => {
     setwinReady(true)
     // [Workaround] If the state column has changed, we already have this change computed locally, so we don't need to update the stateColumn again with data coming from the DB.
-    if (!ordersData || hasStateColumnChanged) {
+    if (!ordersData || hasStateColumnChangedRef.current) {
       return
     }
     const cols: any = {}
@@ -167,7 +166,7 @@ function DragAndDrop() {
     })
 
     setStateColumns(cols)
-  }, [ordersData, hasStateColumnChanged])
+  }, [ordersData, hasStateColumnChangedRef])
 
   const handleDragEnd = (
     destination: DraggableLocation | undefined,
@@ -181,7 +180,7 @@ function DragAndDrop() {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      setHasStateColumnChanged(false)
+      hasStateColumnChangedRef.current = false
       return
     }
 
@@ -228,7 +227,7 @@ function DragAndDrop() {
       [newEnd.id]: newEnd,
     }
     setStateColumns(newStateColumns)
-    setHasStateColumnChanged(true)
+    hasStateColumnChangedRef.current = true
     updateStatusOrder(draggableId, destination.droppableId.toUpperCase()).catch(
       (error) => {
         setStateColumns(prevStateColumns)
