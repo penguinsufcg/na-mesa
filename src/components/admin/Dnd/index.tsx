@@ -146,11 +146,16 @@ function DragAndDrop() {
   const { data: ordersData } = useFirestoreListQuery<Order>('orders')
   const [stateColumns, setStateColumns] = useState<any>(columns)
   const [winReady, setwinReady] = useState(false)
+  // Using ref to avoid render triggers
   const hasStateColumnChangedRef = useRef(false)
 
   useEffect(() => {
     setwinReady(true)
-    // [Workaround] If the state column has changed, we already have this change computed locally, so we don't need to update the stateColumn again with data coming from the DB.
+    // [Workaround] If the state column has
+    // changed, we already have this change
+    // computed locally, so we don't need
+    // to update the stateColumn again with
+    // data coming from the DB.
     if (!ordersData || hasStateColumnChangedRef.current) {
       hasStateColumnChangedRef.current = false
       return
