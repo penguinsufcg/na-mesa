@@ -143,7 +143,7 @@ const columns = {
 const columnOrder = ['pendente', 'cozinha', 'pronto', 'entregue']
 
 function DragAndDrop() {
-  const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders')
+  const { data: ordersData } = useFirestoreListQuery<Order>('orders')
   const [stateColumns, setStateColumns] = useState<any>(columns)
   const [winReady, setwinReady] = useState(false)
   const hasStateColumnChangedRef = useRef(false)
@@ -152,6 +152,7 @@ function DragAndDrop() {
     setwinReady(true)
     // [Workaround] If the state column has changed, we already have this change computed locally, so we don't need to update the stateColumn again with data coming from the DB.
     if (!ordersData || hasStateColumnChangedRef.current) {
+      hasStateColumnChangedRef.current = false
       return
     }
     const cols: any = {}
@@ -180,7 +181,6 @@ function DragAndDrop() {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      hasStateColumnChangedRef.current = false
       return
     }
 
