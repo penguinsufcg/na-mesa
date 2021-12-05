@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { Upload } from 'antd'
 import { createDish, updateDish } from 'api/dishes'
+import DishCard from '@/components/client/Menu/components/DishCard'
 
 type DishModalProps = {
   dish?: Dish
@@ -212,7 +213,6 @@ function DishModal({
             </Box>
           </FormControl>
         </ModalBody>
-
         <ModalFooter>
           <Button onClick={closeModal} variant="secondary" mr={3}>
             Cancelar
@@ -221,6 +221,16 @@ function DishModal({
             Salvar
           </Button>
         </ModalFooter>
+
+        <Box
+          style={{
+            paddingTop: '0.5rem',
+            width: '430px',
+            alignSelf: 'center',
+            borderTopWidth: 'medium',
+          }}>
+          <DishCard key={newDish.id} item={newDish as EntityWithID<Dish>} />
+        </Box>
       </ModalContent>
     </Modal>
   )
