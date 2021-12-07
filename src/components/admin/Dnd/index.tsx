@@ -3,7 +3,7 @@ import '@atlaskit/css-reset'
 import { Box, Flex, List, Spacer, Text } from '@chakra-ui/react'
 import { updateStatusOrder } from 'api/order'
 import OrderCard from 'components/admin/Order'
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import {
   DragDropContext,
   Draggable,
@@ -143,13 +143,21 @@ const columns = {
 const columnOrder = ['pendente', 'cozinha', 'pronto', 'entregue']
 
 function DragAndDrop() {
-  const { data: ordersData, isLoading } = useFirestoreListQuery<Order>('orders')
+  const { data: ordersData } = useFirestoreListQuery<Order>('orders')
   const [stateColumns, setStateColumns] = useState<any>(columns)
   const [winReady, setwinReady] = useState(false)
+  // Using ref to avoid render triggers
+  const hasStateColumnChangedRef = useRef(false)
 
   useEffect(() => {
     setwinReady(true)
-    if (!ordersData) {
+    // [Workaround] If the state column has
+    // changed, we already have this change
+    // computed locally, so we don't need
+    // to update the stateColumn again with
+    // data coming from the DB.
+    if (!ordersData || hasStateColumnChangedRef.current) {
+      hasStateColumnChangedRef.current = false
       return
     }
     const cols: any = {}
@@ -164,7 +172,7 @@ function DragAndDrop() {
     })
 
     setStateColumns(cols)
-  }, [ordersData])
+  }, [ordersData, hasStateColumnChangedRef])
 
   const handleDragEnd = (
     destination: DraggableLocation | undefined,
@@ -188,7 +196,6 @@ function DragAndDrop() {
       const orders = Array.from(startcol.ordersIds)
       orders.splice(source.index, 1)
       orders.splice(destination.index, 0, draggableId)
-
       const newCol = {
         ...startcol,
         ordersIds: orders,
@@ -205,6 +212,7 @@ function DragAndDrop() {
 
     const startorderIds = Array.from(startcol.ordersIds)
     startorderIds.splice(source.index, 1)
+
     const newStart = {
       ...startcol,
       ordersIds: startorderIds,
@@ -224,6 +232,7 @@ function DragAndDrop() {
       [newEnd.id]: newEnd,
     }
     setStateColumns(newStateColumns)
+    hasStateColumnChangedRef.current = true
     updateStatusOrder(draggableId, destination.droppableId.toUpperCase()).catch(
       (error) => {
         setStateColumns(prevStateColumns)
