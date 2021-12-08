@@ -151,6 +151,7 @@ function DishModal({
               marginBottom: '1.5rem',
               boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
               pointerEvents: 'none',
+              padding: '0.7rem',
             }}>
             <DishCard key={newDish.id} item={newDish as EntityWithID<Dish>} />
           </Box>
