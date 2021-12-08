@@ -143,6 +143,18 @@ function DishModal({
           fontSize="sm"
           fontWeight="500"
           pb={6}>
+          <FormLabel>Preview</FormLabel>
+          <Box
+            style={{
+              width: '400px',
+              alignSelf: 'center',
+              marginBottom: '1.5rem',
+              boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+              pointerEvents: 'none',
+            }}>
+            <DishCard key={newDish.id} item={newDish as EntityWithID<Dish>} />
+          </Box>
+
           <FormControl id="name" isRequired>
             <FormLabel>Nome do Produto</FormLabel>
             <Input
@@ -221,16 +233,6 @@ function DishModal({
             Salvar
           </Button>
         </ModalFooter>
-
-        <Box
-          style={{
-            paddingTop: '0.5rem',
-            width: '430px',
-            alignSelf: 'center',
-            borderTopWidth: 'medium',
-          }}>
-          <DishCard key={newDish.id} item={newDish as EntityWithID<Dish>} />
-        </Box>
       </ModalContent>
     </Modal>
   )
