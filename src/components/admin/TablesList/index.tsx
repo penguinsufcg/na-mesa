@@ -15,7 +15,7 @@ const Section = ({ title, status }: { title: string; status: TableStatus }) => {
       <Heading size="md" sx={{ marginBottom: 8 }}>
         {title}
       </Heading>
-      <Flex sx={{ gap: 12 }}>
+      <Flex flexWrap="wrap" sx={{ gap: 12 }}>
         {data?.map((table) => (
           <TableCard key={table.id} table={table} />
         ))}
@@ -27,7 +27,7 @@ const Section = ({ title, status }: { title: string; status: TableStatus }) => {
 const TablesList = () => {
   return (
     <Flex direction="column" sx={{ gap: 24 }}>
-      <Section title="Aguardando paguamento" status="PAYMENT" />
+      <Section title="Aguardando pagamento" status="PAYMENT" />
       <Section title="Ocupadas" status="OCCUPIED" />
       <Section title="Disponíveis" status="AVAILABLE" />
     </Flex>
