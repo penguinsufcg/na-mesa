@@ -46,7 +46,9 @@ const Navbar = () => {
   return (
     <Flex
       direction="column"
-      width="xs"
+      backgroundColor="white"
+      minWidth="2xs"
+      maxWidth="2xs"
       paddingX={5}
       paddingY={7}
       borderRight="1px solid"
