@@ -13,6 +13,9 @@ import {
   useDisclosure,
   VStack,
   Box,
+  HStack,
+  Text,
+  IconButton,
 } from '@chakra-ui/react'
 import { updateTableStatus } from '@/api/tables'
 import { updateSessionStatus } from '@/api/session'
@@ -21,6 +24,7 @@ import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
 import useSessionReceipt from '@/hooks/useSessionReceipt'
 import { formatCurrency, formatTime } from 'utils/formatters'
+import { MdModeEdit, MdDelete } from 'react-icons/md'
 
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
@@ -46,8 +50,7 @@ const TableDrawer: FC<Props> = ({
   })
 
   const closeTable = async () => {
-    updateSessionStatus(sessionRef?.id, 'FINISHED')
-      .catch((e) => console.log(e))
+    updateSessionStatus(sessionRef?.id, 'FINISHED').catch((e) => console.log(e))
     updateTableStatus({
       id: table.id,
       newStatus: 'AVAILABLE',
@@ -63,11 +66,28 @@ const TableDrawer: FC<Props> = ({
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader
-            fontSize="24px"
-            fontWeight="medium"
-            color="secondary.700">
-            Mesa {table.id}
+          <DrawerHeader>
+            <HStack>
+              <Text
+                fontSize="24px"
+                fontWeight="medium"
+                color="secondary.700"
+                marginRight={8}>
+                Mesa {table.id}
+              </Text>
+              <IconButton
+                onClick={onClose}
+                variant="unstyled"
+                aria-label="Edite a mesa"
+                icon={<MdModeEdit size={24} />}
+              />
+              <IconButton
+                onClick={onClose}
+                variant="unstyled"
+                aria-label="Delete a mesa"
+                icon={<MdDelete size={24} />}
+              />
+            </HStack>
           </DrawerHeader>
 
           <DrawerBody>
