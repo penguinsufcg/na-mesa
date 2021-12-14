@@ -3,6 +3,7 @@ import Layout from '@/components/admin/Layout'
 import { Flex, Heading, Spacer } from '@chakra-ui/layout'
 import CreateTableModal from '@/components/admin/CreateTableModal'
 import TablesList from '@/components/admin/TablesList'
+import pageWithAuth from '@/pages/admin/auth/pageWithAuth'
 
 const Header = () => {
   return (
@@ -25,4 +26,4 @@ const MesasPage = () => {
   )
 }
 
-export default MesasPage
+export default pageWithAuth(MesasPage)
