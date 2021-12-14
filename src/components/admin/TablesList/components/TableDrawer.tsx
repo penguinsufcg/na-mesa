@@ -25,6 +25,7 @@ import TableStatus from './TableStatus'
 import useSessionReceipt from '@/hooks/useSessionReceipt'
 import { formatCurrency, formatTime } from 'utils/formatters'
 import { MdModeEdit, MdDelete } from 'react-icons/md'
+import CreateTableModal from '../../TableModal'
 
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
@@ -43,6 +44,12 @@ const TableDrawer: FC<Props> = ({
     isOpen: isOpenModal,
     onOpen: onOpenModal,
     onClose: onCloseModal,
+  } = useDisclosure()
+
+  const {
+    isOpen: isOpenEditModal,
+    onOpen: onOpenEditModal,
+    onClose: onCloseEditModal,
   } = useDisclosure()
 
   const { items: receiptItems, total: receiptTotal } = useSessionReceipt({
@@ -76,13 +83,18 @@ const TableDrawer: FC<Props> = ({
                 Mesa {table.id}
               </Text>
               <IconButton
-                onClick={onClose}
+                onClick={() => {
+                  onClose()
+                  onOpenEditModal()
+                }}
                 variant="unstyled"
                 aria-label="Edite a mesa"
                 icon={<MdModeEdit size={24} />}
               />
               <IconButton
-                onClick={onClose}
+                onClick={() => {
+                  onClose()
+                }}
                 variant="unstyled"
                 aria-label="Delete a mesa"
                 icon={<MdDelete size={24} />}
@@ -116,6 +128,14 @@ const TableDrawer: FC<Props> = ({
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+      <CreateTableModal
+        title="Editar Mesa"
+        defaultTableNumber={table.id}
+        modalProps={{
+          onClose: onCloseEditModal,
+          isOpen: isOpenEditModal,
+        }}
+      />
       <ConfirmationModal
         label={'Encerrar mesa'}
         message={'Tem certeza que deseja encerrar a mesa?'}

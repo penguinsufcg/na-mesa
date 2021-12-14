@@ -1,27 +1,35 @@
-import React, { useState } from 'react'
-import { 
+import { createTable } from '@/api/tables'
+import {
   Button,
-  useDisclosure,
+  FormControl,
+  FormLabel,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton, 
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   NumberInput,
   NumberInputField,
-  FormControl,
-  FormLabel
+  UseDisclosureReturn,
 } from '@chakra-ui/react'
+import React, { useState } from 'react'
 
-import { createTable } from '@/api/tables'
+type Props = {
+  title: string
+  defaultTableNumber?: number
+  modalProps: {
+    isOpen: Pick<UseDisclosureReturn, 'isOpen'>
+    onClose: Pick<UseDisclosureReturn, 'onClose'>
+  }
+}
 
+const CreateTableModal = ({ title, modalProps, defaultTableNumber }: Props) => {
+  const { isOpen, onClose } = modalProps
+  const [tableNumber, setTableNumber] = useState<string>(
+    defaultTableNumber?.toString() ?? '',
+  )
 
-const CreateTableModal = () => {
-  const { onOpen, onClose, isOpen } = useDisclosure()
-  const [tableNumber, setTableNumber] = useState<string>()
-  
   const handleCreate = async () => {
     if (!tableNumber) {
       return
@@ -33,27 +41,25 @@ const CreateTableModal = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>
-        Adicionar mesa
-      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Adicionar mesa</ModalHeader>
+          <ModalHeader>{title}</ModalHeader>
           <ModalBody>
             <FormControl isRequired>
               <FormLabel>Número da mesa</FormLabel>
               <NumberInput
                 isInvalid={!!!tableNumber}
                 value={tableNumber}
-                onChange={(value) => setTableNumber(value)}
-              >
+                onChange={(value) => setTableNumber(value)}>
                 <NumberInputField placeholder="Número da mesa" />
               </NumberInput>
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button variant="secondary" onClick={onClose}>Cancelar</Button>
+            <Button variant="secondary" onClick={onClose}>
+              Cancelar
+            </Button>
             <Button mr={3} onClick={handleCreate}>
               Salvar
             </Button>
