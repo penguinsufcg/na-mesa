@@ -17,7 +17,7 @@ import {
   Text,
   IconButton,
 } from '@chakra-ui/react'
-import { updateTableName, updateTableStatus } from '@/api/tables'
+import { removeTable, updateTableName, updateTableStatus } from '@/api/tables'
 import { updateSessionStatus } from '@/api/session'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
@@ -156,7 +156,7 @@ const TableDrawer: FC<Props> = ({
         message={'Tem certeza que deseja excluir a mesa?'}
         isOpen={isOpenRemoveModal}
         onClose={onCloseRemoveModal}
-        handleSubmit={() => {}}
+        handleSubmit={() => removeTable({ tableNumber: table.id })}
       />
     </>
   )

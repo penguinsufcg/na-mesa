@@ -11,6 +11,18 @@ export function createTable(tableNumber: string) {
   })
 }
 
+export function removeTable({ tableNumber }: { tableNumber?: string }) {
+  return tablesCollection
+    .where('name', '==', tableNumber)
+    .limit(1)
+    .get()
+    .then((snapshot) => {
+      const [tableDoc] = snapshot.docs
+
+      tablesCollection.doc(tableDoc.id).delete()
+    })
+}
+
 export function updateTableName({
   tableNumber,
   newTableNumber,
@@ -18,7 +30,6 @@ export function updateTableName({
   tableNumber?: string
   newTableNumber?: string
 }) {
-  console.log(tableNumber, newTableNumber)
   if (!newTableNumber) return
   return tablesCollection
     .where('name', '==', tableNumber)
