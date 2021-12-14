@@ -10,10 +10,10 @@ export type OrderCardFooterProps = {
 
 const StatusLabel = ({ status }: { status: string }) => {
   const getColor: { [key: string]: string } = {
-    Pendente: '#EFA238',
-    'Na cozinha': '#8BA451',
-    Pronto: '#3EA299',
-    Entregue: '#2B2D57',
+    PENDENTE: '#EFA238',
+    COZINHA: '#8BA451',
+    PRONTO: '#3EA299',
+    ENTREGUE: '#2B2D57',
   }
 
   return (
