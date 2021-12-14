@@ -17,11 +17,8 @@ import React, { useState } from 'react'
 
 type Props = {
   title: string
-  defaultTableNumber?: number
-  modalProps: {
-    isOpen: Pick<UseDisclosureReturn, 'isOpen'>
-    onClose: Pick<UseDisclosureReturn, 'onClose'>
-  }
+  defaultTableNumber?: string
+  modalProps: Pick<UseDisclosureReturn, 'isOpen' | 'onClose'>
   handleSubmit: ({
     tableNumber,
     newTableNumber,
@@ -39,7 +36,7 @@ const CreateTableModal = ({
 }: Props) => {
   const { isOpen, onClose } = modalProps
   const [tableNumber, setTableNumber] = useState<string>(
-    defaultTableNumber?.toString() ?? '',
+    defaultTableNumber ?? '',
   )
 
   const handleCreate = async () => {

@@ -23,7 +23,7 @@ export function removeTable({ tableNumber }: { tableNumber?: string }) {
     })
 }
 
-export function updateTableName({
+export async function updateTableName({
   tableNumber,
   newTableNumber,
 }: {
@@ -31,7 +31,7 @@ export function updateTableName({
   newTableNumber?: string
 }) {
   if (!newTableNumber) return
-  return tablesCollection
+  tablesCollection
     .where('name', '==', tableNumber)
     .limit(1)
     .get()
