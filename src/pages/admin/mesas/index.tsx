@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '@/components/admin/Layout'
 import { Flex, Heading, Spacer } from '@chakra-ui/layout'
-import CreateTableModal from '@/components/admin/TableModal'
+import TableModal from '@/components/admin/TableModal'
 import TablesList from '@/components/admin/TablesList'
 import { Button, useDisclosure } from '@chakra-ui/react'
 import { createTable } from '@/api/tables'
@@ -19,7 +19,7 @@ const Header = () => {
       <Heading>Mesas</Heading>
       <Spacer />
       <Button onClick={onOpen}>Adicionar mesa</Button>
-      <CreateTableModal
+      <TableModal
         title="Adicionar Mesa"
         modalProps={{ isOpen, onClose }}
         handleSubmit={handleSubmit}

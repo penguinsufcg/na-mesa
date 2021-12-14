@@ -1,4 +1,3 @@
-import { createTable } from '@/api/tables'
 import {
   Button,
   FormControl,
@@ -28,7 +27,7 @@ type Props = {
   }) => Promise<void>
 }
 
-const CreateTableModal = ({
+const TableModal = ({
   title,
   modalProps,
   defaultTableNumber,
@@ -79,4 +78,4 @@ const CreateTableModal = ({
   )
 }
 
-export default CreateTableModal
+export default TableModal

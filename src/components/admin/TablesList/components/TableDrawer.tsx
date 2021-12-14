@@ -25,7 +25,7 @@ import TableStatus from './TableStatus'
 import useSessionReceipt from '@/hooks/useSessionReceipt'
 import { formatCurrency, formatTime } from 'utils/formatters'
 import { MdModeEdit, MdDelete } from 'react-icons/md'
-import CreateTableModal from '../../TableModal'
+import TableModal from '../../TableModal'
 
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
@@ -135,7 +135,7 @@ const TableDrawer: FC<Props> = ({
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <CreateTableModal
+      <TableModal
         title="Editar Mesa"
         defaultTableNumber={table.id}
         modalProps={{
