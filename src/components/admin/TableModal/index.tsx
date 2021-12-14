@@ -22,19 +22,31 @@ type Props = {
     isOpen: Pick<UseDisclosureReturn, 'isOpen'>
     onClose: Pick<UseDisclosureReturn, 'onClose'>
   }
+  handleSubmit: ({
+    tableNumber,
+    newTableNumber,
+  }: {
+    tableNumber?: string
+    newTableNumber?: string
+  }) => Promise<void>
 }
 
-const CreateTableModal = ({ title, modalProps, defaultTableNumber }: Props) => {
+const CreateTableModal = ({
+  title,
+  modalProps,
+  defaultTableNumber,
+  handleSubmit,
+}: Props) => {
   const { isOpen, onClose } = modalProps
   const [tableNumber, setTableNumber] = useState<string>(
     defaultTableNumber?.toString() ?? '',
   )
 
   const handleCreate = async () => {
-    if (!tableNumber) {
-      return
-    }
-    await createTable(tableNumber)
+    await handleSubmit({
+      tableNumber: defaultTableNumber?.toString() ?? tableNumber,
+      newTableNumber: tableNumber,
+    })
 
     onClose()
   }

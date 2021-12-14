@@ -17,7 +17,7 @@ import {
   Text,
   IconButton,
 } from '@chakra-ui/react'
-import { updateTableStatus } from '@/api/tables'
+import { updateTableName, updateTableStatus } from '@/api/tables'
 import { updateSessionStatus } from '@/api/session'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
@@ -50,6 +50,12 @@ const TableDrawer: FC<Props> = ({
     isOpen: isOpenEditModal,
     onOpen: onOpenEditModal,
     onClose: onCloseEditModal,
+  } = useDisclosure()
+
+  const {
+    isOpen: isOpenRemoveModal,
+    onOpen: onOpenRemoveModal,
+    onClose: onCloseRemoveModal,
   } = useDisclosure()
 
   const { items: receiptItems, total: receiptTotal } = useSessionReceipt({
@@ -94,6 +100,7 @@ const TableDrawer: FC<Props> = ({
               <IconButton
                 onClick={() => {
                   onClose()
+                  onOpenRemoveModal()
                 }}
                 variant="unstyled"
                 aria-label="Delete a mesa"
@@ -135,6 +142,7 @@ const TableDrawer: FC<Props> = ({
           onClose: onCloseEditModal,
           isOpen: isOpenEditModal,
         }}
+        handleSubmit={updateTableName}
       />
       <ConfirmationModal
         label={'Encerrar mesa'}
@@ -142,6 +150,13 @@ const TableDrawer: FC<Props> = ({
         isOpen={isOpenModal}
         onClose={onCloseModal}
         handleSubmit={closeTable}
+      />
+      <ConfirmationModal
+        label={'Excluir mesa'}
+        message={'Tem certeza que deseja excluir a mesa?'}
+        isOpen={isOpenRemoveModal}
+        onClose={onCloseRemoveModal}
+        handleSubmit={() => {}}
       />
     </>
   )

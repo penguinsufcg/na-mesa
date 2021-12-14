@@ -4,9 +4,16 @@ import { Flex, Heading, Spacer } from '@chakra-ui/layout'
 import CreateTableModal from '@/components/admin/TableModal'
 import TablesList from '@/components/admin/TablesList'
 import { Button, useDisclosure } from '@chakra-ui/react'
+import { createTable } from '@/api/tables'
 
 const Header = () => {
   const { onOpen, onClose, isOpen } = useDisclosure()
+  const handleSubmit = async ({ tableNumber }: { tableNumber?: string }) => {
+    if (!tableNumber) {
+      return
+    }
+    await createTable(tableNumber)
+  }
   return (
     <Flex sx={{ width: '100%' }}>
       <Heading>Mesas</Heading>
@@ -15,6 +22,7 @@ const Header = () => {
       <CreateTableModal
         title="Adicionar Mesa"
         modalProps={{ isOpen, onClose }}
+        handleSubmit={handleSubmit}
       />
     </Flex>
   )

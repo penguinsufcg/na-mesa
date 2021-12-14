@@ -29,17 +29,9 @@ function ConfirmationModal({
   const initialRef = React.useRef().current
   const finalRef = React.useRef().current
 
-  const [filesList, setFilesList] = useState<any[]>([])
-
   const confirm = async () => {
     handleSubmit()
     onClose()
-  }
-
-  const props = {
-    async onChange(info: any) {
-      setFilesList([...filesList, ...[info.fileList]])
-    },
   }
 
   return (

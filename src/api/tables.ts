@@ -2,16 +2,47 @@ import { db } from '@/config/firebaseClient'
 
 const tablesCollection = db.collection('tables')
 
-export function createTable(name: string) {
+export function createTable(tableNumber: string) {
   tablesCollection.add({
-    id: name,
-    name,
+    id: tableNumber,
+    name: tableNumber,
     status: 'AVAILABLE',
     currentSession: null,
   })
 }
 
-export function updateTableStatus({ id, newStatus, currentSession }: { id: string, newStatus: TableStatus, currentSession?: Reference<Session> | null }) {
+export function updateTableName({
+  tableNumber,
+  newTableNumber,
+}: {
+  tableNumber?: string
+  newTableNumber?: string
+}) {
+  console.log(tableNumber, newTableNumber)
+  if (!newTableNumber) return
+  return tablesCollection
+    .where('name', '==', tableNumber)
+    .limit(1)
+    .get()
+    .then((snapshot) => {
+      const [tableDoc] = snapshot.docs
+
+      tablesCollection.doc(tableDoc.id).update({
+        id: newTableNumber,
+        name: newTableNumber,
+      })
+    })
+}
+
+export function updateTableStatus({
+  id,
+  newStatus,
+  currentSession,
+}: {
+  id: string
+  newStatus: TableStatus
+  currentSession?: Reference<Session> | null
+}) {
   return tablesCollection
     .where('name', '==', id)
     .limit(1)
@@ -21,7 +52,7 @@ export function updateTableStatus({ id, newStatus, currentSession }: { id: strin
 
       tablesCollection.doc(tableDoc.id).update({
         status: newStatus,
-        ...typeof currentSession !== 'undefined' && { currentSession },
+        ...(typeof currentSession !== 'undefined' && { currentSession }),
       })
-  })
+    })
 }
