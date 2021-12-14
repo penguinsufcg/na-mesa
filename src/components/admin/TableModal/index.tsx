@@ -40,11 +40,12 @@ const TableModal = ({
 
   const handleCreate = async () => {
     await handleSubmit({
-      tableNumber: defaultTableNumber?.toString() ?? tableNumber,
+      tableNumber: defaultTableNumber ?? tableNumber,
       newTableNumber: tableNumber,
     })
 
     onClose()
+    setTableNumber('')
   }
 
   return (
@@ -65,7 +66,12 @@ const TableModal = ({
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button variant="secondary" onClick={onClose}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                onClose()
+                setTableNumber('')
+              }}>
               Cancelar
             </Button>
             <Button mr={3} onClick={handleCreate}>
