@@ -137,7 +137,7 @@ const TableDrawer: FC<Props> = ({
       </Drawer>
       <TableModal
         title="Editar Mesa"
-        defaultTableNumber={table.id}
+        initialTableNumber={table.id}
         modalProps={{
           onClose: onCloseEditModal,
           isOpen: isOpenEditModal,

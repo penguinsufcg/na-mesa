@@ -30,17 +30,17 @@ type Props = {
 const TableModal = ({
   title,
   modalProps,
-  defaultTableNumber,
+  initialTableNumber,
   handleSubmit,
 }: Props) => {
   const { isOpen, onClose } = modalProps
   const [tableNumber, setTableNumber] = useState<string>(
-    defaultTableNumber ?? '',
+    initialTableNumber ?? '',
   )
 
   const handleCreate = async () => {
     await handleSubmit({
-      tableNumber: defaultTableNumber ?? tableNumber,
+      tableNumber: initialTableNumber ?? tableNumber,
       newTableNumber: tableNumber,
     })
 
