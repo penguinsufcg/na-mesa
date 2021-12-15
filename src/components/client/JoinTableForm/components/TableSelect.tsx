@@ -18,7 +18,8 @@ const TableSelect: FC<TableSelectProps> = ({ onSelect }: TableSelectProps) => {
         sx={{ alignItems: 'center', gap: '12px', width: '100%' }}>
         <Select
           placeholder="Número da mesa"
-          onChange={(event) => onSelect(event.target.value)}>
+          onChange={(event) => onSelect(event.target.value)}
+          sx={{color: 'gray.500'}}>
           {data?.map((table) => (
             <option key={table.id} value={table.name}>
               {table.name}

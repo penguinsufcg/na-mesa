@@ -52,10 +52,10 @@ function ConfirmationModal({
 
           <ModalFooter>
             <Button onClick={onClose} variant="secondary" mr={3}>
-              Cancelar
+              CANCELAR
             </Button>
             <Button onClick={confirm} colorScheme="blue">
-              Confirmar
+              CONFIRMAR
             </Button>
           </ModalFooter>
         </ModalContent>

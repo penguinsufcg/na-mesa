@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FC } from 'react'
 import { Box, Flex, Heading, Text, Spacer } from '@chakra-ui/react'
 import { BiTimeFive } from 'react-icons/bi'
 import TableDrawer from './TableDrawer'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import { formatTime } from 'utils/formatters'
 
-const TableCard = ({ table }: { table: Table }) => {
+
+const TableCard: FC<{ table: Table }> = ({ table, ...props }) => {
   const [session, setSession] = useState<Session | null>()
   const { name, currentSession } = table
   const [isOpenDetails, setIsOpenDetails] = useState<boolean>(false)
@@ -36,7 +37,8 @@ const TableCard = ({ table }: { table: Table }) => {
           _hover: {
             cursor: 'pointer',
           },
-        }}>
+        }}
+        {...props}>
         <Flex sx={{ alignItems: 'center' }}>
           <Text size="sm" maxW="175px" isTruncated>
             Mesa {name}

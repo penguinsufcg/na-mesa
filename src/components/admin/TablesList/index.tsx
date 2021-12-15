@@ -26,7 +26,7 @@ const Section = ({ title, status }: { title: string; status: TableStatus }) => {
 
 const TablesList = () => {
   return (
-    <Flex direction="column" sx={{ gap: 24 }}>
+    <Flex direction="column" sx={{ gap: 24, marginTop: 8 }}>
       <Section title="Aguardando pagamento" status="PAYMENT" />
       <Section title="Ocupadas" status="OCCUPIED" />
       <Section title="Disponíveis" status="AVAILABLE" />
