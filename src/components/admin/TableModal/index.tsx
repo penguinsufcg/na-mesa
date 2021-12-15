@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 
 type Props = {
   title: string
-  defaultTableNumber?: string
+  initialTableNumber?: string
   modalProps: Pick<UseDisclosureReturn, 'isOpen' | 'onClose'>
   handleSubmit: ({
     tableNumber,
