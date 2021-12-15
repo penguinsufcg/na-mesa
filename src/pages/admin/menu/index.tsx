@@ -4,6 +4,7 @@ import Layout from '@/components/admin/Layout'
 import { useFirestoreListQuery } from '@/hooks/useFirestoreListQuery'
 import { Button, Flex, Heading, Spacer, useDisclosure } from '@chakra-ui/react'
 import { BiPlus } from 'react-icons/bi'
+import pageWithAuth from '@/pages/admin/auth/pageWithAuth'
 
 const Menu = () => {
   const {
@@ -39,4 +40,4 @@ const Menu = () => {
   )
 }
 
-export default Menu
+export default pageWithAuth(Menu)

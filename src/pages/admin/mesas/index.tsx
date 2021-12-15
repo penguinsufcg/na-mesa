@@ -3,6 +3,7 @@ import Layout from '@/components/admin/Layout'
 import { Flex, Heading, Spacer } from '@chakra-ui/layout'
 import TableModal from '@/components/admin/TableModal'
 import TablesList from '@/components/admin/TablesList'
+import pageWithAuth from '@/pages/admin/auth/pageWithAuth'
 import { Button, useDisclosure } from '@chakra-ui/react'
 import { createTable } from '@/api/tables'
 
@@ -39,4 +40,4 @@ const MesasPage = () => {
   )
 }
 
-export default MesasPage
+export default pageWithAuth(MesasPage)
