@@ -13,14 +13,19 @@ import {
   useDisclosure,
   VStack,
   Box,
+  HStack,
+  Text,
+  IconButton,
 } from '@chakra-ui/react'
-import { updateTableStatus } from '@/api/tables'
+import { removeTable, updateTableName, updateTableStatus } from '@/api/tables'
 import { updateSessionStatus } from '@/api/session'
 import BillDetails from '@/components/BillDetails'
 import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
 import useSessionReceipt from '@/hooks/useSessionReceipt'
 import { formatCurrency, formatTime } from 'utils/formatters'
+import { MdModeEdit, MdDelete } from 'react-icons/md'
+import TableModal from '../../TableModal'
 
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
@@ -41,13 +46,24 @@ const TableDrawer: FC<Props> = ({
     onClose: onCloseModal,
   } = useDisclosure()
 
+  const {
+    isOpen: isOpenEditModal,
+    onOpen: onOpenEditModal,
+    onClose: onCloseEditModal,
+  } = useDisclosure()
+
+  const {
+    isOpen: isOpenRemoveModal,
+    onOpen: onOpenRemoveModal,
+    onClose: onCloseRemoveModal,
+  } = useDisclosure()
+
   const { items: receiptItems, total: receiptTotal } = useSessionReceipt({
     sessionRef,
   })
 
   const closeTable = async () => {
-    updateSessionStatus(sessionRef?.id, 'FINISHED')
-      .catch((e) => console.log(e))
+    updateSessionStatus(sessionRef?.id, 'FINISHED').catch((e) => console.log(e))
     updateTableStatus({
       id: table.id,
       newStatus: 'AVAILABLE',
@@ -63,11 +79,34 @@ const TableDrawer: FC<Props> = ({
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader
-            fontSize="24px"
-            fontWeight="medium"
-            color="secondary.700">
-            Mesa {table.id}
+          <DrawerHeader>
+            <HStack>
+              <Text
+                fontSize="24px"
+                fontWeight="medium"
+                color="secondary.700"
+                marginRight={8}>
+                Mesa {table.id}
+              </Text>
+              <IconButton
+                onClick={() => {
+                  onClose()
+                  onOpenEditModal()
+                }}
+                variant="unstyled"
+                aria-label="Edite a mesa"
+                icon={<MdModeEdit size={24} />}
+              />
+              <IconButton
+                onClick={() => {
+                  onClose()
+                  onOpenRemoveModal()
+                }}
+                variant="unstyled"
+                aria-label="Delete a mesa"
+                icon={<MdDelete size={24} />}
+              />
+            </HStack>
           </DrawerHeader>
 
           <DrawerBody>
@@ -96,12 +135,28 @@ const TableDrawer: FC<Props> = ({
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+      <TableModal
+        title="Editar Mesa"
+        initialTableNumber={table.id}
+        modalProps={{
+          onClose: onCloseEditModal,
+          isOpen: isOpenEditModal,
+        }}
+        handleSubmit={updateTableName}
+      />
       <ConfirmationModal
         label={'Encerrar mesa'}
         message={'Tem certeza que deseja encerrar a mesa?'}
         isOpen={isOpenModal}
         onClose={onCloseModal}
         handleSubmit={closeTable}
+      />
+      <ConfirmationModal
+        label={'Excluir mesa'}
+        message={'Tem certeza que deseja excluir a mesa?'}
+        isOpen={isOpenRemoveModal}
+        onClose={onCloseRemoveModal}
+        handleSubmit={() => removeTable({ tableNumber: table.id })}
       />
     </>
   )
