@@ -27,7 +27,9 @@ const Menu = ({ searchKey }: Props) => {
       return
     }
     const filtered =
-      data?.filter((item: EntityWithID<Dish>) => item.name.startsWith(searchKey)) ?? []
+      data?.filter((item: EntityWithID<Dish>) =>
+        item.name.toLowerCase().includes(searchKey.toLowerCase()),
+      ) ?? []
     setFilteredDishes(filtered)
   }, [data, searchKey])
 
