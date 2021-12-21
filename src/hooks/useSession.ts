@@ -5,8 +5,12 @@ type SessionContextProps = {
   session?: EntityWithID<Session> | null
   sessionRef?: Reference<Session> | null
   isLogged: boolean
-  createNewSession?: (params: {table: string, client: string }) => Promise<string>
+  createNewSession?: (params: {
+    table: string
+    client: string
+  }) => Promise<string>
   joinSession?: (params: { sessionId: string }) => void
+  logout: () => void
 }
 
 export const SessionContext: Context<SessionContextProps> =
@@ -15,15 +19,16 @@ export const SessionContext: Context<SessionContextProps> =
     sessionRef: null,
     isLogged: false,
     isLoading: false,
+    logout: () => {},
   })
 
-const useSession = (): SessionContextProps =>  {
+const useSession = (): SessionContextProps => {
   const context = useContext<SessionContextProps>(SessionContext)
 
   if (!context) {
     throw new Error('Do not use Session outside of context')
   }
-  
+
   return context
 }
 

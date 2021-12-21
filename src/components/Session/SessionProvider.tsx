@@ -26,8 +26,14 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     setSessionId(undefined)
     setSession(null)
     setSessionRef(null)
-    
+
     router.push('/logout')
+  }
+
+  const logout = () => {
+    setSessionId(undefined)
+    setSession(null)
+    setSessionRef(null)
   }
 
   const getSessionLocal = () => {
@@ -106,7 +112,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
   }, [session])
 
   useEffect(() => {
-    if(session?.status === 'FINISHED') {
+    if (session?.status === 'FINISHED') {
       closeSession()
     }
   }, [session])
@@ -119,6 +125,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
       isLoading,
       createNewSession,
       joinSession,
+      logout,
     }),
     [session, sessionRef, sessionId, isLoading],
   )
