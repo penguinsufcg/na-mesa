@@ -16,7 +16,7 @@ const DishPage = () => {
     dishId,
   ])
   const { addItem } = useMinicart()
-  const { isLogged } = useSession()
+  const { isLogged, underPayment } = useSession()
 
   const toast = useToast()
 
@@ -59,7 +59,7 @@ const DishPage = () => {
         <ChevronLeftIcon />
       </Button>
       {dishData && <DishDetails dish={dishData} />}
-      {isLogged && <AddDishForm onSubmit={handleSubmit} />}
+      {isLogged && !underPayment && <AddDishForm onSubmit={handleSubmit} />}
     </Flex>
   )
 }

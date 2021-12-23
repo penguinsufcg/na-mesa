@@ -5,12 +5,12 @@ import useSessionReceipt from '@/hooks/useSessionReceipt'
 import { useToast } from '@chakra-ui/react'
 import { Container } from '@chakra-ui/layout'
 import { updateTableStatus } from '@/api/tables'
+import { updateSessionStatus } from '@/api/session'
 import Layout from '@/components/client/Layout'
 import BillDetails from '@/components/BillDetails'
 
 const BillPage = () => {
-  const [ disableButton, setDisableButton ] = useState(false)
-  const { session, sessionRef } = useSession()
+  const { session, sessionRef, underPayment } = useSession()
   const { items: receiptItems, total: billTotal } = useSessionReceipt({
     sessionRef,
   })
@@ -26,6 +26,8 @@ const BillPage = () => {
       newStatus: 'PAYMENT',
     })
 
+    await updateSessionStatus(session.id, 'PAYMENT')
+
     toast({
       title: 'Pagamento solicitado!',
       description: 'Aguarde pelo garçom :)',
@@ -33,8 +35,6 @@ const BillPage = () => {
       duration: 5000,
       isClosable: true,
     })
-
-    setDisableButton(true)
   }
 
   return (
@@ -45,11 +45,11 @@ const BillPage = () => {
         buttonProps: {
           children: 'Solicitar pagamento',
           onClick: handleClick,
-          disabled: disableButton 
+          disabled: underPayment
         },
       }}>
       <Container px={10}>
-        <BillDetails items={receiptItems}/>
+        <BillDetails items={receiptItems} />
       </Container>
     </Layout>
   )
