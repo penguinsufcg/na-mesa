@@ -46,10 +46,10 @@ const DeleteItemModal = ({
 
         <ModalFooter>
           <Button onClick={handleConfirm} variant="secondary" size="sm">
-            Confirmar
+            CONFIRMAR
           </Button>
           <Button onClick={onClose} size="sm">
-            Cancelar
+            CANCELAR
           </Button>
         </ModalFooter>
       </ModalContent>

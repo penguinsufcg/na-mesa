@@ -43,7 +43,6 @@ const JoinTableForm: FC = () => {
         </Heading>
 
         <TableSelect onSelect={setTableNumber} />
-
         <Input
           placeholder="Nome do consumidor"
           isRequired

@@ -32,7 +32,7 @@ const Header = () => {
 const MesasPage = () => {
   return (
     <Layout>
-      <Flex direction="column" sx={{ width: 'full', padding: 4 }}>
+      <Flex direction="column" sx={{ width: 'full', padding: 12 }}>
         <Header />
         <TablesList />
       </Flex>
