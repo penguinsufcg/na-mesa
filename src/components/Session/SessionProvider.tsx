@@ -30,6 +30,12 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
     router.push('/logout')
   }
 
+  const logout = () => {
+    setSessionId(undefined)
+    setSession(null)
+    setSessionRef(null)
+  }
+
   const getSessionLocal = () => {
     const sessionId = localStorage.getItem('sessionId')
 
@@ -120,6 +126,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
       isLoading,
       createNewSession,
       joinSession,
+      logout,
     }),
     [session, sessionRef, sessionId, isLoading],
   )

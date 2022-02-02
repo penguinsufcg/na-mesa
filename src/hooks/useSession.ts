@@ -6,8 +6,12 @@ type SessionContextProps = {
   sessionRef?: Reference<Session> | null
   isLogged: boolean
   underPayment: boolean
-  createNewSession?: (params: { table: string, client: string }) => Promise<string>
+  createNewSession?: (params: {
+    table: string
+    client: string
+  }) => Promise<string>
   joinSession?: (params: { sessionId: string }) => void
+  logout: () => void
 }
 
 export const SessionContext: Context<SessionContextProps> =
@@ -17,6 +21,7 @@ export const SessionContext: Context<SessionContextProps> =
     isLogged: false,
     underPayment: false,
     isLoading: false,
+    logout: () => {},
   })
 
 const useSession = (): SessionContextProps => {
