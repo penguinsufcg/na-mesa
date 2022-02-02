@@ -3,6 +3,26 @@ import JoinTableForm from '@/components/client/JoinTableForm'
 import Logo from '@/components/Logo'
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
+
+const PageHeader = () => {
+  const router = useRouter()
+  return (
+    <Flex w='full' align='center' marginBottom='40%'>
+      <Box flex={1}>
+        <Button
+          variant='ghost'
+          sx={{ fontSize: '2xl', boxSize: 10 }}
+          onClick={() => router.back()}>
+          <ChevronLeftIcon />
+        </Button>
+      </Box>
+      <Logo />
+      <Box flex={1}></Box>
+    </Flex>
+  )
+}
 
 const JoinTablePage = () => {
   const [showJoin, setShowJoin] = useState<boolean>(true)
@@ -12,11 +32,12 @@ const JoinTablePage = () => {
       direction="column"
       sx={{
         alignItems: 'center',
-        padding: 8,
+        paddingY: 4,
+        paddingX: 5,
       }}>
-      <Box sx={{ marginBottom: '50%' }}>
-        <Logo />
-      </Box>
+
+      <PageHeader />
+      
       {showJoin ? (
         <>
           <JoinTableForm />
