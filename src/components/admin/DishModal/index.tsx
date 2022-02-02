@@ -228,10 +228,10 @@ function DishModal({
         </ModalBody>
         <ModalFooter>
           <Button onClick={closeModal} variant="secondary" mr={3}>
-            Cancelar
+            CANCELAR
           </Button>
           <Button onClick={update ? changeDish : saveDish} colorScheme="blue">
-            Salvar
+            SALVAR
           </Button>
         </ModalFooter>
       </ModalContent>

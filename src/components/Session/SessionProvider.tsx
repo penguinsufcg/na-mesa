@@ -122,6 +122,7 @@ function SessionProvider({ children }: SessionContextProps): JSX.Element {
       session,
       sessionRef,
       isLogged: sessionId && sessionId !== 'undefined' ? true : false,
+      underPayment: session?.status == 'PAYMENT',
       isLoading,
       createNewSession,
       joinSession,

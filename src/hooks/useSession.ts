@@ -5,6 +5,7 @@ type SessionContextProps = {
   session?: EntityWithID<Session> | null
   sessionRef?: Reference<Session> | null
   isLogged: boolean
+  underPayment: boolean
   createNewSession?: (params: {
     table: string
     client: string
@@ -18,6 +19,7 @@ export const SessionContext: Context<SessionContextProps> =
     session: null,
     sessionRef: null,
     isLogged: false,
+    underPayment: false,
     isLoading: false,
     logout: () => {},
   })

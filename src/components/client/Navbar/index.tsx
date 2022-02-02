@@ -5,13 +5,13 @@ import { BiHome, BiCartAlt, BiReceipt, BiLogOut } from 'react-icons/bi'
 import NavbarOption from './components/NavbarOption'
 
 const Navbar = () => {
-  const { logout } = useSession()
+  const { logout, underPayment } = useSession()
 
   return (
     <Flex justifyContent="space-around">
       <NavbarOption isSelected icon={<BiHome size={24} />} href="/" />
       <NavbarOption icon={<BiCartAlt size={24} />} href="/cart" />
-      <NavbarOption icon={<BiReceipt size={24} />} href="/receipt" />
+      <NavbarOption icon={<BiReceipt size={24} />} href={underPayment ? "/bill" : "/receipt"} />
       <NavbarOption icon={<BiLogOut size={24} />} href="/" onClick={logout} />
     </Flex>
   )
