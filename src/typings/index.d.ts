@@ -47,3 +47,5 @@ type Order = {
   items: OrderItem[]
   time: string
 }
+
+declare module 'react-to-pdf'

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useRef } from 'react'
 import {
   Button,
   Drawer,
@@ -24,8 +24,9 @@ import ConfirmationModal from '@/components/admin/ConfirmationModal'
 import TableStatus from './TableStatus'
 import useSessionReceipt from '@/hooks/useSessionReceipt'
 import { formatCurrency, formatTime } from 'utils/formatters'
-import { MdModeEdit, MdDelete } from 'react-icons/md'
+import { MdModeEdit, MdDelete, MdReceipt } from 'react-icons/md'
 import TableModal from '../../TableModal'
+import Pdf from 'react-to-pdf'
 
 type Props = Pick<DrawerProps, 'isOpen' | 'onClose'> & {
   table: Table
@@ -62,6 +63,8 @@ const TableDrawer: FC<Props> = ({
     sessionRef,
   })
 
+  const billRef = useRef(null);
+
   const closeTable = async () => {
     updateSessionStatus(sessionRef?.id, 'FINISHED').catch((e) => console.log(e))
     updateTableStatus({
@@ -88,6 +91,16 @@ const TableDrawer: FC<Props> = ({
                 marginRight={8}>
                 Mesa {table.id}
               </Text>
+              <Pdf targetRef={billRef} filename={`comprovante-mesa-${table.id}`}>
+                {({toPdf}: {toPdf: () => unknown}) => (
+                    <IconButton
+                     onClick={toPdf}
+                     variant="unstyled"
+                     aria-label="Imprimir comprovante"
+                     icon={<MdReceipt size={24} />}
+                   />
+                )}
+              </Pdf>
               <IconButton
                 onClick={() => {
                   onClose()
@@ -122,7 +135,9 @@ const TableDrawer: FC<Props> = ({
                 <Heading size="md" fontWeight="medium" color="secondary.700">
                   Conta
                 </Heading>
-                <BillDetails items={receiptItems} />
+                <div ref={billRef}>
+                  <BillDetails items={receiptItems} />
+                </div>
               </Box>
             </VStack>
           </DrawerBody>
